@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "migrate:up": "node-pg-migrate up --create-schema"
+    "migrate:up": "node-pg-migrate up --create-schema",
+    "migrate:drop": "psql -U postgres -d postgres -c 'DROP SCHEMA IF EXISTS \"foostown\" CASCADE'",
+    "migrate:reset": "yarn migrate:drop && yarn migrate:up"
   },
   "dependencies": {
     "node-pg-migrate": "^3.16.0",
