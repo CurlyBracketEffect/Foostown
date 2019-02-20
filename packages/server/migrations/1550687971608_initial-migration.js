@@ -9,6 +9,3 @@ exports.up = pgm => {
   `)
 };
 
-exports.down = pgm => {
-  pgm.dropSchema('foostown', {cascade: true})
-};

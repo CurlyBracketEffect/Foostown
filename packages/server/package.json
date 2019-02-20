@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "db:up": "node-pg-migrate up --create-schema",
+    "db:drop": "psql -U postgres -d postgres -c 'DROP SCHEMA IF EXISTS \"foostown\" CASCADE'",
+    "db:reset": "yarn db:drop && yarn db:up"
+  },
   "dependencies": {
     "node-pg-migrate": "^3.16.0",
     "pg": "^7.8.0"
