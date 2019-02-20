@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "migrate:up": "node-pg-migrate up --create-schema"
+  },
   "dependencies": {
     "node-pg-migrate": "^3.16.0",
     "pg": "^7.8.0"
