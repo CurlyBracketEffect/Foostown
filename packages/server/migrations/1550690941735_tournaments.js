@@ -11,3 +11,5 @@ exports.up = pgm => {
     );
   `)
 };
+
+// FOREIGN KEY (organization_id) REFERENCES organizations (id)
