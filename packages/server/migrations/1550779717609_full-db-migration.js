@@ -3,7 +3,7 @@ exports.up = pgm => {
   pgm.sql(`
     CREATE TABLE "foostown"."users" (
       "id" SERIAL PRIMARY KEY,
-      "fullname" TEXT UNIQUE NOT NULL,
+      "fullname" TEXT NOT NULL,
       "email" TEXT UNIQUE NOT NULL,
       "password" TEXT NOT NULL
     );
@@ -29,7 +29,7 @@ exports.up = pgm => {
   //4. Organizations_Users Table
   pgm.sql(`
     CREATE TABLE "foostown"."organizations_users" (
-      "organization_id" INTEGER  REFERENCES organizations (id) NOT NULL,
+      "organization_id" INTEGER REFERENCES organizations (id) NOT NULL,
       "user_id" INTEGER REFERENCES users (id) NOT NULL,
       "is_admin" BOOLEAN NOT NULL
     );
@@ -86,8 +86,8 @@ exports.up = pgm => {
     "round" INTEGER NOT NULL,
     "position" INTEGER NOT NULL,
     "tournament_id" INTEGER REFERENCES tournaments(id) NOT NULL,
-    "match_id" INTEGER  REFERENCES matches(id) NOT NULL,
-    "team_id" INTEGER  REFERENCES teams(id) NOT NULL,
+    "match_id" INTEGER REFERENCES matches(id) NOT NULL,
+    "team_id" INTEGER REFERENCES teams(id) NOT NULL,
     UNIQUE ("round", "position", "tournament_id")
   );
 `)
