@@ -1,28 +1,22 @@
 > Workback Plan Of Action <
 
-User Authentication - BackEnd
-- 
-
-Login Mutation - BackEnd
--
-
-Create User Mutation - BackEnd
-- 
+User Authentication(Login & Create User Mutation) - BackEnd
+- Akshay
 
 Create Game Mutation - BackEnd
--
+- Eirian
 
 Users Query - BackEnd
--
+- Jorrin
 
 Games Played Query - BackEnd
-- 
+- Jorrin
 
 Login Page - FrontEnd
-- 
+- Navi
 
 Signup Page - FrontEnd
-- 
+- Navi
 
 Main Page - FrontEnd
 - Vaughn
