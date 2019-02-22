@@ -20,10 +20,10 @@ const App = () => {
     <Router>
       {/* <ApolloProvider> << insert: client={apolloClient} */}
         <div className="App">
-          <LoginPage />
-          <SignUpPage />
-          <HomePage />
-          <CreateGamePage />
+          <Route path="/" exact component={LoginPage} />
+          <Route path="/sign-up" exact component={SignUpPage} />
+          <Route path="/home" exact component={HomePage} />
+          <Route path="/create-game" exact component={CreateGamePage} />
         </div>
       {/* </ApolloProvider> */}
     </Router>
