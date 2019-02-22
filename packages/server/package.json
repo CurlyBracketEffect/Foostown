@@ -2,10 +2,21 @@
   "scripts": {
     "db:up": "node-pg-migrate up --create-schema",
     "db:drop": "psql -U postgres -d postgres -c \"DROP SCHEMA IF EXISTS \\\"foostown\\\" CASCADE\"",
-    "db:reset": "yarn db:drop && yarn db:up"
+    "db:reset": "yarn db:drop && yarn db:up",
+    "start": "NODE_ENV=production node index.js",
+    "start:dev": "NODE_ENV=development nodemon index.js"
   },
   "dependencies": {
+    "apollo-server-express": "^2.4.6",
+    "apollo-upload-server": "^7.1.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "graphql": "^14.1.1",
     "node-pg-migrate": "^3.16.0",
     "pg": "^7.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
   }
 }
