@@ -115,6 +115,10 @@ const SignUp = ({
                 >
                   Submit
                 </Button>
+
+                <Link to='/' /*className={classes.signIn}*/>
+                  login to existing account
+                </Link>
               </Box>
             </form>
           )
