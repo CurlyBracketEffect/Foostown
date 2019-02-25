@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const Promise = require('bluebird');
 
 
-module.exports => {
+module.exports = {
   function setCookie({ tokenName, token, res }) {
     res.cookie(tokenName, token, {
       httpOnly: true,
