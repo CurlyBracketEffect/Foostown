@@ -1,9 +1,9 @@
 module.exports = {
   Query: {
-    async user(parent, { id }, { req }, info) {
+    async user(parent, { id }, { req, postgres }, info) {
 
       const findUserQuery = {
-        text: 'SELECT * FROM users WHERE id = $1',
+        text: 'SELECT * FROM foostown.users WHERE id = $1',
         values: [id] 
       }
       
