@@ -18,19 +18,37 @@ function generateToken({ id }, secret, csrfToken) {
   }
   return jwt.sign(payload, secret);
 }
+
+
 module.exports = {
   Mutation: {
     async signup(parent, args, { req, app, postgres }) {
+      const hashedPassword = await bcrypt.hash(args.input.password, 12)
+      
       console.log("Test");
       console.log(args);  
+
       const newUserInsert = {
         text: 'INSERT INTO foostown.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *', 
-        values: [args.input.fullname, args.input.email, args.input.password],
+        values: [args.input.fullname, args.input.email, hashedPassword],
       }
       try {
-        const user = await postgres.query(newUserInsert);
-        console.log(user);
-        return user.rows[0];
+        const userResult = await postgres.query(newUserInsert);
+        const user = userResult.rows[0];
+        const csrfTokenBinary = await Promise.promisify(crypto.randomBytes)(32)
+        const csrfToken = Buffer.from(csrfTokenBinary, 'binary').toString('base64')
+        setCookie({
+          tokenName: app.get('JWT_COOKIE_NAME'),
+          token: generateToken(user, app.get('JWT_SECRET'), csrfToken),
+          res: req.res
+        });
+
+    
+        return {
+          user,
+          csrfToken  
+        };
+      
       } catch (e) {
         switch (true) {
           case /users_fullname_key/.test(e.message):
