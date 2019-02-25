@@ -10,13 +10,13 @@
     "apollo-link-context": "^1.0.14",
     "apollo-link-http": "^1.5.11",
     "formik": "^1.5.1",
+    "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "react": "^16.8.3",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.8.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",
-    "react-select": "^2.4.1",
     "yup": "^0.26.10"
   },
   "scripts": {

@@ -120,7 +120,7 @@ const CreateGamePage = () => (
             <Link style={{ marginTop: 50, width: '75%', textDecoration: 'none' }} to='/home'>
               <Button 
                 type='submit'
-                // color='primary'
+                color='primary'
                 disabled={isSubmitting} 
                 variant='contained' 
                 style={{
