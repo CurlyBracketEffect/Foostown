@@ -1,17 +1,19 @@
-import React from 'react';
+import React from 'react'
 
 //router
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 //formik & yup
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 
 //material-ui
-import { FormControl, TextField, Button } from '@material-ui/core/'
+import { 
+  Typography, FormControl, TextField, Button 
+} from '@material-ui/core/'
 
 //components
-import SelectOpponent from "./SelectOpponent";
+import SelectOpponent from './SelectOpponent'
 
 const CreateGamePage = () => (
   <div
@@ -22,8 +24,8 @@ const CreateGamePage = () => (
       alignItems: 'center',
     }}
   >
-    <h1>Create Game Page</h1>
-    <Link to="/home"><button>Back To Home</button></Link>
+    <Typography style={{ marginTop: 25 }} variant='overline'>Create Game</Typography>
+    <Link style={{ marginTop: 25 }} to='/home'><button>Back To Home</button></Link>
 
     <Formik
       initialValues={{
@@ -35,7 +37,7 @@ const CreateGamePage = () => (
         values = {
           ...values,
           selectOpponent: values.selectOpponent.map(opponent => opponent.value),
-        };
+        }
         // createGame({ variables: {
         //   insert key here: insert value here
         // } })
@@ -58,7 +60,7 @@ const CreateGamePage = () => (
         const {
           handleSubmit,
           isSubmitting,                 
-        } = props;
+        } = props
         return (
           <form
             onSubmit={handleSubmit}
@@ -87,11 +89,11 @@ const CreateGamePage = () => (
               }}
             >
               <TextField
-                id="standard-number"
-                label="Your Score"
+                id='standard-number'
+                label='Your Score'
                 // value={}
                 // onChange={}
-                type="number"
+                type='number'
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -101,11 +103,11 @@ const CreateGamePage = () => (
               />
 
               <TextField
-                id="standard-number"
-                label="Opponent Score"
+                id='standard-number'
+                label='Opponent Score'
                 // value={}
                 // onChange={}
-                type="number"
+                type='number'
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -115,24 +117,25 @@ const CreateGamePage = () => (
               />
             </div>
 
-             <Button 
-                type="submit"
-                // color="primary"
+            <Link style={{ marginTop: 50, width: '75%', textDecoration: 'none' }} to='/home'>
+              <Button 
+                type='submit'
+                // color='primary'
                 disabled={isSubmitting} 
-                variant="contained" 
+                variant='contained' 
                 style={{
-                  marginTop: 50,
-                  width: '75%',
+                  width: '100%',
                 }}
               >
                 Submit Scores
               </Button>
+            </Link>
      
           </form>
-        );
+        )
       }}
     </Formik>
   </div>
-);
+)
 
-export default CreateGamePage;
+export default CreateGamePage
