@@ -22,17 +22,24 @@ function generateToken({ id }, secret, csrfToken) {
 
 module.exports = {
   Mutation: {
-    async signup(parent, args, { req, app, postgres }) {
-      const hashedPassword = await bcrypt.hash(args.input.password, 12)
-      
-      console.log("Test");
-      console.log(args);  
+    async signup(parent, { input: {fullname, email, password} }, { req, app, postgres }) {
+      const hashedPassword = await bcrypt.hash(password, 12)
+      const orgID = 1;
 
       const newUserInsert = {
         text: 'INSERT INTO foostown.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *', 
-        values: [args.input.fullname, args.input.email, hashedPassword],
+        values: [fullname, email, hashedPassword],
       }
+
+      const client = await postgres.connect()
+
+
       try {
+
+        // Begin postgres transaction
+        await client.query('BEGIN')
+
+        //Create New User
         const userResult = await postgres.query(newUserInsert);
         const user = userResult.rows[0];
         const csrfTokenBinary = await Promise.promisify(crypto.randomBytes)(32)
@@ -43,22 +50,45 @@ module.exports = {
           res: req.res
         });
 
-    
+        //Create New Team
+        const team = await postgres.query({
+          text:'INSERT INTO foostown.teams (team_name, organization_id) VALUES ($1, $2) RETURNING *',
+          values: [email, orgID]
+        });
+
+        console.log(team);
+
+        //Assign the Team for the User
+
+        const userId = user.id
+        const teamId = team.rows[0].id
+        const assignTeamForUser = await postgres.query({
+          text:'INSERT INTO foostown.teams_users (user_id, team_id) VALUES ($1, $2) RETURNING *',
+          values: [userId, teamId]
+        });
+                
+        // Commit the entire transaction!        
+        await client.query('COMMIT')
+        console.log(user)
         return {
           user,
           csrfToken  
         };
       
       } catch (e) {
-        switch (true) {
-          case /users_fullname_key/.test(e.message):
-            throw 'An account with this username already exists.';
-          case /users_email_key/.test(e.message):
-            throw 'An account with this email already exists.';
-          default:
-            throw new Error(e);
-        }
+        // Something went wrong
+        client.query('ROLLBACK', err => {
+          if (err) {
+            throw err;
+          }
+          // release the client back to the pool
+        });
+        throw e;
       }
+
+
     },
+
+
   }
 }
