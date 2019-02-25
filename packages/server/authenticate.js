@@ -1,19 +1,19 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 
 const authenticate = (app, req) => {
   if (app.get('SKIP_AUTH')) {
-    return 1;
+    return 1
   }
-  const cookieName = app.get('JWT_COOKIE_NAME');
-  const jwtCookie = req.cookies[cookieName];
-  const secret = app.get('JWT_SECRET');
-  const { userID, csrfToken } = jwt.verify(jwtCookie, secret);
+  const cookieName = app.get('JWT_COOKIE_NAME')
+  const jwtCookie = req.cookies[cookieName]
+  const secret = app.get('JWT_SECRET')
+  const { userID, csrfToken } = jwt.verify(jwtCookie, secret)
 
-  const headerCSRFToken = req.get('authorization').replace('Bearer ', '');
-  const isValidCSRF = headerCSRFToken === csrfToken;
+  const headerCSRFToken = req.get('authorization').replace('Bearer ', '')
+  const isValidCSRF = headerCSRFToken === csrfToken
 
   if (!isValidCSRF) {
-    throw new Error('Unauthorized');
+    throw new Error('Unauthorized')
   }
 
   return userID
