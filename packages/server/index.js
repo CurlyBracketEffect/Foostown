@@ -67,6 +67,7 @@ const apolloServer = new ApolloServer({
     return {
       app,
       req,
+      postgres,
     }
   },
   schema,
