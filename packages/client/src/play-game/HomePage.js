@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 //material-ui
 import { 
-  Typography, List, ListSubheader, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Button
+  Typography, List, ListSubheader, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Divider, Button
 } from '@material-ui/core/'
 
 
@@ -37,6 +37,7 @@ const HomePage = () => (
           Stats
         </ListItemSecondaryAction>
       </ListItem>
+      <Divider />
       <ListItem button>
         <ListItemIcon>
           Avatar
@@ -60,6 +61,7 @@ const HomePage = () => (
           Scores
         </ListItemSecondaryAction>
       </ListItem>
+      <Divider color="secondary"/>
       <ListItem button>
         <ListItemIcon>
           Icon
@@ -77,6 +79,7 @@ const HomePage = () => (
         style={{
           width: '75%',
         }}
+        color='primary'
       >
         Create Game</Button>
     </Link>
