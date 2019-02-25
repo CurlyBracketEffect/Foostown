@@ -35,6 +35,11 @@ module.exports = gql`
     goals_against: Int!
   }
 
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
   type Query {
     user: String!
   }
