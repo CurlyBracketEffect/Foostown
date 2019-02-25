@@ -9,10 +9,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 // import apolloClient from './apolloClient' --- create apolloClient component
 
 //components
-import LoginPage from './login-sign-up/LoginPage';
-import SignUpPage from './login-sign-up/SignUpPage';
+
+import Login from './login-sign-up/Login';
+import SignUp from './login-sign-up/SignUp';
 import HomePage from './play-game/HomePage';
 import CreateGamePage from './play-game/CreateGamePage';
+
 
 //material-ui
 import { ThemeProvider } from '@material-ui/styles'
@@ -41,8 +43,8 @@ const App = () => {
       <ThemeProvider theme={theme}>
         {/* <ApolloProvider> << insert: client={apolloClient} */}
           <div className="App">
-            <Route path="/" exact component={LoginPage} />
-            <Route path="/sign-up" exact component={SignUpPage} />
+            <Route path="/" exact component={Login} />
+            <Route path="/sign-up" exact component={SignUp} />
             <Route path="/home" exact component={HomePage} />
             <Route path="/create-game" exact component={CreateGamePage} />
           </div>
