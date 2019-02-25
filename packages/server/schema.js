@@ -39,9 +39,15 @@ module.exports = gql`
     user: String!
   }
 
+  type LoginResponse {
+    csrfToken: String!
+    user: User!
+  }
+
   type Mutation {
-    signup(input: NewUserInput!): User!
+    signup(input: NewUserInput!): LoginResponse!
+    login(input: LoginInput!): LoginResponse!
     createTeam(input: ID!): Team!
     createMatch(input: NewMatchInput): Match!
-  } 
+  }
 `
