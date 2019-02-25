@@ -10,10 +10,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 
 //components
 
-import Login from './login-sign-up/Login';
-import SignUp from './login-sign-up/SignUp';
-import HomePage from './play-game/HomePage';
-import CreateGamePage from './play-game/CreateGamePage';
+import Login from './Login-SignUp/Login';
+import SignUp from './Login-SignUp/SignUp';
+import HomePage from './Play-Game/HomePage';
+import CreateGamePage from './Play-Game/CreateGamePage';
 
 
 //material-ui
