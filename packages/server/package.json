@@ -3,6 +3,8 @@
     "db:up": "node-pg-migrate up --create-schema",
     "db:drop": "psql -U postgres -d postgres -c \"DROP SCHEMA IF EXISTS \\\"foostown\\\" CASCADE\"",
     "db:reset": "yarn db:drop && yarn db:up",
+    "db:seed": "node seeds/index.js",
+    "db:resetandseed": "yarn db:drop && yarn db:up && node seeds/index.js",
     "start": "NODE_ENV=production node index.js",
     "start:dev": "NODE_ENV=development nodemon index.js"
   },
@@ -17,7 +19,8 @@
     "graphql": "^14.1.1",
     "jsonwebtoken": "^8.5.0",
     "node-pg-migrate": "^3.16.0",
-    "pg": "^7.8.0"
+    "pg": "^7.8.0",
+    "squel": "^5.12.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
