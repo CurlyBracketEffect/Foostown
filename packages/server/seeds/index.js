@@ -132,31 +132,23 @@ const seed = async () => {
   const pg = await new Pool(config.db).connect();
 
   try {
-    await pg.query('BEGIN')
+    await pg.query("BEGIN");
 
-    console.log("Seeding Users...")
+    console.log("Seeding Users...");
 
     await Promise.all(
-      userSeeds.map(
-        userSeed =>
-          console.log(
-            squel
-              .insert()
-              .into("foostown.users")
-              .setFields(userSeed)
-              .toParam()
-          ) ||
-          pg.query(
-            squel
-              .insert()
-              .into("foostown.users")
-              .setFields(userSeed)
-              .toParam()
-          )
+      userSeeds.map(userSeed =>
+        pg.query(
+          squel
+            .insert()
+            .into("foostown.users")
+            .setFields(userSeed)
+            .toParam()
+        )
       )
     );
 
-    console.log("Seeding Users... [DONE]")
+    console.log("Seeding Users... [DONE]");
 
     const orgPromise = pg.query(
       squel
@@ -178,7 +170,7 @@ const seed = async () => {
       )
     );
 
-    await Promise.all([orgPromise, teamsPromise])
+    await Promise.all([orgPromise, teamsPromise]);
 
     const teamsUsersPromise = Promise.all(
       teamsUsersSeeds.map(teamsUsersSeed =>
@@ -204,24 +196,18 @@ const seed = async () => {
       )
     );
 
-    await Promise.all([teamsUsersPromise, orgsUsersPromise])
-    await pg.query('COMMIT')
+    await Promise.all([teamsUsersPromise, orgsUsersPromise]);
+    await pg.query("COMMIT");
   } catch (e) {
-    await pg.query('ROLLBACK')
-    throw e
+    await pg.query("ROLLBACK");
+    throw e;
   } finally {
     pg.release();
   }
-}
-// await Promise.all(userSeeds.map((userSeed) => (
-//   pg.query({
-//     text: 'INSERT INTO users (full_name, email, password) VALUES ($1, $2, $3)',
-//     values: [userSeed.full_name, userSeed.email, userSeed.password],
-//   })
-// )))
+};
 
 seed().catch(e => {
   setImmediate(() => {
     throw e;
   });
-})
+});
