@@ -128,6 +128,108 @@ const orgSeed = {
   is_active: true
 };
 
+const matchesSeeds = [
+  {
+    organization_id: 1,
+    tournament_id: null
+  },
+  {
+    organization_id: 1,
+    tournament_id: null
+  },
+  {
+    organization_id: 1,
+    tournament_id: null
+  },
+  {
+    organization_id: 1,
+    tournament_id: null
+  },
+  {
+    organization_id: 1,
+    tournament_id: null
+  },
+  {
+    organization_id: 1,
+    tournament_id: null
+  },
+]
+
+const teamsMatchesSeeds = [
+  {
+    match_id: 1,
+    team_id: 1,
+    goals_for: 1,
+    goals_against: 2,
+  },
+  {
+    match_id: 1,
+    team_id: 2,
+    goals_for: 2,
+    goals_against: 1,
+  },
+  {
+    match_id: 2,
+    team_id: 3,
+    goals_for: 4,
+    goals_against: 5,
+  },
+  {
+    match_id: 2,
+    team_id: 4,
+    goals_for: 5,
+    goals_against: 4,
+  },
+  {
+    match_id: 3,
+    team_id: 5,
+    goals_for: 0,
+    goals_against: 2,
+  },
+  {
+    match_id: 3,
+    team_id: 6,
+    goals_for: 2,
+    goals_against: 0,
+  },
+  {
+    match_id: 4,
+    team_id: 1,
+    goals_for: 6,
+    goals_against: 2,
+  },
+  {
+    match_id: 4,
+    team_id: 3,
+    goals_for: 2,
+    goals_against: 6,
+  },
+  {
+    match_id: 5,
+    team_id: 2,
+    goals_for: 3,
+    goals_against: 5,
+  },
+  {
+    match_id: 5,
+    team_id: 4,
+    goals_for: 5,
+    goals_against: 3,
+  },
+  {
+    match_id: 6,
+    team_id: 3,
+    goals_for: 10,
+    goals_against: 5,
+  },
+  {
+    match_id: 6,
+    team_id: 5,
+    goals_for: 5,
+    goals_against: 10,
+  },
+]
+
 const seed = async () => {
   const pg = await new Pool(config.db).connect();
 
@@ -197,6 +299,31 @@ const seed = async () => {
     );
 
     await Promise.all([teamsUsersPromise, orgsUsersPromise]);
+
+    await Promise.all(
+      matchesSeeds.map(matchSeed =>
+        pg.query(
+          squel
+            .insert()
+            .into("foostown.matches")
+            .setFields(matchSeed)
+            .toParam()
+        )
+      )
+    );
+
+    await Promise.all(
+      teamsMatchesSeeds.map(teamsmatchSeed =>
+        pg.query(
+          squel
+            .insert()
+            .into("foostown.teams_matches")
+            .setFields(teamsmatchSeed)
+            .toParam()
+        )
+      )
+    );
+
     await pg.query("COMMIT");
   } catch (e) {
     await pg.query("ROLLBACK");
