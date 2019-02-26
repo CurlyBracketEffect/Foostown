@@ -28,10 +28,10 @@ module.exports = gql`
   }
 
   input NewMatchInput {
-    id: ID!
     team_id: ID!
     goals_for: Int!
     goals_against: Int!
+    organization_id: ID!
   }
 
   input NewTeamInput {
