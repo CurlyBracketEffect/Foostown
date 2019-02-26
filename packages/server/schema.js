@@ -7,6 +7,13 @@ module.exports = gql`
     email: String!
     password: String!
     teams: [Team]!
+    stats: Stat!
+  }
+
+  type Stat {
+    matches_played: Int!
+    goals_for: Int!
+    goals_against: Int!
   }
 
   type Organization{

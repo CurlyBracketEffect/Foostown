@@ -36,7 +36,7 @@ module.exports = {
 
       const findUserQuery = {
         text: 'SELECT * FROM foostown.users WHERE id = $1',
-        values: [args.input.id],
+        values: [userID],
       }
 
       const user = await postgres.query(findUserQuery)
