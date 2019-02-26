@@ -46,6 +46,7 @@ module.exports = gql`
 
   type Query {
     user: String!
+    viewer: User
   }
 
   type LoginResponse {
