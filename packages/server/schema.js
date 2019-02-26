@@ -1,7 +1,6 @@
 const { gql } = require('apollo-server-express')
 
 module.exports = gql`
-  
   type User {
     id: ID!
     fullname: String
@@ -31,10 +30,15 @@ module.exports = gql`
   }
 
   input NewMatchInput {
-    id: ID!
     team_id: ID!
     goals_for: Int!
     goals_against: Int!
+    organization_id: ID!
+  }
+
+  input NewTeamInput {
+    organization_id: ID!
+    team_name: String!
   }
 
   input LoginInput {
@@ -44,6 +48,7 @@ module.exports = gql`
 
   type Query {
     user(id: ID!): User!
+    viewer: User
   }
 
   type LoginResponse {
@@ -54,7 +59,7 @@ module.exports = gql`
   type Mutation {
     signup(input: NewUserInput!): LoginResponse!
     login(input: LoginInput!): LoginResponse!
-    createTeam(input: ID!): Team!
+    createTeam(input: NewTeamInput!): Team!
     createMatch(input: NewMatchInput): Match!
   }
 `

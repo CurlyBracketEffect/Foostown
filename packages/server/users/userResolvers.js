@@ -1,7 +1,11 @@
+const authenticate = require('../authenticate')
+
 //if there a user only belongs to one team
 module.exports = {
   User: {
     async teams(user, args, { req, postgres }, info) {
+      authenticate()
+
       const allUsersTeamIDsQuery = {
         text: "SELECT * FROM foostown.teams_users WHERE team_id = $1",
         values: [user.id]
