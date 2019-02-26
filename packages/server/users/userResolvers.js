@@ -1,17 +1,55 @@
+//if there a user only belongs to one team
+module.exports = {
+  User: {
+    async teams(user, args, { req, postgres }, info) {
+      const allUsersTeamIDsQuery = {
+        text: "SELECT * FROM foostown.teams_users WHERE team_id = $1",
+        values: [user.id]
+      };
 
-module.exports = app => {
-  return {
-    User: {
-      async gamesPlayed(user, { id }, { req }, info) {
+      const allUsersTeamIDs = await postgres.query(allUsersTeamIDsQuery);
 
-        const gamesPlayedQuery = {
-          text: 'SELECT * FROM teams_matches WHERE team_id = $1',
-          values: [id] 
-        }
-        
-        const games = await postgres.query(gamesPlayedQuery);
-        return games.rows[0]; //not sure about this
-      },
+      const teamsArrayQuery = {
+        text: "SELECT * FROM foostown.teams WHERE id = $1",
+        values: [allUsersTeamIDs.rows[0].team_id]
+      };
+
+      const teamsArray = await postgres.query(teamsArrayQuery);
+
+      return teamsArray.rows;
     }
-  };
+  }
 };
+
+//if a user belongs to multiple teams
+// module.exports = {
+//   User: {
+//     async teams(user, args, { req, postgres }, info) {
+//       // console.log("user: ", user)
+//       const allUsersTeamsQuery = {
+//         text: "SELECT * FROM foostown.teams_users WHERE team_id = $1",
+//         values: [user.id]
+//       };
+
+//       const allTeams = await postgres.query(allUsersTeamsQuery);
+//       console.log(allTeams.rows);
+
+//       const teamIDsArray = await allTeams.rows.map(async team => {
+//         console.log(team.team_id);
+
+//         const teamsArrayQuery = {
+//           text: "SELECT * FROM foostown.teams WHERE team_id = $1",
+//           values: [team.team_id]
+//         };
+
+//         const teamsArray = await postgres.query(teamsArrayQuery);
+//         console.log("teamsArray", teamsArray);
+
+//         return teamsArray;
+//       });
+
+//       console.log("teamIDsArray", teamIDsArray);
+//       return teamIDsArray;
+//     }
+//   }
+// };
