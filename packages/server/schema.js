@@ -34,6 +34,11 @@ module.exports = gql`
     organization_id: ID!
   }
 
+  input NewTeamInput {
+    organization_id: ID!
+    team_name: String!
+  }
+
   input LoginInput {
     email: String!
     password: String!
@@ -41,6 +46,7 @@ module.exports = gql`
 
   type Query {
     user: String!
+    viewer: User
   }
 
   type LoginResponse {
@@ -51,7 +57,7 @@ module.exports = gql`
   type Mutation {
     signup(input: NewUserInput!): LoginResponse!
     login(input: LoginInput!): LoginResponse!
-    createTeam(input: ID!): Team!
+    createTeam(input: NewTeamInput!): Team!
     createMatch(input: NewMatchInput): Match!
   }
 `
