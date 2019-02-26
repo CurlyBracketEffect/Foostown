@@ -12,8 +12,10 @@ import {
   Typography, List, ListSubheader, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Divider, Button
 } from '@material-ui/core/'
 
+import UsersAndStats from './UsersAndStats'
 
 const HomePage = () => (
+  
   <div
     style={{
       display: 'flex', 
@@ -45,96 +47,9 @@ const HomePage = () => (
     </ListSubheader>
     <List style={{ height: '175px', overflowY: 'scroll' }}>
       {/* <Divider style={{ background: '#00aa25', height: "0.5px" }}/> */}
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 1' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 2' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 3' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 4' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 5' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 6' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 7' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 8' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 9' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 10' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
-      </ListItem>
+
+        <UsersAndStats/>
+
     </List>
   
     <ListSubheader 
