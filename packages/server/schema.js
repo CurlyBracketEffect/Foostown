@@ -16,6 +16,14 @@ module.exports = gql`
     goals_against: Int!
   }
 
+  type Organization{
+    id: ID!
+    name: String!
+    owner_id: ID!
+    is_active: Boolean!
+    users: [User!]!
+  }
+
   type Team {
     id: ID!
     organization_id: ID!
@@ -56,6 +64,7 @@ module.exports = gql`
   type Query {
     user(id: ID!): User!
     viewer: User
+    organization(id: ID!): Organization!
   }
 
   type LoginResponse {

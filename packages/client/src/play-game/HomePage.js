@@ -8,219 +8,165 @@ import { Link } from 'react-router-dom'
 // import gql from 'graphql-tag'
 
 //material-ui
-import { 
-  Typography, List, ListSubheader, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Divider, Button
+import {
+  Typography,
+  List,
+  ListSubheader,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemSecondaryAction,
+  Divider,
+  Button,
 } from '@material-ui/core/'
 
-
-const HomePage = () => (
+const HomePage = ({ setCSRFToken }) => (
   <div
     style={{
-      display: 'flex', 
+      display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       width: '300px',
     }}
   >
-    <Typography style={{ marginTop: 25,  marginBottom:25 }} variant='overline'>Home</Typography>
-    <Link style={{ marginBottom:25, textDecoration: 'none' }} to='/'>
-      <Button 
+    <Typography style={{ marginTop: 25, marginBottom: 25 }} variant="overline">
+      Home
+    </Typography>
+    <Link style={{ marginBottom: 25, textDecoration: 'none' }} to="/">
+      <Button
         style={{
-          width: '50%'
+          width: '50%',
         }}
-        color='primary'
-        variant='contained'
+        color="primary"
+        variant="contained"
+        onClick={() => {
+          localStorage.clear()
+          setCSRFToken(null)
+        }}
       >
         Logout
       </Button>
     </Link>
-    <ListSubheader 
-      style={{ 
-        borderBottom: '1px solid #00aa25', 
-        overflow: 'hidden' 
-        }} 
-      component='div'
+    <ListSubheader
+      style={{
+        borderBottom: '1px solid #00aa25',
+        overflow: 'hidden',
+      }}
+      component="div"
     >
       Players
     </ListSubheader>
     <List style={{ height: '175px', overflowY: 'scroll' }}>
       {/* <Divider style={{ background: '#00aa25', height: "0.5px" }}/> */}
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 1' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 1" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 2' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 2" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 3' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 3" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 4' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 4" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 5' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 5" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 6' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 6" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 7' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 7" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 8' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 8" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 9' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 9" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Avatar
-        </ListItemIcon>
-        <ListItemText primary='Player 10' />
-        <ListItemSecondaryAction>
-          Stats
-        </ListItemSecondaryAction>
+        <ListItemIcon>Avatar</ListItemIcon>
+        <ListItemText primary="Player 10" />
+        <ListItemSecondaryAction>Stats</ListItemSecondaryAction>
       </ListItem>
     </List>
-  
-    <ListSubheader 
-      style={{ 
-        borderBottom: '1px solid #00aa25', 
-        overflow: 'hidden' 
-        }} 
-      component='div'
+
+    <ListSubheader
+      style={{
+        borderBottom: '1px solid #00aa25',
+        overflow: 'hidden',
+      }}
+      component="div"
     >
       Games
     </ListSubheader>
     <List style={{ height: '175px', overflowY: 'scroll' }}>
-      <ListItem button >
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 1' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+      <ListItem button>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 1" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 2' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 2" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 3' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 3" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 4' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 4" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 5' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 5" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 6' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 6" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 7' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 7" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
     </List>
 
-    <Link style={{ marginTop: 25, textDecoration: 'none' }} to='/create-game'>
+    <Link style={{ marginTop: 25, textDecoration: 'none' }} to="/create-game">
       <Button
-        variant='contained'
-        color='secondary'
+        variant="contained"
+        color="secondary"
         style={{
           width: '75%',
         }}
       >
-        Create Game</Button>
+        Create Game
+      </Button>
     </Link>
 
     {/* users/players query
@@ -282,8 +228,7 @@ const HomePage = () => (
       }}
     </Query>
     */}
-
   </div>
-);
+)
 
-export default HomePage;
+export default HomePage

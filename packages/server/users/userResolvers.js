@@ -7,9 +7,9 @@ module.exports = {
       authenticate(app, req)
 
       const allUsersTeamIDsQuery = {
-        text: 'SELECT * FROM foostown.teams_users WHERE team_id = $1',
-        values: [user.id],
-      }
+        text: "SELECT * FROM foostown.teams_users WHERE user_id = $1",
+        values: [user.id]
+      };
 
       const allUsersTeamIDs = await postgres.query(allUsersTeamIDsQuery)
 
