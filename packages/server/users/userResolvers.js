@@ -3,27 +3,46 @@ const authenticate = require('../authenticate')
 //if there a user only belongs to one team
 module.exports = {
   User: {
-    async teams(user, args, { req, postgres }, info) {
-      authenticate()
+    async teams(user, args, { app, req, postgres }, info) {
+      authenticate(app, req)
 
       const allUsersTeamIDsQuery = {
-        text: "SELECT * FROM foostown.teams_users WHERE team_id = $1",
-        values: [user.id]
-      };
+        text: 'SELECT * FROM foostown.teams_users WHERE team_id = $1',
+        values: [user.id],
+      }
 
-      const allUsersTeamIDs = await postgres.query(allUsersTeamIDsQuery);
+      const allUsersTeamIDs = await postgres.query(allUsersTeamIDsQuery)
 
       const teamsArrayQuery = {
-        text: "SELECT * FROM foostown.teams WHERE id = $1",
-        values: [allUsersTeamIDs.rows[0].team_id]
-      };
+        text: 'SELECT * FROM foostown.teams WHERE id = $1',
+        values: [allUsersTeamIDs.rows[0].team_id],
+      }
 
-      const teamsArray = await postgres.query(teamsArrayQuery);
+      const teamsArray = await postgres.query(teamsArrayQuery)
 
-      return teamsArray.rows;
-    }
-  }
-};
+      return teamsArray.rows
+    },
+    async stats(user, args, { app, req, postgres }, info) {
+      authenticate(app, req)
+
+      const userStats = await postgres.query({
+        text: `
+          SELECT
+          SUM(teams_matches.goals_for) AS goals_for,
+          SUM(teams_matches.goals_against) AS goals_against,
+          COUNT(teams_matches.match_id) AS matches_played
+          FROM foostown.teams_users AS teams_users
+          LEFT JOIN foostown.teams_matches AS teams_matches
+          ON teams_users.team_id = teams_matches.team_id 
+          WHERE teams_users.user_id = $1
+        `,
+        values: [user.id],
+      })
+
+      return userStats.rows[0]
+    },
+  },
+}
 
 //if a user belongs to multiple teams
 // module.exports = {
