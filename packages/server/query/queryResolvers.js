@@ -2,8 +2,8 @@ const authenticate = require('../authenticate')
 
 module.exports = {
   Query: {
-    async user(parent, { id }, { req, postgres }, info) {
-      authenticate()
+    async user(parent, { id }, { app, req, postgres }, info) {
+      authenticate(app, req)
       const findUserQuery = {
         text: 'SELECT * FROM foostown.users WHERE id = $1',
         values: [id],
