@@ -5,7 +5,7 @@ import React from 'react'
 // import gql from "graphql-tag"
 
 //material-ui
-import { InputLabel, Select, MenuItem } from '@material-ui/core/'
+import { OutlinedInput, InputLabel, Select, MenuItem } from '@material-ui/core/'
 
 const SelectOpponent = () => (
   <div>
@@ -17,6 +17,9 @@ const SelectOpponent = () => (
       <Select
         style={{width: '300px'}}
         name='Select Opponent'
+        input={
+          <OutlinedInput name="age" id="outlined-age-simple" />
+        }
       >
         <MenuItem value=''>Player 1</MenuItem>
         <MenuItem value=''>Player 2</MenuItem>
