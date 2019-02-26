@@ -143,7 +143,6 @@ module.exports = {
         })
 
         const userTeamID = userTeamResult.rows[0].team_id
-
         const newMatchResult = await client.query({
           text:
             'INSERT INTO foostown.matches (organization_id, tournament_id) VALUES ($1, $2) RETURNING *',
@@ -164,7 +163,7 @@ module.exports = {
 
         const matchResult = createHomeEntryResult.rows[0]
         await client.query('COMMIT')
-        return { id: matchResult.match_id, ...matchResult }
+        return matchResult
       } catch (e) {
         client.query('ROLLBACK', err => {
           if (err) {
