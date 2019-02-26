@@ -2,16 +2,18 @@ import React from 'react';
 import gql from 'graphql-tag'
 import * as Yup from 'yup'
 
+// import App from './App.js'
+
+import { Mutation } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import { Formik } from 'formik'
 import { makeStyles } from '@material-ui/styles'
-import { ThemeProvider } from '@material-ui/styles'
 import { unstable_Box as Box } from '@material-ui/core/Box';
 import {
-      Typography, TextField, Button
+  Typography, TextField, Button
 } from '@material-ui/core'
 
-const useStyles = makeStyles ({
+const useStyles = makeStyles({
   loginContainer: {
     width: 300,
     margin: '0 auto',
@@ -38,105 +40,129 @@ const useStyles = makeStyles ({
   }
 })
 
+const LOG_IN = gql`
+  mutation loginMutation ($user: LoginInput!) {
+    login (input:$user) {
+      user {
+        id
+        fullname
+        email
+      }
+      csrfToken
+    }
+  }
+`;
+
 const Login = ({
-  //setCSRFToken
+  setCSRFToken
 }) => {
   const classes = useStyles();
-  return(
-    <ThemeProvider>
-      <Box className={classes.loginContainer}>
-        <div className={classes.loginForm}>
-          <Typography variant='overline'>Login</Typography>
-          <Formik
-            initialValues={
-              {
-                email: '',
-                password: '',
+  return (
+    <Box className={classes.loginContainer}>
+      <Mutation
+        mutation={LOG_IN}
+        onCompleted={(data) => {
+          console.log('csrf token:', data.login.csrfToken)
+          localStorage.setItem('token', data.login.csrfToken)
+          setCSRFToken(data.login.csrfToken)
+        }}
+        onError={(error) => {
+          alert(error)
+        }}>
+        {(login, { data }) => (
+          <div className={classes.loginForm}>
+            <Typography variant='overline'>Login</Typography>
+            <Formik
+              initialValues={
+                {
+                  email: '',
+                  password: '',
+                }
               }
-            }
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                //login({ variables: { user: values } });
-                setSubmitting(false);
-              }, 500);
-            }}
-            validationSchema={Yup.object().shape({
-              email: Yup.string()
-                .email()
-                .required('Required'),
-              password: Yup.string(),
-            })}
-          >
-            {props => {
-              const {
-                values,
-                touched,
-                errors,
-                dirty,
-                isSubmitting,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                handleReset,
-              } = props;
-              return (
-                <form onSubmit={handleSubmit}>
-                  <TextField 
-                    name='email'
-                    label='Email'
-                    type='email'
-                    margin='normal'
-                    variant='outlined'
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={`{
+              onSubmit={(values, { setSubmitting }) => {
+                setTimeout(() => {
+                  alert(JSON.stringify(values, null, 2));
+                  login({ variables: { user: values } });
+                  setSubmitting(false);
+                }, 500);
+              }}
+              validationSchema={Yup.object().shape({
+                email: Yup.string()
+                  .email()
+                  .required('Required'),
+                password: Yup.string(),
+              })}
+            >
+              {props => {
+                const {
+                  values,
+                  touched,
+                  errors,
+                  dirty,
+                  isSubmitting,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  handleReset,
+                } = props;
+                return (
+                  <form onSubmit={handleSubmit}>
+                    <TextField
+                      name='email'
+                      label='Email'
+                      type='email'
+                      margin='normal'
+                      variant='outlined'
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={`{
                       ${classes.inputField}
                       ${errors.email && touched.email ? 'text-input error' : 'text-input'}
                     }`}
-                  /> <br/>
-                  { errors.email &&
-                    touched.email && <div className='input-feedback'>{errors.email}</div>}
+                    /> <br />
+                    {errors.email &&
+                      touched.email && <div className='input-feedback'>{errors.email}</div>}
 
-                  <TextField 
-                    name='password'
-                    label='Password'
-                    type='text'
-                    margin='normal'
-                    variant='outlined'
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={`{
+                    <TextField
+                      name='password'
+                      label='Password'
+                      type='text'
+                      margin='normal'
+                      variant='outlined'
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={`{
                       ${classes.inputField}
                       ${errors.password && touched.password ? 'text-input error' : 'text-input'}
                     }`}
-                  /> <br />
-                  { errors.email && 
-                    touched.email && <div className='input-feeback'>{errors.email}</div>}
+                    /> <br />
+                    {errors.email &&
+                      touched.email && <div className='input-feeback'>{errors.email}</div>}
 
-                  <Box className={classes.submitBtn}>
-                    <Button
-                      type='submit'
-                      className='outline'
-                      disabled={isSubmitting}
-                      variant='contained'
-                    >
-                      submit
+                    <Box className={classes.submitBtn}>
+                      <Button
+                        type='submit'
+                        className='outline'
+                        disabled={isSubmitting}
+                        variant='contained'
+                      >
+                        submit
                     </Button>
 
-                    <Link to='/sign-up' className={classes.createAccount}>
-                      create an account
+                      <Link to='/sign-up' className={classes.createAccount}>
+                        create an account
                     </Link>
-                  </Box>
-                </form>
-              )
-            }}
-          </Formik>
-        </div>
-      </Box>
-    </ThemeProvider>
+                    </Box>
+                  </form>
+                )
+              }}
+            </Formik>
+          </div>
+        )}
+      </Mutation>
+    </Box>
   )
 };
 
