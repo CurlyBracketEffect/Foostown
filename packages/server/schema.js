@@ -6,16 +6,18 @@ module.exports = gql`
     fullname: String
     email: String!
     password: String!
+    teams: [Team]!
   }
 
   type Team {
     id: ID!
     organization_id: ID!
     team_name: String!
+    matches: [Match]!
   }
 
   type Match {
-    id: ID!
+    match_id: ID!
     team_id: ID!
     goals_for: Int!
     goals_against: Int!
@@ -45,7 +47,7 @@ module.exports = gql`
   }
 
   type Query {
-    user: String!
+    user(id: ID!): User!
     viewer: User
   }
 
