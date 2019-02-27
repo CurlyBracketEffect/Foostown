@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import * as Yup from 'yup'
 
 import { Mutation } from 'react-apollo'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Formik } from 'formik'
 import { makeStyles } from '@material-ui/styles'
 import { ThemeProvider } from '@material-ui/styles'
@@ -71,8 +71,16 @@ const SIGN_UP = gql`
   }
 `
 
+
 const SignUp = ({
-  setCSRFToken
+  setCSRFToken,
+  state = {
+    homePage: false
+  },
+  homePageHandle=() => {
+
+    this.setState({homePage:true})
+  }
 }) => {
   const classes = useStyles();
   return (
@@ -84,6 +92,7 @@ const SignUp = ({
             console.log('csrf token:', data.signup.csrfToken)
             localStorage.setItem('token', data.signup.csrfToken)
             setCSRFToken(data.signup.csrfToken)
+            window.history.go(-1)
           }}
           onError={(error) => {
             alert(error)
@@ -105,7 +114,7 @@ const SignUp = ({
                 }
                 onSubmit={(values, { setSubmitting }) => {
                   setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
+                    //alert(JSON.stringify(values, null, 2));
                     signup({ variables: { user: values } })
                     setSubmitting(false);
                   }, 500);
@@ -234,7 +243,7 @@ const SignUp = ({
                           Create
                     </Button>
 
-                        <Link to='/' className={classes.signIn}>
+                      <Link to='/' className={classes.signIn}>
                           existing account?
                     </Link>
                       </Box>
