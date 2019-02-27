@@ -56,11 +56,11 @@ module.exports = {
     },
 
     async teams (parent, args, { req, app, postgres }) {
-      const userID = authenticate(app, req)
+      // const userID = authenticate(app, req)
 
       const teams = await postgres.query({
         text: 'SELECT * FROM foostown.teams',
-        values: [userID],
+        // values: [userID],
       })
       return teams.rows
     },
