@@ -61,8 +61,7 @@ const HomePage = ({ setCSRFToken }) => (
     <List style={{ height: '175px', overflowY: 'scroll' }}>
       {/* <Divider style={{ background: '#00aa25', height: "0.5px" }}/> */}
 
-        <UsersAndStats/>
-
+      <UsersAndStats />
     </List>
 
     <ListSubheader
