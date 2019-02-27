@@ -14,8 +14,10 @@ import SignUp from './Login-SignUp/SignUp'
 import HomePage from './Play-Game/HomePage'
 import CreateGamePage from './Play-Game/CreateGamePage'
 
+
 //material-ui
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
+import { unstable_Box as Box } from '@material-ui/core/Box'
 
 const intialCSRFToken = localStorage.getItem('token')
 
@@ -37,31 +39,31 @@ const theme = createMuiTheme({
 })
 
 const App = () => {
-  const [csrfToken, setCSRFToken] = useState(intialCSRFToken)
-  //const classes = useStyles();
+  const [csrfToken, setCSRFToken] = useState(intialCSRFToken);
   return (
     <Router>
       <ApolloProvider client={apolloClient}>
         <MuiThemeProvider theme={theme}>
-          <div className="App">
-            {csrfToken == null && (
-              <React.Fragment>
-                <Route path="/" exact render={() => <Login setCSRFToken={setCSRFToken} />} />
-                <Route
-                  path="/sign-up"
-                  exact
-                  render={() => <SignUp setCSRFToken={setCSRFToken} />}
-                />
-              </React.Fragment>
-            )}
+            <Box className="App" style={{backgroundColor: '#f5f5f5'}}>
+              {csrfToken == null && (
+                <React.Fragment>
+                  <Route path='/' exact render={() => (
+                    <Login setCSRFToken={setCSRFToken} />
+                  )} />
+                  <Route path='/sign-up' exact render={() => (
+                    <SignUp setCSRFToken={setCSRFToken} />
+                  )} />
+                </React.Fragment>
+              )}
 
-            {csrfToken != null && (
-              <React.Fragment>
-                <Route path="/" exact render={() => <HomePage setCSRFToken={setCSRFToken} />} />
-                <Route path="/create-game" exact component={CreateGamePage} />
-              </React.Fragment>
-            )}
-          </div>
+              {csrfToken != null && (
+                <React.Fragment>
+                  <Route path='/' exact component={HomePage} />
+                  <Route path='/create-game' exact component={CreateGamePage} />
+                </React.Fragment>
+              )}
+            </Box>
+
         </MuiThemeProvider>
       </ApolloProvider>
     </Router>

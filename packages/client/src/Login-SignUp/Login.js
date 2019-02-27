@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import gql from 'graphql-tag'
 import * as Yup from 'yup'
 
@@ -8,7 +8,7 @@ import { Mutation } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import { Formik } from 'formik'
 import { makeStyles } from '@material-ui/styles'
-import { unstable_Box as Box } from '@material-ui/core/Box';
+import { unstable_Box as Box } from '@material-ui/core/Box'
 import {
   Typography, TextField, Button
 } from '@material-ui/core'
@@ -31,14 +31,32 @@ const useStyles = makeStyles({
   inputField: {
     width: 250,
     marginBottom: 20,
+    backgroundColor: '#FFF',
   },
+  cssLabel: {
+    '&$cssFocused': {
+      color: '#007900',
+    },
+  },
+  cssFocused: {},
+  cssUnderline: {
+    '&:after': {
+      borderBottomColor: '#007900'
+    },
+  },
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: '#007900',
+    },
+  },
+  notchedOutline: {},
   submitBtn: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: 15
   }
-})
+}, { name: 'hello_worlkd_wtf', index: 10 })
 
 const LOG_IN = gql`
   mutation loginMutation ($user: LoginInput!) {
@@ -58,7 +76,7 @@ const Login = ({
 }) => {
   const classes = useStyles();
   return (
-    <Box className={classes.loginContainer}>
+    <Box className={classes.loginContainer} >
       <Mutation
         mutation={LOG_IN}
         onCompleted={(data) => {
@@ -71,7 +89,11 @@ const Login = ({
         }}>
         {(login, { data }) => (
           <div className={classes.loginForm}>
-            <Typography variant='overline'>Login</Typography>
+            <Typography
+              variant='overline'
+              style={{ fontSize: 16, color: '#00aa25', fontWeight: 'bold' }}>
+              Login
+            </Typography>
             <Formik
               initialValues={
                 {
@@ -108,6 +130,19 @@ const Login = ({
                 return (
                   <form onSubmit={handleSubmit}>
                     <TextField
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                          focused: classes.cssFocused,
+                          notchedOutline: classes.notchedOutline,
+                        },
+                      }}
                       name='email'
                       label='Email'
                       type='email'
@@ -125,6 +160,19 @@ const Login = ({
                       touched.email && <div className='input-feedback'>{errors.email}</div>}
 
                     <TextField
+                      InputLabelProps={{
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          root: classes.cssOutlinedInput,
+                          focused: classes.cssFocused,
+                          notchedOutline: classes.notchedOutline,
+                        },
+                      }}
                       name='password'
                       label='Password'
                       type='text'
@@ -147,6 +195,7 @@ const Login = ({
                         className='outline'
                         disabled={isSubmitting}
                         variant='contained'
+                        color='secondary'
                       >
                         submit
                     </Button>
@@ -163,7 +212,10 @@ const Login = ({
         )}
       </Mutation>
     </Box>
+
   )
+
 };
+
 
 export default Login;
