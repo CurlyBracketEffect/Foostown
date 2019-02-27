@@ -43,18 +43,6 @@ module.exports = {
       return user.rows[0]
     },
 
-    async viewer(parent, args, { req, app, postgres }) {
-      const userID = authenticate(app, req)
-
-      const findUserQuery = {
-        text: 'SELECT * FROM foostown.users WHERE id = $1',
-        values: [args.input.id],
-      }
-
-      const user = await postgres.query(findUserQuery)
-      return user.rows[0]
-    },
-
     async teams (parent, args, { req, app, postgres }) {
       // const userID = authenticate(app, req)
 
