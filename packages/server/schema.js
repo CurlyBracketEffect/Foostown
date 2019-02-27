@@ -7,6 +7,21 @@ module.exports = gql`
     email: String!
     password: String!
     teams: [Team]!
+    stats: Stat!
+  }
+
+  type Stat {
+    matches_played: Int!
+    goals_for: Int!
+    goals_against: Int!
+  }
+
+  type Organization{
+    id: ID!
+    name: String!
+    owner_id: ID!
+    is_active: Boolean!
+    users: [User!]!
   }
 
   type Team {
@@ -49,6 +64,7 @@ module.exports = gql`
   type Query {
     user(id: ID!): User!
     viewer: User
+    organization(id: ID!): Organization!
   }
 
   type LoginResponse {

@@ -3,45 +3,58 @@ import React from 'react'
 //router
 import { Link } from 'react-router-dom'
 
+import UsersAndStats from './UsersAndStats'
+
 //apollo
 // import { Query } from 'react-apollo'
 // import gql from 'graphql-tag'
 
 //material-ui
-import { 
-  Typography, List, ListSubheader, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Divider, Button
+import {
+  Typography,
+  List,
+  ListSubheader,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemSecondaryAction,
+  Divider,
+  Button,
 } from '@material-ui/core/'
 
-import UsersAndStats from './UsersAndStats'
-
-const HomePage = () => (
-  
+const HomePage = ({ setCSRFToken }) => (
   <div
     style={{
-      display: 'flex', 
+      display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       width: '300px',
     }}
   >
-    <Typography style={{ marginTop: 25,  marginBottom:25 }} variant='overline'>Home</Typography>
-    <Link style={{ marginBottom:25, textDecoration: 'none' }} to='/'>
-      <Button 
+    <Typography style={{ marginTop: 25, marginBottom: 25 }} variant="overline">
+      Home
+    </Typography>
+    <Link style={{ marginBottom: 25, textDecoration: 'none' }} to="/">
+      <Button
         style={{
-          width: '50%'
+          width: '50%',
         }}
-        color='primary'
-        variant='contained'
+        color="primary"
+        variant="contained"
+        onClick={() => {
+          localStorage.clear()
+          setCSRFToken(null)
+        }}
       >
         Logout
       </Button>
     </Link>
-    <ListSubheader 
-      style={{ 
-        borderBottom: '1px solid #00aa25', 
-        overflow: 'hidden' 
-        }} 
-      component='div'
+    <ListSubheader
+      style={{
+        borderBottom: '1px solid #00aa25',
+        overflow: 'hidden',
+      }}
+      component="div"
     >
       Players
     </ListSubheader>
@@ -51,91 +64,64 @@ const HomePage = () => (
         <UsersAndStats/>
 
     </List>
-  
-    <ListSubheader 
-      style={{ 
-        borderBottom: '1px solid #00aa25', 
-        overflow: 'hidden' 
-        }} 
-      component='div'
+
+    <ListSubheader
+      style={{
+        borderBottom: '1px solid #00aa25',
+        overflow: 'hidden',
+      }}
+      component="div"
     >
       Games
     </ListSubheader>
     <List style={{ height: '175px', overflowY: 'scroll' }}>
-      <ListItem button >
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 1' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+      <ListItem button>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 1" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 2' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 2" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 3' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 3" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 4' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 4" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 5' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 5" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 6' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 6" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
       <ListItem button>
-        <ListItemIcon>
-          Icon
-        </ListItemIcon>
-        <ListItemText primary='Game 7' />
-        <ListItemSecondaryAction>
-          Scores
-        </ListItemSecondaryAction>
+        <ListItemIcon>Icon</ListItemIcon>
+        <ListItemText primary="Game 7" />
+        <ListItemSecondaryAction>Scores</ListItemSecondaryAction>
       </ListItem>
     </List>
 
-    <Link style={{ marginTop: 25, textDecoration: 'none' }} to='/create-game'>
+    <Link style={{ marginTop: 25, textDecoration: 'none' }} to="/create-game">
       <Button
-        variant='contained'
-        color='secondary'
+        variant="contained"
+        color="secondary"
         style={{
           width: '75%',
         }}
       >
-        Create Game</Button>
+        Create Game
+      </Button>
     </Link>
 
     {/* users/players query
@@ -197,8 +183,7 @@ const HomePage = () => (
       }}
     </Query>
     */}
-
   </div>
-);
+)
 
-export default HomePage;
+export default HomePage

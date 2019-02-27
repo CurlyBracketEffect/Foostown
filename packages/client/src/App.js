@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState } from 'react'
+import './App.css'
 
 //react router
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 //apollo
-import { ApolloProvider } from "react-apollo"
+import { ApolloProvider } from 'react-apollo'
 import apolloClient from './apolloClient'
 
 //components
-import Login from './Login-SignUp/Login';
-import SignUp from './Login-SignUp/SignUp';
-import HomePage from './Play-Game/HomePage';
-import CreateGamePage from './Play-Game/CreateGamePage';
-
+import Login from './Login-SignUp/Login'
+import SignUp from './Login-SignUp/SignUp'
+import HomePage from './Play-Game/HomePage'
+import CreateGamePage from './Play-Game/CreateGamePage'
 
 //material-ui
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
@@ -37,9 +36,8 @@ const theme = createMuiTheme({
   },
 })
 
-
 const App = () => {
-  const [csrfToken, setCSRFToken] = useState(intialCSRFToken);
+  const [csrfToken, setCSRFToken] = useState(intialCSRFToken)
   //const classes = useStyles();
   return (
     <Router>
@@ -48,27 +46,26 @@ const App = () => {
           <div className="App">
             {csrfToken == null && (
               <React.Fragment>
-                <Route path="/" exact render={() => (
-                  <Login setCSRFToken={setCSRFToken} />
-                )} />
-                <Route path="/sign-up" exact render={() => (
-                  <SignUp setCSRFToken={setCSRFToken} />
-                )} />
+                <Route path="/" exact render={() => <Login setCSRFToken={setCSRFToken} />} />
+                <Route
+                  path="/sign-up"
+                  exact
+                  render={() => <SignUp setCSRFToken={setCSRFToken} />}
+                />
               </React.Fragment>
             )}
 
             {csrfToken != null && (
               <React.Fragment>
-                <Route path="/" exact component={HomePage} />
+                <Route path="/" exact render={() => <HomePage setCSRFToken={setCSRFToken} />} />
                 <Route path="/create-game" exact component={CreateGamePage} />
               </React.Fragment>
             )}
           </div>
         </MuiThemeProvider>
       </ApolloProvider>
-
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
