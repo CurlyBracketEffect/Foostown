@@ -31,7 +31,7 @@ const CreateGamePage = () => (
 
     <Typography style={{ marginTop: 25, marginBottom: 25 }} variant='overline'>Create Game</Typography>
 
-    <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to='/home'>
+    <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to='/'>
       <Button 
         style={{
           width: '100%'
@@ -42,60 +42,65 @@ const CreateGamePage = () => (
         Back To Home
       </Button>
     </Link>
-    {/* <Mutation
+    <Mutation
       onError={(error) => {
         alert(error)
       }}
       mutation={gql`
-        mutation($item: NewItemInput!) {
-          addItem (
-            input: $item	
+        mutation($createMatch: NewMatchInput!) {
+          createMatch (
+            input: $createMatch
           ) {
-              id
-              title
-              description
-            }
-        }  
+            id
+            team_id
+            goals_for
+            goals_against
+          }
+        }
       `}
     >
-      {(createGame, { loading, error, data }) => {
+      {(createMatch, { loading, error, data }) => {
         if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>;
+        if (error) {
+          console.log(error)
+          return <p>Error :(</p>
+        };
 
-        return ( */}
+        return (
           <Formik
             initialValues={{
-              selectOpponent: [],
-              yourScore: '',
-              opponentScore: '',
+              team_id: '',
+              goals_for: '',
+              goals_against: '',
+              organization_id: 1,
             }}
             onSubmit={(values, { setSubmitting }) => {
+              console.log(values)
               values = {
-                ...values,
-                selectOpponent: values.selectOpponent.map(opponent => opponent.value),
+                ...values,    
               }
-              // createGame({ variables: {
-              //   insert key here: insert value here
+              // createMatch({ variables: {
+              //   match: values
               // } })
+              createMatch({ variables: { createMatch: values } })
               setSubmitting(false)
+              alert('Submitting Score!')
             }}
             validationSchema={Yup.object().shape({
-              selectOpponent: Yup.array()
-                .of(
-                  Yup.object().shape({
-                    // insert key here: Yup.string().required(),
-                  })
-                ),
-              yourScore: Yup.string()
+              team_id: Yup.number()
                 .required('required'),
-              opponentScore: Yup.string()
+              goals_for: Yup.number()
+                .required('required'),
+              goals_against: Yup.number()
                 .required('required'),
             })}
           >
             {props => {
               const {
+                handleChange,
                 handleSubmit,
-                isSubmitting,                 
+                isSubmitting,
+                values,
               } = props
               return (
                 <form
@@ -111,9 +116,8 @@ const CreateGamePage = () => (
 
                   <FormControl variant='outlined'>
                     <SelectOpponent 
-                      style={{
-                        marginTop: 50,
-                      }}
+                      value={parseInt(values.team_id)}
+                      onChange={handleChange}
                     />
                   </FormControl>
 
@@ -125,10 +129,10 @@ const CreateGamePage = () => (
                     }}
                   >
                     <TextField
-                      id='standard-number'
+                      name='goals_for'
                       label='Your Score'
-                      // value={}
-                      // onChange={}
+                      value={values.goals_for}
+                      onChange={handleChange}
                       type='number'
                       InputLabelProps={{
                         shrink: true,
@@ -140,10 +144,10 @@ const CreateGamePage = () => (
                     />
 
                     <TextField
-                      id='standard-number'
+                      name='goals_against'
                       label='Opponent Score'
-                      // value={}
-                      // onChange={}
+                      value={values.goals_against}
+                      onChange={handleChange}
                       type='number'
                       InputLabelProps={{
                         shrink: true,
@@ -155,7 +159,7 @@ const CreateGamePage = () => (
                     />
                   </div>
 
-                  <Link style={{ marginTop: 50, width: '75%', textDecoration: 'none' }} to='/home'>
+                  {/* <Link style={{ marginTop: 50, width: '75%', textDecoration: 'none' }} to='/'> */}
                     <Button 
                       type='submit'
                       color='secondary'
@@ -163,18 +167,21 @@ const CreateGamePage = () => (
                       variant='contained' 
                       style={{
                         width: '100%',
+                        width: '75%',
+                        marginTop: 50,
                       }}
+                      // onClick={alert("Submitting Scores!")}
                     >
                       Submit Scores
                     </Button>
-                  </Link>
+                  {/* </Link> */}
           
                 </form>
               )
             }}
           </Formik>
-      {/* )}}
-      </Mutation> */}
+        )}}
+      </Mutation>
   </div>
 )
 
