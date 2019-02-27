@@ -1,157 +1,157 @@
-const { Pool } = require("pg");
-const squel = require("squel").useFlavour("postgres");
-const config = require("../config/default.json");
+const { Pool } = require('pg')
+const squel = require('squel').useFlavour('postgres')
+const config = require('../config/default.json')
 
 const userSeeds = [
   {
-    fullname: "Rob Gilson",
-    email: "rob@rob.rob",
-    password: "123456"
+    fullname: 'Rob Gilson',
+    email: 'rob@rob.rob',
+    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {
-    fullname: "Jorrin Bruns",
-    email: "Jorrin@Jorrin.com",
-    password: "123456"
+    fullname: 'Jorrin Bruns',
+    email: 'Jorrin@Jorrin.com',
+    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {
-    fullname: "Eirian Ta",
-    email: "Eirian@Eirian.com",
-    password: "123456"
+    fullname: 'Eirian Ta',
+    email: 'Eirian@Eirian.com',
+    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {
-    fullname: "Akshay Manchand",
-    email: "Akshay@Akshay.com",
-    password: "123456"
+    fullname: 'Akshay Manchand',
+    email: 'Akshay@Akshay.com',
+    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {
-    fullname: "Navi Hothi",
-    email: "navi@navi.com",
-    password: "123456"
+    fullname: 'Navi Hothi',
+    email: 'navi@navi.com',
+    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {
-    fullname: "Vaughn Paulger",
-    email: "vaughn@vaughn.com",
-    password: "123456"
-  }
-];
+    fullname: 'Vaughn Paulger',
+    email: 'vaughn@vaughn.com',
+    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
+  },
+]
 
 const teamSeeds = [
   {
-    team_name: "Rob Gilson",
-    organization_id: 1
+    team_name: 'Rob Gilson',
+    organization_id: 1,
   },
   {
-    team_name: "Jorrin Bruns",
-    organization_id: 1
+    team_name: 'Jorrin Bruns',
+    organization_id: 1,
   },
   {
-    team_name: "Eirian Ta",
-    organization_id: 1
+    team_name: 'Eirian Ta',
+    organization_id: 1,
   },
   {
-    team_name: "Akshay Manchand",
-    organization_id: 1
+    team_name: 'Akshay Manchand',
+    organization_id: 1,
   },
   {
-    team_name: "Navi Hothi",
-    organization_id: 1
+    team_name: 'Navi Hothi',
+    organization_id: 1,
   },
   {
-    team_name: "Vaughn Paulger",
-    organization_id: 1
-  }
-];
+    team_name: 'Vaughn Paulger',
+    organization_id: 1,
+  },
+]
 
 const teamsUsersSeeds = [
   {
     user_id: 1,
-    team_id: 1
+    team_id: 1,
   },
   {
     user_id: 2,
-    team_id: 2
+    team_id: 2,
   },
   {
     user_id: 3,
-    team_id: 3
+    team_id: 3,
   },
   {
     user_id: 4,
-    team_id: 4
+    team_id: 4,
   },
   {
     user_id: 5,
-    team_id: 5
+    team_id: 5,
   },
   {
     user_id: 6,
-    team_id: 6
-  }
-];
+    team_id: 6,
+  },
+]
 
 const orgsUsersSeeds = [
   {
     organization_id: 1,
     user_id: 1,
-    is_admin: true
+    is_admin: true,
   },
   {
     organization_id: 1,
     user_id: 2,
-    is_admin: true
+    is_admin: true,
   },
   {
     organization_id: 1,
     user_id: 3,
-    is_admin: true
+    is_admin: true,
   },
   {
     organization_id: 1,
     user_id: 4,
-    is_admin: true
+    is_admin: true,
   },
   {
     organization_id: 1,
     user_id: 5,
-    is_admin: true
+    is_admin: true,
   },
   {
     organization_id: 1,
     user_id: 6,
-    is_admin: true
-  }
-];
+    is_admin: true,
+  },
+]
 
 const orgSeed = {
-  name: "RED Academy",
+  name: 'RED Academy',
   owner_id: 1,
-  is_active: true
-};
+  is_active: true,
+}
 
 const matchesSeeds = [
   {
     organization_id: 1,
-    tournament_id: null
+    tournament_id: null,
   },
   {
     organization_id: 1,
-    tournament_id: null
+    tournament_id: null,
   },
   {
     organization_id: 1,
-    tournament_id: null
+    tournament_id: null,
   },
   {
     organization_id: 1,
-    tournament_id: null
+    tournament_id: null,
   },
   {
     organization_id: 1,
-    tournament_id: null
+    tournament_id: null,
   },
   {
     organization_id: 1,
-    tournament_id: null
+    tournament_id: null,
   },
 ]
 
@@ -231,110 +231,124 @@ const teamsMatchesSeeds = [
 ]
 
 const seed = async () => {
-  const pg = await new Pool(config.db).connect();
+  const pg = await new Pool(config.db).connect()
 
   try {
-    await pg.query("BEGIN");
+    await pg.query('BEGIN')
 
-    console.log("Seeding Users...");
+    console.log('Seeding Users...')
 
     await Promise.all(
       userSeeds.map(userSeed =>
         pg.query(
           squel
             .insert()
-            .into("foostown.users")
+            .into('foostown.users')
             .setFields(userSeed)
             .toParam()
         )
       )
-    );
+    )
 
-    console.log("Seeding Users... [DONE]");
+    console.log('Seeding Users... [DONE]')
+    console.log('Seeding Organizations...')
 
-    const orgPromise = pg.query(
+    const orgPromise = await pg.query(
       squel
         .insert()
-        .into("foostown.organizations")
+        .into('foostown.organizations')
         .setFields(orgSeed)
         .toParam()
-    );
+    )
 
-    const teamsPromise = Promise.all(
+    console.log('Seeding Organizations... [DONE]')
+    console.log('Seeding Teams...')
+
+    const teamsPromise = await Promise.all(
       teamSeeds.map(teamSeed =>
         pg.query(
           squel
             .insert()
-            .into("foostown.teams")
+            .into('foostown.teams')
             .setFields(teamSeed)
             .toParam()
         )
       )
-    );
+    )
 
-    await Promise.all([orgPromise, teamsPromise]);
+    console.log('Seeding Teams... [DONE]')
+    console.log('Seeding Teams_Users...')
 
-    const teamsUsersPromise = Promise.all(
+    const teamsUsersPromise = await Promise.all(
       teamsUsersSeeds.map(teamsUsersSeed =>
         pg.query(
           squel
             .insert()
-            .into("foostown.teams_users")
+            .into('foostown.teams_users')
             .setFields(teamsUsersSeed)
             .toParam()
         )
       )
-    );
+    )
 
-    const orgsUsersPromise = Promise.all(
+    console.log('Seeding Teams_Users... [DONE]')
+    console.log('Seeding Orgs_Users...')
+
+    const orgsUsersPromise = await Promise.all(
       orgsUsersSeeds.map(orgsUsersSeed =>
         pg.query(
           squel
             .insert()
-            .into("foostown.organizations_users")
+            .into('foostown.organizations_users')
             .setFields(orgsUsersSeed)
             .toParam()
         )
       )
-    );
+    )
 
-    await Promise.all([teamsUsersPromise, orgsUsersPromise]);
+    console.log('Seeding Orgs_Users... [DONE]')
+    console.log('Seeding Matches...')
 
     await Promise.all(
       matchesSeeds.map(matchSeed =>
         pg.query(
           squel
             .insert()
-            .into("foostown.matches")
+            .into('foostown.matches')
             .setFields(matchSeed)
             .toParam()
         )
       )
-    );
+    )
+
+    console.log('Seeding Matches... [DONE]')
+    console.log('Seeding Teams_Matches...')
 
     await Promise.all(
       teamsMatchesSeeds.map(teamsmatchSeed =>
         pg.query(
           squel
             .insert()
-            .into("foostown.teams_matches")
+            .into('foostown.teams_matches')
             .setFields(teamsmatchSeed)
             .toParam()
         )
       )
-    );
+    )
 
-    await pg.query("COMMIT");
+    console.log('Seeding Teams_Matches... [DONE]')
+
+    await pg.query('COMMIT')
   } catch (e) {
-    await pg.query("ROLLBACK");
-    throw e;
+    await pg.query('ROLLBACK')
+    throw e
   } finally {
-    pg.release();
+    pg.release()
   }
-};
+}
 
 seed().catch(e => {
   setImmediate(() => {
-    throw e;
-  });
-});
+    throw e
+  })
+})
