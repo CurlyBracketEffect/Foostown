@@ -9,6 +9,7 @@ import * as Yup from 'yup'
 
 //apollo
 import { Mutation } from 'react-apollo'
+import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 //material-ui
@@ -100,7 +101,30 @@ const CreateGamePage = () => (
                   }}
                 >
                   <FormControl variant="outlined">
-                    <SelectOpponent value={parseInt(values.team_id)} onChange={handleChange} />
+                    <Query
+                      query={gql`
+                        query{
+                          viewer{
+                            id
+                          }
+                        }
+                      `}
+                    >
+                      {({ loading, error, data }) => {
+                        if (loading) return <p>Loading...</p>
+                        if (error){
+                          console.log(error)
+                          return <p>Error :(</p>
+                        } 
+                        return (
+                          <SelectOpponent
+                            userID = {data.viewer.id}
+                            value={parseInt(values.team_id)}
+                            onChange={handleChange}
+                          />
+                        )
+                      }}
+                    </Query>
                   </FormControl>
 
                   <div
