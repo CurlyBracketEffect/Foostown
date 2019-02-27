@@ -1,59 +1,61 @@
 import React from 'react'
 
 //apollo
-// import { Query } from "react-apollo"
-// import gql from "graphql-tag"
+import { Query } from "react-apollo"
+import gql from "graphql-tag"
 
 //material-ui
 import { OutlinedInput, InputLabel, Select, MenuItem } from '@material-ui/core/'
 
-const SelectOpponent = () => (
+const SelectOpponent = ({
+  value,
+  onChange,
+}) => {
+
+  return (
   <div>
 
     <div style={{ margin: '1rem 0', color: 'black', width: 300 }}>
-      <InputLabel shrink htmlFor='age-label-placeholder'>
+      <InputLabel shrink>
         Select Opponent
       </InputLabel>
-      <Select
-        style={{width: '300px'}}
-        name='Select Opponent'
-        input={
-          <OutlinedInput name="age" id="outlined-age-simple" />
-        }
+      <Query
+        query={gql`
+          {
+            teams {
+              id
+              organization_id
+              team_name
+            }
+          }    
+        `}
       >
-        <MenuItem value=''>Player 1</MenuItem>
-        <MenuItem value=''>Player 2</MenuItem>
-        <MenuItem value=''>Player 3</MenuItem>
-      </Select>
-    </div>
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading...</p>
+          if (error) return <p>Error :(</p>
 
-  {/* 
-    <Query
-      // query={gql`
-      //   {
-      //     tags {
-      //       id
-      //       title
-      //     }
-      //   }    
-      // `}
-    >
-      {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>
-        if (error) return <p>Error :(</p>
+          return (
+            <Select
+              onChange={onChange}
+              value={value}
+              style={{width: '300px'}}
+              name='team_id'
+              input={
+                <OutlinedInput />
+              }
+            >
+              {
+                data.teams.map(({ id, team_name }) => (    
+                  <MenuItem key={id} value={parseInt(id)}>{team_name}</MenuItem>
+                ))
+              }
+            </Select>
+          )
+        }}
+      </Query>
+    </div> 
 
-        const opponents = data.tags.map(({ id, title }) => (
-            {value: id, label: title}
-        ))
-    
-        return (
-        
-        )
-      }}
-    </Query>
-    */}
-     
   </div>
-)
+)}
 
 export default SelectOpponent
