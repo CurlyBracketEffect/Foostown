@@ -16,7 +16,7 @@ module.exports = gql`
     goals_against: Int!
   }
 
-  type Organization{
+  type Organization {
     id: ID!
     name: String!
     owner_id: ID!
@@ -62,6 +62,7 @@ module.exports = gql`
   }
 
   type Query {
+    teams: [Team]!
     user(id: ID!): User!
     viewer: User
     organization(id: ID!): Organization!
