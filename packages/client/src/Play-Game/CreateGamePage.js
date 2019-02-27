@@ -76,9 +76,6 @@ const CreateGamePage = () => (
               values = {
                 ...values,
               }
-              // createMatch({ variables: {
-              //   match: values
-              // } })
               createMatch({ variables: { createMatch: values } })
               setSubmitting(false)
               alert('Submitting Score!')
@@ -155,7 +152,6 @@ const CreateGamePage = () => (
                       width: '75%',
                       marginTop: 50,
                     }}
-                    // onClick={alert("Submitting Scores!")}
                   >
                     Submit Scores
                   </Button>
