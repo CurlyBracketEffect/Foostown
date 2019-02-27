@@ -39,6 +39,14 @@ module.exports = {
         values: [user.id],
       })
 
+      if(userStats.rows[0].matches_played === '0'){
+        return{
+          goals_for: 0,
+          goals_against: 0,
+          matches_played: 0,
+        }
+      }
+
       return userStats.rows[0]
     },
   },
