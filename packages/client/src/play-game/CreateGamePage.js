@@ -8,13 +8,11 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 //apollo
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
 
 //material-ui
-import { 
-  Typography, FormControl, TextField, Button 
-} from '@material-ui/core/'
+import { Typography, FormControl, TextField, Button } from '@material-ui/core/'
 
 //components
 import SelectOpponent from './SelectOpponent'
@@ -22,36 +20,34 @@ import SelectOpponent from './SelectOpponent'
 const CreateGamePage = () => (
   <div
     style={{
-      display: 'flex', 
+      display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
     }}
   >
+    <Typography style={{ marginTop: 25, marginBottom: 25 }} variant="overline">
+      Create Game
+    </Typography>
 
-    <Typography style={{ marginTop: 25, marginBottom: 25 }} variant='overline'>Create Game</Typography>
-
-    <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to='/'>
-      <Button 
+    <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to="/">
+      <Button
         style={{
-          width: '100%'
+          width: '100%',
         }}
-        color='primary'
-        variant='contained'
+        color="primary"
+        variant="contained"
       >
         Back To Home
       </Button>
     </Link>
     <Mutation
-      onError={(error) => {
+      onError={error => {
         alert(error)
       }}
       mutation={gql`
         mutation($createMatch: NewMatchInput!) {
-          createMatch (
-            input: $createMatch
-          ) {
-            id
+          createMatch(input: $createMatch) {
             team_id
             goals_for
             goals_against
@@ -60,11 +56,11 @@ const CreateGamePage = () => (
       `}
     >
       {(createMatch, { loading, error, data }) => {
-        if (loading) return <p>Loading...</p>;
+        if (loading) return <p>Loading...</p>
         if (error) {
           console.log(error)
           return <p>Error :(</p>
-        };
+        }
 
         return (
           <Formik
@@ -77,111 +73,95 @@ const CreateGamePage = () => (
             onSubmit={(values, { setSubmitting }) => {
               console.log(values)
               values = {
-                ...values,    
+                ...values,
               }
-              // createMatch({ variables: {
-              //   match: values
-              // } })
               createMatch({ variables: { createMatch: values } })
               setSubmitting(false)
               alert('Submitting Score!')
             }}
             validationSchema={Yup.object().shape({
-              team_id: Yup.number()
-                .required('required'),
-              goals_for: Yup.number()
-                .required('required'),
-              goals_against: Yup.number()
-                .required('required'),
+              team_id: Yup.number().required('required'),
+              goals_for: Yup.number().required('required'),
+              goals_against: Yup.number().required('required'),
             })}
           >
             {props => {
-              const {
-                handleChange,
-                handleSubmit,
-                isSubmitting,
-                values,
-              } = props
+              const { handleChange, handleSubmit, isSubmitting, values } = props
               return (
                 <form
                   onSubmit={handleSubmit}
                   style={{
                     marginTop: 50,
                     width: '300px',
-                    display: 'flex', 
+                    display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}
                 >
-
-                  <FormControl variant='outlined'>
-                    <SelectOpponent 
-                      value={parseInt(values.team_id)}
-                      onChange={handleChange}
-                    />
+                  <FormControl variant="outlined">
+                    <SelectOpponent value={parseInt(values.team_id)} onChange={handleChange} />
                   </FormControl>
 
                   <div
                     style={{
                       marginTop: 50,
-                      display: 'flex', 
+                      display: 'flex',
                       justifyContent: 'space-between',
                     }}
                   >
                     <TextField
-                      name='goals_for'
-                      label='Your Score'
+                      name="goals_for"
+                      label="Your Score"
                       value={values.goals_for}
                       onChange={handleChange}
-                      type='number'
+                      type="number"
                       InputLabelProps={{
                         shrink: true,
                       }}
                       style={{
                         width: '45%',
                       }}
-                      variant='outlined'
+                      variant="outlined"
                     />
 
                     <TextField
-                      name='goals_against'
-                      label='Opponent Score'
+                      name="goals_against"
+                      label="Opponent Score"
                       value={values.goals_against}
                       onChange={handleChange}
-                      type='number'
+                      type="number"
                       InputLabelProps={{
                         shrink: true,
                       }}
                       style={{
                         width: '45%',
                       }}
-                      variant='outlined'
+                      variant="outlined"
                     />
                   </div>
 
                   {/* <Link style={{ marginTop: 50, width: '75%', textDecoration: 'none' }} to='/'> */}
-                    <Button 
-                      type='submit'
-                      color='secondary'
-                      disabled={isSubmitting} 
-                      variant='contained' 
-                      style={{
-                        width: '100%',
-                        width: '75%',
-                        marginTop: 50,
-                      }}
-                      // onClick={alert("Submitting Scores!")}
-                    >
-                      Submit Scores
-                    </Button>
+                  <Button
+                    type="submit"
+                    color="secondary"
+                    disabled={isSubmitting}
+                    variant="contained"
+                    style={{
+                      width: '100%',
+                      width: '75%',
+                      marginTop: 50,
+                    }}
+                  >
+                    Submit Scores
+                  </Button>
                   {/* </Link> */}
-          
                 </form>
               )
             }}
           </Formik>
-        )}}
-      </Mutation>
+        )
+      }}
+    </Mutation>
   </div>
 )
 
