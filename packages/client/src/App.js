@@ -58,7 +58,9 @@ const App = () => {
 
               {csrfToken != null && (
                 <React.Fragment>
-                  <Route path='/' exact component={HomePage} />
+                  <Route path='/' exact render={() => (
+                    <HomePage setCSRFToken={setCSRFToken} />
+                  )} />
                   <Route path='/create-game' exact component={CreateGamePage} />
                 </React.Fragment>
               )}
