@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import gql from 'graphql-tag'
 import * as Yup from 'yup'
 
@@ -29,8 +29,26 @@ const useStyles = makeStyles({
   },
   inputField: {
     width: 250,
-    marginBottom: 20
+    marginBottom: 20,
+    backgroundColor: '#FFF',
   },
+  cssLabel: {
+    '&$cssFocused': {
+      color: '#007900',
+    },
+  },
+  cssFocused: {},
+  cssUnderline: {
+    '&:after': {
+      borderBottomColor: '#007900'
+    },
+  },
+  cssOutlinedInput: {
+    '&$cssFocused $notchedOutline': {
+      borderColor: '#007900',
+    },
+  },
+  notchedOutline: {},
   submitBtn: {
     display: 'flex',
     alignItems: 'center',
@@ -72,7 +90,11 @@ const SignUp = ({
           }}>
           {(signup, { data }) => (
             <div className={classes.signupForm}>
-              <Typography variant='overline'>Create new account</Typography>
+              <Typography
+                variant='overline'
+                style={{ fontSize: 16, color: '#00aa25', fontWeight: 'bold' }}>
+                Create new account
+              </Typography>
               <Formik
                 initialValues={
                   {
@@ -110,6 +132,19 @@ const SignUp = ({
                   return (
                     <form onSubmit={handleSubmit}>
                       <TextField
+                        InputLabelProps={{
+                          classes: {
+                            root: classes.cssLabel,
+                            focused: classes.cssFocused,
+                          },
+                        }}
+                        InputProps={{
+                          classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline,
+                          },
+                        }}
                         name='fullname'
                         label='Full name'
                         type='text'
@@ -128,6 +163,19 @@ const SignUp = ({
                         touched.fullname && <div className='input-feedback'>{errors.fullname}</div>}
 
                       <TextField
+                        InputLabelProps={{
+                          classes: {
+                            root: classes.cssLabel,
+                            focused: classes.cssFocused,
+                          },
+                        }}
+                        InputProps={{
+                          classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline,
+                          },
+                        }}
                         name='email'
                         label='Email'
                         type='text'
@@ -146,6 +194,19 @@ const SignUp = ({
                         touched.email && <div className='input-feedback'>{errors.email}</div>}
 
                       <TextField
+                        InputLabelProps={{
+                          classes: {
+                            root: classes.cssLabel,
+                            focused: classes.cssFocused,
+                          },
+                        }}
+                        InputProps={{
+                          classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline,
+                          },
+                        }}
                         name='password'
                         label='Password'
                         type='text'
@@ -168,6 +229,7 @@ const SignUp = ({
                           className='outline'
                           disabled={isSubmitting}
                           variant='contained'
+                          color='secondary'
                         >
                           Create
                     </Button>
