@@ -74,13 +74,6 @@ const SIGN_UP = gql`
 
 const SignUp = ({
   setCSRFToken,
-  state = {
-    homePage: false
-  },
-  homePageHandle=() => {
-
-    this.setState({homePage:true})
-  }
 }) => {
   const classes = useStyles();
   return (
@@ -218,7 +211,7 @@ const SignUp = ({
                         }}
                         name='password'
                         label='Password'
-                        type='text'
+                        type='password'
                         margin='normal'
                         variant='outlined'
                         value={values.password}

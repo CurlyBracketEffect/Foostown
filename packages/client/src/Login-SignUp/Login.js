@@ -175,7 +175,7 @@ const Login = ({
                       }}
                       name='password'
                       label='Password'
-                      type='text'
+                      type='password'
                       margin='normal'
                       variant='outlined'
                       value={values.password}
