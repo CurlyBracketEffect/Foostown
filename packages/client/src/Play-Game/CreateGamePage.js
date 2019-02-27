@@ -48,6 +48,7 @@ const CreateGamePage = () => (
       mutation={gql`
         mutation($createMatch: NewMatchInput!) {
           createMatch(input: $createMatch) {
+            match_id
             team_id
             goals_for
             goals_against

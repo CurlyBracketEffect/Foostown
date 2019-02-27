@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const saltRounds = 12
 const crypto = require('crypto')
 const Promise = require('bluebird')
+const authenticate = require('../authenticate')
 
 function setCookie({ tokenName, token, res }) {
   res.cookie(tokenName, token, {
@@ -122,6 +123,54 @@ module.exports = {
       return {
         user,
         csrfToken,
+      }
+    },
+    async createMatch(
+      parent,
+      {
+        input: { team_id, goals_for, goals_against, organization_id },
+      },
+      { req, app, postgres }
+    ) {
+      const client = await postgres.connect()
+      try {
+        await client.query('BEGIN')
+        const userID = authenticate(app, req)
+        const tournamentID = null
+        const userTeamResult = await client.query({
+          text: 'SELECT * FROM foostown.teams_users WHERE user_id = $1',
+          values: [userID],
+        })
+
+        const userTeamID = userTeamResult.rows[0].team_id
+        const newMatchResult = await client.query({
+          text:
+            'INSERT INTO foostown.matches (organization_id, tournament_id) VALUES ($1, $2) RETURNING *',
+          values: [organization_id, tournamentID],
+        })
+        const matchID = newMatchResult.rows[0].id
+        const createHomeEntryResult = await client.query({
+          text:
+            'INSERT INTO foostown.teams_matches (match_id, team_id, goals_for, goals_against) VALUES ($1, $2, $3, $4) RETURNING *',
+          values: [matchID, userTeamID, goals_for, goals_against],
+        })
+
+        const createAwayEntryResult = await client.query({
+          text:
+            'INSERT INTO foostown.teams_matches (match_id, team_id, goals_for, goals_against) VALUES ($1,$2,$3,$4)',
+          values: [matchID, team_id, goals_against, goals_for],
+        })
+
+        const matchResult = createHomeEntryResult.rows[0]
+        await client.query('COMMIT')
+        return matchResult
+      } catch (e) {
+        client.query('ROLLBACK', err => {
+          if (err) {
+            throw err
+          }
+        })
+        throw e
       }
     },
   },
