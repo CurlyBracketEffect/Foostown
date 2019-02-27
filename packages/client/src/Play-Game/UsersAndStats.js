@@ -20,6 +20,7 @@ const UsersAndStats = () => (
       query {
         organization(id: 1) {
           users {
+            id
             fullname
             stats {
               matches_played
@@ -38,7 +39,7 @@ const UsersAndStats = () => (
       }
       return data.organization.users.map(user => {
         return (
-          <ListItem button style={{ height: '75px' }}>
+          <ListItem key={user.id} button style={{ height: '75px' }}>
             {/* {console.log(data)} */}
             <ListItemIcon>Avatar</ListItemIcon>
             <ListItemText
