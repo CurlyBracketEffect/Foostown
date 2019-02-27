@@ -22,7 +22,7 @@ import {
   Button,
 } from '@material-ui/core/'
 
-const HomePage = ({ setCSRFToken }) => (
+const HomePage = ({ setCSRFToken, history }) => (
   <div
     style={{
       display: 'flex',
@@ -44,6 +44,7 @@ const HomePage = ({ setCSRFToken }) => (
         onClick={() => {
           localStorage.clear()
           setCSRFToken(null)
+          history.push('/')
         }}
       >
         Logout
