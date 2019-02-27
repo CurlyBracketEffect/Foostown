@@ -103,7 +103,7 @@ const Login = ({
               }
               onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
+                  //alert(JSON.stringify(values, null, 2));
                   login({ variables: { user: values } });
                   setSubmitting(false);
                 }, 500);
@@ -190,6 +190,7 @@ const Login = ({
                       touched.email && <div className='input-feeback'>{errors.email}</div>}
 
                     <Box className={classes.submitBtn}>
+
                       <Button
                         type='submit'
                         className='outline'
@@ -197,7 +198,7 @@ const Login = ({
                         variant='contained'
                         color='secondary'
                       >
-                        submit
+                        submit                        
                     </Button>
 
                       <Link to='/sign-up' className={classes.createAccount}>
