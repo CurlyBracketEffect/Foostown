@@ -30,12 +30,13 @@ module.exports = {
       { req, app, postgres }
     ) {
       const hashedPassword = await bcrypt.hash(password, 12)
+      const emailLowerCase = email.toString().toLowerCase()
       const orgID = 1
 
       const newUserInsert = {
         text:
           'INSERT INTO foostown.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
-        values: [fullname, email, hashedPassword],
+        values: [fullname, emailLowerCase, hashedPassword],
       }
 
       const client = await postgres.connect()
@@ -96,10 +97,11 @@ module.exports = {
       },
       { req, app, postgres }
     ) {
+      const emailLowerCase = email.toString().toLowerCase()
       //Get User And Password For Verification
       const findUserQuery = {
         text: 'SELECT * FROM foostown.users WHERE email = $1',
-        values: [email],
+        values: [emailLowerCase],
       }
       const userResult = await postgres.query(findUserQuery)
       const user = userResult.rows[0]
