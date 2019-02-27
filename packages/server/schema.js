@@ -6,16 +6,33 @@ module.exports = gql`
     fullname: String
     email: String!
     password: String!
+    teams: [Team]!
+    stats: Stat!
+  }
+
+  type Stat {
+    matches_played: Int!
+    goals_for: Int!
+    goals_against: Int!
+  }
+
+  type Organization{
+    id: ID!
+    name: String!
+    owner_id: ID!
+    is_active: Boolean!
+    users: [User!]!
   }
 
   type Team {
     id: ID!
     organization_id: ID!
     team_name: String!
+    matches: [Match]!
   }
 
   type Match {
-    id: ID!
+    match_id: ID!
     team_id: ID!
     goals_for: Int!
     goals_against: Int!
@@ -45,8 +62,9 @@ module.exports = gql`
   }
 
   type Query {
-    user: String!
+    user(id: ID!): User!
     viewer: User
+    organization(id: ID!): Organization!
   }
 
   type LoginResponse {

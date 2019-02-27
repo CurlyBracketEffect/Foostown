@@ -5,7 +5,7 @@ import './App.css'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 //apollo
-import { ApolloProvider } from "react-apollo"
+import { ApolloProvider } from 'react-apollo'
 import apolloClient from './apolloClient'
 
 //components
@@ -38,8 +38,6 @@ const theme = createMuiTheme({
   },
 })
 
-
-
 const App = () => {
   const [csrfToken, setCSRFToken] = useState(intialCSRFToken);
   return (
@@ -65,11 +63,11 @@ const App = () => {
                 </React.Fragment>
               )}
             </Box>
+
         </MuiThemeProvider>
       </ApolloProvider>
-
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
