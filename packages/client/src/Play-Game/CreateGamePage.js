@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 //router
 import { Link } from 'react-router-dom'
@@ -16,8 +16,15 @@ import { Typography, FormControl, TextField, Button } from '@material-ui/core/'
 
 //components
 import SelectOpponent from './SelectOpponent'
+import CustomizedSnackbar from './SnackBar'
 
-const CreateGamePage = () => (
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+
+
+const CreateGamePage = () => {
+  const [snackBarOpen, setSnackBarOpen] = useState(false)
+  return (
   <div
     style={{
       display: 'flex',
@@ -41,6 +48,7 @@ const CreateGamePage = () => (
         Back To Home
       </Button>
     </Link>
+
     <Mutation
       onError={error => {
         alert(error)
@@ -64,6 +72,8 @@ const CreateGamePage = () => (
         }
 
         return (
+
+
           <Formik
             initialValues={{
               team_id: '',
@@ -78,7 +88,9 @@ const CreateGamePage = () => (
               }
               createMatch({ variables: { createMatch: values } })
               setSubmitting(false)
-              alert('Submitting Score!')
+              setSnackBarOpen(true)
+              
+              console.log('snack_bar_open', snackBarOpen)              
             }}
             validationSchema={Yup.object().shape({
               team_id: Yup.number().required('required'),
@@ -87,7 +99,7 @@ const CreateGamePage = () => (
             })}
           >
             {props => {
-              const { handleChange, handleSubmit, isSubmitting, values } = props
+              const { handleChange, handleSubmit, isSubmitting, values} = props
               return (
                 <form
                   onSubmit={handleSubmit}
@@ -155,8 +167,15 @@ const CreateGamePage = () => (
                   >
                     Submit Scores
                   </Button>
+
+                  <CustomizedSnackbar 
+                    open={snackBarOpen}
+                    setSnackBarOpen={setSnackBarOpen} 
+                  />
                   {/* </Link> */}
                 </form>
+
+
               )
             }}
           </Formik>
@@ -164,6 +183,6 @@ const CreateGamePage = () => (
       }}
     </Mutation>
   </div>
-)
+)}
 
 export default CreateGamePage
