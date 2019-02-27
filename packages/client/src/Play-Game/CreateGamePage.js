@@ -48,7 +48,7 @@ const CreateGamePage = () => (
       mutation={gql`
         mutation($createMatch: NewMatchInput!) {
           createMatch(input: $createMatch) {
-            match_id
+            id
             team_id
             goals_for
             goals_against
@@ -76,6 +76,9 @@ const CreateGamePage = () => (
               values = {
                 ...values,
               }
+              // createMatch({ variables: {
+              //   match: values
+              // } })
               createMatch({ variables: { createMatch: values } })
               setSubmitting(false)
               alert('Submitting Score!')
@@ -152,6 +155,7 @@ const CreateGamePage = () => (
                       width: '75%',
                       marginTop: 50,
                     }}
+                    // onClick={alert("Submitting Scores!")}
                   >
                     Submit Scores
                   </Button>
