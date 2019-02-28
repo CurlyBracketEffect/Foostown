@@ -41,7 +41,7 @@ const SelectOpponent = ({ value, onChange }) => {
                 input={<OutlinedInput />}
               >
 
-              {/* {console.log(data.viewer)} */}
+              {console.log(data.viewer)}
                 {data.viewer.teams.map((team) => (
                   <MenuItem key={team.id} value={parseInt(team.id)}>
                  { console.log(team.id)}
