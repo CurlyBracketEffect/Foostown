@@ -68,7 +68,7 @@ const SIGN_UP = gql`
   }
 `
 
-const SignUp = ({ setCSRFToken }) => {
+const SignUp = () => {
   const classes = useStyles()
   return (
     <ThemeProvider>

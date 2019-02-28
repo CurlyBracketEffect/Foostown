@@ -17,7 +17,6 @@ function generateToken({ id }, secret, csrfToken) {
     csrfToken,
     exp: Math.floor(Date.now() / 1000) + 2 * (60 * 60),
   }
-  console.log(payload.exp)
   return jwt.sign(payload, secret)
 }
 

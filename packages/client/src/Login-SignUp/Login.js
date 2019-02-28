@@ -72,7 +72,7 @@ const LOG_IN = gql`
   }
 `
 
-const Login = ({ setCSRFToken }) => {
+const Login = () => {
   const classes = useStyles()
   return (
     <Box className={classes.loginContainer}>

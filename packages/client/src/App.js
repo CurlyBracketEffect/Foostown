@@ -21,8 +21,6 @@ import CreateGamePage from './Play-Game/CreateGamePage'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 import { unstable_Box as Box } from '@material-ui/core/Box'
 
-import * as jwt from 'jsonwebtoken'
-
 const history = createBrowserHistory()
 
 const theme = createMuiTheme({
@@ -67,15 +65,15 @@ const App = () => {
                 <Box className="App" style={{ backgroundColor: '#f5f5f5' }}>
                   {!isLoggedIn && (
                     <Switch>
-                      <Route path="/" exact render={() => <Login />} />
-                      <Route path="/sign-up" exact render={() => <SignUp />} />
+                      <Route path="/" exact component={Login} />
+                      <Route path="/sign-up" exact component={SignUp} />
                       <Redirect to="/" />
                     </Switch>
                   )}
 
                   {isLoggedIn && (
                     <React.Fragment>
-                      <Route path="/" exact render={() => <HomePage history={history} />} />
+                      <Route path="/" exact component={HomePage} />} />
                       <Route path="/create-game" exact component={CreateGamePage} />
                     </React.Fragment>
                   )}
