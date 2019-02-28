@@ -3,11 +3,8 @@ import React from 'react'
 //router
 import { Link } from 'react-router-dom'
 
-import UsersAndStats from './UserAndStats'
-
-//apollo
-// import { Query } from 'react-apollo'
-// import gql from 'graphql-tag'
+import UsersAndStats from './UsersAndStats'
+import MatchesPlayed from './MatchesPlayed'
 
 //material-ui
 import { makeStyles } from '@material-ui/styles'
@@ -15,11 +12,6 @@ import {
   Typography,
   List,
   ListSubheader,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemSecondaryAction,
-  Divider,
   Button
 } from '@material-ui/core/'
 
@@ -63,6 +55,7 @@ const HomePage = ({
   const classes = useStyles();
   return (
     <div className={classes.homePage}>
+
       <Typography 
         className= {classes.homeTitle}
         variant='overline'>
@@ -79,89 +72,29 @@ const HomePage = ({
         }}
         >
           Logout
-      </Button>
+        </Button>
       </Link>
+
+       {/* Users And Stats Query */}
       <ListSubheader
         className={classes.subHeader}
         component='div'
       >
         Players
-    </ListSubheader>
+      </ListSubheader>
       <List className={classes.homePageList}>
         <UsersAndStats/>
-        {/* <Divider style={{ background: '#00aa25', height: "0.5px" }}/> */}
       </List>
-
       <ListSubheader
         className={classes.subHeader}
         component='div'
       >
         Games
-    </ListSubheader>
+      </ListSubheader>
+
+      {/* Games Query */}
       <List className={classes.homePageList}>
-        <ListItem button >
-          <ListItemIcon>
-            Icon
-        </ListItemIcon>
-          <ListItemText primary='Game 1' />
-          <ListItemSecondaryAction>
-            Scores
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Icon
-        </ListItemIcon>
-          <ListItemText primary='Game 2' />
-          <ListItemSecondaryAction>
-            Scores
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Icon
-        </ListItemIcon>
-          <ListItemText primary='Game 3' />
-          <ListItemSecondaryAction>
-            Scores
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Icon
-        </ListItemIcon>
-          <ListItemText primary='Game 4' />
-          <ListItemSecondaryAction>
-            Scores
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Icon
-        </ListItemIcon>
-          <ListItemText primary='Game 5' />
-          <ListItemSecondaryAction>
-            Scores
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Icon
-        </ListItemIcon>
-          <ListItemText primary='Game 6' />
-          <ListItemSecondaryAction>
-            Scores
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Icon
-        </ListItemIcon>
-          <ListItemText primary='Game 7' />
-          <ListItemSecondaryAction>
-            Scores
-        </ListItemSecondaryAction>
-        </ListItem>
+        <MatchesPlayed/>
       </List>
 
       <Link className={classes.createBtn} to='/create-game'>
@@ -169,71 +102,12 @@ const HomePage = ({
           variant='contained'
           color='secondary'
         >
-          Create Game</Button>
+          Create Game
+        </Button>
       </Link>
-
-      {/* users/players query
-    <Query
-      query={gql`
-        {
-          items(idToOmit:1) {
-            id
-            title
-            description
-            tags {
-              id
-              title
-            }
-            borrower {
-              username
-            }
-          }              
-        }   
-      `}
-    >
-      {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>
-        if (error) return <p>Error :(</p>
-
-        // const players = data.items.map(({ title, description, borrower }) => (  
-
-        // ))
-      }}
-    </Query>
-
-
-    games query
-    <Query
-      query={gql`
-        {
-          items(idToOmit:1) {
-            id
-            title
-            description
-            tags {
-              id
-              title
-            }
-            borrower {
-              username
-            }
-          }              
-        }   
-      `}
-    >
-      {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>
-        if (error) return <p>Error :(</p>
-
-        // const games = data.items.map(({ title, description, borrower }) => (  
-
-        // ))
-      }}
-    </Query>
-    */}
 
     </div>
   )
-};
+}
 
 export default HomePage;
