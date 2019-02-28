@@ -6,19 +6,19 @@ module.exports = {
     async teams(user, args, { app, req, postgres }, info) {
       authenticate(app, req)
 
-      const allUsersTeamIDsQuery = {
-        text: "SELECT * FROM foostown.teams_users WHERE user_id = $1",
-        values: [user.id]
-      };
+      const teamsArray = await postgres.query({
+        text: `SELECT * 
+        from foostown.teams as teams
+        right join (SELECT users.fullname, t_u.team_id 
+        from foostown.users as users
+        left join foostown.teams_users as t_u
+        on users.id = t_u.user_id where users.id != $1) 
+        as users_t_u
+        on teams.id = users_t_u.team_id`,
+        values: [user.id],
+      })
 
-      const allUsersTeamIDs = await postgres.query(allUsersTeamIDsQuery)
-
-      const teamsArrayQuery = {
-        text: 'SELECT * FROM foostown.teams WHERE id = $1',
-        values: [allUsersTeamIDs.rows[0].team_id],
-      }
-
-      const teamsArray = await postgres.query(teamsArrayQuery)
+      console.log(teamsArray.rows)
 
       return teamsArray.rows
     },
@@ -39,8 +39,8 @@ module.exports = {
         values: [user.id],
       })
 
-      if(userStats.rows[0].matches_played === '0'){
-        return{
+      if (userStats.rows[0].matches_played === '0') {
+        return {
           goals_for: 0,
           goals_against: 0,
           matches_played: 0,

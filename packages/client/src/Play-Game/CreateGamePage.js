@@ -130,7 +130,6 @@ const CreateGamePage = () => {
                         } 
                         return (
                           <SelectOpponent
-                            userID = {data.viewer.id}
                             value={parseInt(values.team_id)}
                             onChange={handleChange}
                           />
