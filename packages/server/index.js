@@ -5,7 +5,6 @@ const cors = require('cors')
 const path = require('path')
 const { Pool } = require('pg')
 const { ApolloServer } = require('apollo-server-express')
-const { apolloUploadExpress } = require('apollo-upload-server')
 const { makeExecutableSchema } = require('graphql-tools')
 
 const typeDefs = require('./schema')
@@ -82,9 +81,6 @@ apolloServer.applyMiddleware({
   app,
   uploads: true,
   cors: app.get('CORS_CONFIG'),
-  uploads: apolloUploadExpress({
-    maxFileSize: 10000000,
-  }),
 })
 
 postgres.on('error', (err, client) => {

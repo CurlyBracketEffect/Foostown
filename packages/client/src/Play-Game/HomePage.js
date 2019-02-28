@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import UsersAndStats from './UsersAndStats'
 
+import LogoutButton from '../LogoutButton'
 //apollo
 // import { Query } from 'react-apollo'
 // import gql from 'graphql-tag'
@@ -22,7 +23,7 @@ import {
   Button,
 } from '@material-ui/core/'
 
-const HomePage = ({ setCSRFToken, history }) => (
+const HomePage = () => (
   <div
     style={{
       display: 'flex',
@@ -34,22 +35,7 @@ const HomePage = ({ setCSRFToken, history }) => (
     <Typography style={{ marginTop: 25, marginBottom: 25 }} variant="overline">
       Home
     </Typography>
-    <Link style={{ marginBottom: 25, textDecoration: 'none' }} to="/">
-      <Button
-        style={{
-          width: '50%',
-        }}
-        color="primary"
-        variant="contained"
-        onClick={() => {
-          localStorage.clear()
-          setCSRFToken(null)
-          history.push('/')
-        }}
-      >
-        Logout
-      </Button>
-    </Link>
+    <LogoutButton />
     <ListSubheader
       style={{
         borderBottom: '1px solid #00aa25',

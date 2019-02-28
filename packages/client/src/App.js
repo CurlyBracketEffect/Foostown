@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import './App.css'
 
 //react router
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import createBrowserHistory from 'history/createBrowserHistory'
 
 //apollo
 import { ApolloProvider } from 'react-apollo'
 import apolloClient from './apolloClient'
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
 
 //components
 import Login from './Login-SignUp/Login'
@@ -19,7 +21,7 @@ import CreateGamePage from './Play-Game/CreateGamePage'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 import { unstable_Box as Box } from '@material-ui/core/Box'
 
-const intialCSRFToken = localStorage.getItem('token')
+import * as jwt from 'jsonwebtoken'
 
 const history = createBrowserHistory()
 
@@ -41,34 +43,46 @@ const theme = createMuiTheme({
 })
 
 const App = () => {
-  const [csrfToken, setCSRFToken] = useState(intialCSRFToken)
   return (
     <Router history={history}>
       <ApolloProvider client={apolloClient}>
         <MuiThemeProvider theme={theme}>
-          <Box className="App" style={{ backgroundColor: '#f5f5f5' }}>
-            {csrfToken == null && (
-              <React.Fragment>
-                <Route path="/" exact render={() => <Login setCSRFToken={setCSRFToken} />} />
-                <Route
-                  path="/sign-up"
-                  exact
-                  render={() => <SignUp setCSRFToken={setCSRFToken} />}
-                />
-              </React.Fragment>
-            )}
+          <Query
+            query={gql`
+              query {
+                authStatus @client {
+                  id
+                  isLoggedIn
+                }
+              }
+            `}
+          >
+            {({ loading, error, data }) => {
+              if (loading) return <div>Loading...</div>
+              if (error) {
+                throw error
+              }
+              const { isLoggedIn } = data.authStatus
+              return (
+                <Box className="App" style={{ backgroundColor: '#f5f5f5' }}>
+                  {!isLoggedIn && (
+                    <Switch>
+                      <Route path="/" exact render={() => <Login />} />
+                      <Route path="/sign-up" exact render={() => <SignUp />} />
+                      <Redirect to="/" />
+                    </Switch>
+                  )}
 
-            {csrfToken != null && (
-              <React.Fragment>
-                <Route
-                  path="/"
-                  exact
-                  render={() => <HomePage setCSRFToken={setCSRFToken} history={history} />}
-                />
-                <Route path="/create-game" exact component={CreateGamePage} />
-              </React.Fragment>
-            )}
-          </Box>
+                  {isLoggedIn && (
+                    <React.Fragment>
+                      <Route path="/" exact render={() => <HomePage history={history} />} />
+                      <Route path="/create-game" exact component={CreateGamePage} />
+                    </React.Fragment>
+                  )}
+                </Box>
+              )
+            }}
+          </Query>
         </MuiThemeProvider>
       </ApolloProvider>
     </Router>

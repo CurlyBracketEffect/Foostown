@@ -17,6 +17,7 @@ function generateToken({ id }, secret, csrfToken) {
     csrfToken,
     exp: Math.floor(Date.now() / 1000) + 2 * (60 * 60),
   }
+  console.log(payload.exp)
   return jwt.sign(payload, secret)
 }
 
@@ -174,6 +175,11 @@ module.exports = {
         })
         throw e
       }
+    },
+    async logout(parent, {}, { app, req, postgres }) {
+      const cookieName = app.get('JWT_COOKIE_NAME')
+      req.res.clearCookie(cookieName)
+      return true
     },
   },
 }
