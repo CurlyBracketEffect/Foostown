@@ -7,18 +7,21 @@ import gql from 'graphql-tag'
 //material-ui
 import { OutlinedInput, InputLabel, Select, MenuItem } from '@material-ui/core/'
 
-const SelectOpponent = ({ userID, value, onChange }) => {
+const SelectOpponent = ({ value, onChange }) => {
   return (
     <div>
       <div style={{ margin: '1rem 0', color: 'black', width: 300 }}>
         <InputLabel shrink>Select Opponent</InputLabel>
         <Query
           query={gql`
-            {
-              teams {
+            query {
+              viewer {
                 id
-                organization_id
-                team_name
+                fullname
+                teams {
+                  id
+                  team_name
+                }
               }
             }
           `}
@@ -37,14 +40,14 @@ const SelectOpponent = ({ userID, value, onChange }) => {
                 name="team_id"
                 input={<OutlinedInput />}
               >
-                {data.teams.map(//need to refactor when we allow user to be on multiple teams 
-                  ({ id, team_name }) =>
-                    id !== userID && (
-                      <MenuItem key={id} value={parseInt(id)}>
-                        {team_name}
-                      </MenuItem>
-                    )
-                )}
+
+              {/* {console.log(data.viewer)} */}
+                {data.viewer.teams.map((team) => (
+                  <MenuItem key={team.id} value={parseInt(team.id)}>
+                 { console.log(team.id)}
+                    {team.team_name}
+                  </MenuItem>
+                ))}
               </Select>
             )
           }}
