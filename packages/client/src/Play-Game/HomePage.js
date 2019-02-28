@@ -3,7 +3,7 @@ import React from 'react'
 //router
 import { Link } from 'react-router-dom'
 
-import UsersAndStats from './UserAndStats'
+import UsersAndStats from './UsersAndStats'
 
 //apollo
 // import { Query } from 'react-apollo'
@@ -33,9 +33,9 @@ const useStyles = makeStyles({
   homeTitle: {
     marginTop: 25,
     marginBottom: 25,
-    fontSize: 16, 
-    color: '#00aa25', 
-    fontWeight: 'bold' 
+    fontSize: 16,
+    color: '#00aa25',
+    fontWeight: 'bold'
   },
   logoutBtn: {
     marginBottom: 25,
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
   subHeader: {
     borderBottom: '1px solid #00aa25',
     overflow: 'hidden',
-    fontWeight: 'bold' 
+    fontWeight: 'bold'
   },
   homePageList: {
     height: '175px',
@@ -63,20 +63,20 @@ const HomePage = ({
   const classes = useStyles();
   return (
     <div className={classes.homePage}>
-      <Typography 
-        className= {classes.homeTitle}
+      <Typography
+        className={classes.homeTitle}
         variant='overline'>
-          Home
+        Home
       </Typography>
       <Link className={classes.logoutBtn} to='/'>
         <Button
           color="primary"
           variant="contained"
           onClick={() => {
-          localStorage.clear()
-          setCSRFToken(null)
-          history.push('/')
-        }}
+            localStorage.clear()
+            setCSRFToken(null)
+            history.push('/')
+          }}
         >
           Logout
       </Button>
@@ -88,7 +88,7 @@ const HomePage = ({
         Players
     </ListSubheader>
       <List className={classes.homePageList}>
-        <UsersAndStats/>
+        <UsersAndStats />
         {/* <Divider style={{ background: '#00aa25', height: "0.5px" }}/> */}
       </List>
 
