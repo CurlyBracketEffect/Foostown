@@ -18,8 +18,6 @@ module.exports = {
         values: [user.id],
       })
 
-      console.log("teams>>>", teamsArray.rows)
-
       return teamsArray.rows
     },
     async stats(user, args, { app, req, postgres }, info) {
