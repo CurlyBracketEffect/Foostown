@@ -71,6 +71,13 @@ module.exports = {
           values: [userId, teamId],
         })
 
+        //Set role for the User in the Org
+        const isAdmin = false
+        const setRoleForUser = await postgres.query({
+          text: 'INSERT INTO foostown.organizations_users (organization_id, user_id, is_admin) VALUES ($1, $2, $3) RETURNING *',
+          values: [orgID, userId, isAdmin],
+        })
+
         // Commit the entire transaction!
         await client.query('COMMIT')
         console.log(user)
