@@ -4,6 +4,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import UsersAndStats from './UsersAndStats'
+
+import LogoutButton from '../LogoutButton'
 import MatchesPlayed from './MatchesPlayed'
 
 //material-ui
@@ -48,10 +50,7 @@ const useStyles = makeStyles({
   }
 })
 
-const HomePage = ({
-  setCSRFToken,
-  history
-}) => {
+const HomePage = () => {
   const classes = useStyles();
   return (
     <div className={classes.homePage}>
@@ -61,19 +60,7 @@ const HomePage = ({
         variant='overline'>
           Home
       </Typography>
-      <Link className={classes.logoutBtn} to='/'>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => {
-          localStorage.clear()
-          setCSRFToken(null)
-          history.push('/')
-        }}
-        >
-          Logout
-        </Button>
-      </Link>
+        <LogoutButton />
 
        {/* Users And Stats Query */}
       <ListSubheader

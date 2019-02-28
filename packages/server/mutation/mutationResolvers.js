@@ -185,7 +185,11 @@ module.exports = {
         throw e
       }
     },
-
+    async logout(parent, {}, { app, req, postgres }) {
+      const cookieName = app.get('JWT_COOKIE_NAME')
+      req.res.clearCookie(cookieName)
+      return true
+    },
 
     async createTournament(
       parent,

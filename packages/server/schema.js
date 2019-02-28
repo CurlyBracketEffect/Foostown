@@ -107,6 +107,7 @@ module.exports = gql`
     login(input: LoginInput!): LoginResponse!
     createTeam(input: NewTeamInput!): Team!
     createMatch(input: NewMatchInput): Match!
+    logout: Boolean
     createTournament(input: NewTournamentInput): Tournament!
     closeTournament(id: ID!): Tournament!
   }
