@@ -9,6 +9,7 @@
     "start:dev": "NODE_ENV=development nodemon index.js"
   },
   "dependencies": {
+    "@okgrow/graphql-scalars": "^0.4.5",
     "apollo-server-express": "^2.4.6",
     "apollo-upload-server": "^7.1.0",
     "bcrypt": "^3.0.4",

@@ -5,6 +5,10 @@ const crypto = require('crypto')
 const Promise = require('bluebird')
 const authenticate = require('../authenticate')
 
+const { DateTime, DateTimeScalar } = require ('@okgrow/graphql-scalars')
+
+
+
 function setCookie({ tokenName, token, res }) {
   res.cookie(tokenName, token, {
     httpOnly: true,
@@ -134,6 +138,8 @@ module.exports = {
         csrfToken,
       }
     },
+
+
     async createMatch(
       parent,
       {
@@ -181,6 +187,25 @@ module.exports = {
         })
         throw e
       }
+    },
+
+
+    async createTournament(
+      parent,
+      {
+        input: { tournament_name },
+      },
+      { req, app, postgres }
+    ) {
+      const orgID = 1
+      let status = "Open"
+      const start_date = new Date().toISOString()
+      const tournament = await postgres.query({
+          text:
+            'INSERT INTO foostown.tournaments (tournament_name, organization_id, start_date, status) VALUES ($1, $2, $3, $4) RETURNING *',
+          values: [tournament_name, orgID, start_date, status],
+        })
+      return tournament.rows[0]
     },
   },
 }

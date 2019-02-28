@@ -19,6 +19,8 @@ import CreateGamePage from './Play-Game/CreateGamePage'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 import { unstable_Box as Box } from '@material-ui/core/Box'
 
+
+
 const intialCSRFToken = localStorage.getItem('token')
 
 const history = createBrowserHistory()
