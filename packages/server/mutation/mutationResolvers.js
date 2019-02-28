@@ -5,6 +5,7 @@ const crypto = require('crypto')
 const Promise = require('bluebird')
 const authenticate = require('../authenticate')
 
+
 function setCookie({ tokenName, token, res }) {
   res.cookie(tokenName, token, {
     httpOnly: true,
@@ -71,6 +72,13 @@ module.exports = {
           values: [userId, teamId],
         })
 
+        //Set role for the User in the Org
+        const isAdmin = false
+        const setRoleForUser = await postgres.query({
+          text: 'INSERT INTO foostown.organizations_users (organization_id, user_id, is_admin) VALUES ($1, $2, $3) RETURNING *',
+          values: [orgID, userId, isAdmin],
+        })
+
         // Commit the entire transaction!
         await client.query('COMMIT')
         console.log(user)
@@ -127,6 +135,8 @@ module.exports = {
         csrfToken,
       }
     },
+
+
     async createMatch(
       parent,
       {
@@ -180,5 +190,46 @@ module.exports = {
       req.res.clearCookie(cookieName)
       return true
     },
+
+    async createTournament(
+      parent,
+      {
+        input: { tournament_name },
+      },
+      { req, app, postgres }
+    ) {
+      const orgID = 1
+      const status = 'open'
+      const start_date = new Date().toISOString()
+      const tournament = await postgres.query({
+          text:
+            'INSERT INTO foostown.tournaments (tournament_name, organization_id, start_date, status) VALUES ($1, $2, $3, $4) RETURNING *',
+          values: [tournament_name, orgID, start_date, status],
+        })
+      return tournament.rows[0]
+    },
+
+
+    async closeTournament(
+      parent, 
+      {
+        id,
+      },
+      { req, app, postgres }
+    ) {
+      const end_date = new Date().toISOString()
+      const status = 'closed'
+      const updateTournamentStatus = await postgres.query({
+          text:
+            'UPDATE foostown.tournaments SET end_date=$1, status=$2 WHERE id=$3 RETURNING *',
+          values: [end_date, status, id],
+        })
+      console.log()
+      console.log(end_date)
+      console.log(status)
+      console.log(updateTournamentStatus)
+      return updateTournamentStatus.rows[0]
+    },
+
   },
 }

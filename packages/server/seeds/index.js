@@ -10,17 +10,17 @@ const userSeeds = [
   },
   {
     fullname: 'Jorrin Bruns',
-    email: 'Jorrin@Jorrin.com',
+    email: 'jorrin@jorrin.com',
     password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {
     fullname: 'Eirian Ta',
-    email: 'Eirian@Eirian.com',
+    email: 'eirian@eirian.com',
     password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {
     fullname: 'Akshay Manchand',
-    email: 'Akshay@Akshay.com',
+    email: 'akshay@akshay.com',
     password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
   },
   {

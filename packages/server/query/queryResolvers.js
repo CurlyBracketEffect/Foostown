@@ -16,6 +16,7 @@ module.exports = {
       }
       return user.rows[0]
     },
+
     async organization(parent, { id }, { app, req, postgres }, info) {
       authenticate(app, req)
       const findOrgQuery = {
@@ -50,6 +51,36 @@ module.exports = {
         // values: [userID],
       })
       return teams.rows
+    },
+
+    async matchesPlayed(team, args, { app, req, postgres }, info) {
+      const userID = authenticate(app, req)
+
+      const teamsMatchesQuery = {
+        text: `
+          SELECT
+          home_team.team_name as home_team,
+          away_team.team_name as away_team,
+          home.match_id as match_id,
+          home.team_id as home_team_id,
+          away.team_id as away_team_id,
+          home.goals_for as home_goals,
+          away.goals_for as away_goals
+          FROM foostown.teams_matches AS home
+          INNER JOIN foostown.teams_matches AS away
+          ON away.match_id = home.match_id AND away.team_id != home.team_id
+          INNER JOIN foostown.teams as home_team
+          on home_team.id = home.team_id 
+          INNER JOIN foostown.teams as away_team
+          on away_team.id = away.team_id 
+          WHERE home.team_id = $1
+        `,
+        values: [userID] 
+      }
+
+      const matchesPlayed = await postgres.query(teamsMatchesQuery);
+      
+      return matchesPlayed.rows; 
     },
   },
 }

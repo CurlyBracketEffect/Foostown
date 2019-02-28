@@ -1,6 +1,11 @@
 const { gql } = require('apollo-server-express')
 
+const { DateTimeScalar } = require ('@okgrow/graphql-scalars')
+
+
 module.exports = gql`
+  scalar DateTime
+
   type User {
     id: ID!
     fullname: String
@@ -38,6 +43,25 @@ module.exports = gql`
     goals_against: Int!
   }
 
+  type Tournament {
+    id: ID!
+    tournament_name: String!
+    organization_id: ID!
+    start_date: DateTime!
+    end_date: DateTime
+    status: String!
+  }
+
+  type MatchStat {
+    home_team: String
+    away_team: String
+    match_id: ID
+    home_team_id: ID
+    away_team_id: ID
+    home_goals: Int
+    away_goals: Int
+  }
+
   input NewUserInput {
     fullname: String
     email: String!
@@ -56,6 +80,10 @@ module.exports = gql`
     team_name: String!
   }
 
+  input NewTournamentInput {
+    tournament_name: String!
+  }
+
   input LoginInput {
     email: String!
     password: String!
@@ -66,6 +94,7 @@ module.exports = gql`
     user(id: ID!): User!
     viewer: User
     organization(id: ID!): Organization!
+    matchesPlayed: [MatchStat]!
   }
 
   type LoginResponse {
@@ -79,5 +108,7 @@ module.exports = gql`
     createTeam(input: NewTeamInput!): Team!
     createMatch(input: NewMatchInput): Match!
     logout: Boolean
+    createTournament(input: NewTournamentInput): Tournament!
+    closeTournament(id: ID!): Tournament!
   }
 `
