@@ -193,12 +193,13 @@ module.exports = {
     async createTournament(
       parent,
       {
-        input: { tournament_name, start_date },
+        input: { tournament_name },
       },
       { req, app, postgres }
     ) {
       const orgID = 1
       let status = "Open"
+      const start_date = new Date().toISOString()
       const tournament = await postgres.query({
           text:
             'INSERT INTO foostown.tournaments (tournament_name, organization_id, start_date, status) VALUES ($1, $2, $3, $4) RETURNING *',

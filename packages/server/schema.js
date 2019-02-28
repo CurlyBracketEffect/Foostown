@@ -74,7 +74,6 @@ module.exports = gql`
 
   input NewTournamentInput {
     tournament_name: String!
-    start_date: DateTime!
   }
 
   input LoginInput {
