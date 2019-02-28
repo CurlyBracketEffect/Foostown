@@ -33,7 +33,6 @@ module.exports = {
 
     async viewer(parent, args, { req, app, postgres }) {
       const userID = authenticate(app, req)
-
       const findUserQuery = {
         text: 'SELECT * FROM foostown.users WHERE id = $1',
         values: [userID],
@@ -43,7 +42,7 @@ module.exports = {
       return user.rows[0]
     },
 
-    async teams (parent, args, { req, app, postgres }) {
+    async teams(parent, args, { req, app, postgres }) {
       // const userID = authenticate(app, req)
 
       const teams = await postgres.query({

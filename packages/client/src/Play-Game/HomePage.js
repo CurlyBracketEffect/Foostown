@@ -54,9 +54,9 @@ const useStyles = makeStyles({
   }
 })
 
-
 const HomePage = ({
   setCSRFToken,
+  history
 }) => {
   const classes = useStyles();
   return (
@@ -68,8 +68,13 @@ const HomePage = ({
       </Typography>
       <Link className={classes.logoutBtn} to='/'>
         <Button
-          color='primary'
-          variant='contained'
+          color="primary"
+          variant="contained"
+          onClick={() => {
+          localStorage.clear()
+          setCSRFToken(null)
+          history.push('/')
+        }}
         >
           Logout
       </Button>

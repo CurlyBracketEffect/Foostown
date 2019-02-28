@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 //material-ui
 import { OutlinedInput, InputLabel, Select, MenuItem } from '@material-ui/core/'
 
-const SelectOpponent = ({ value, onChange }) => {
+const SelectOpponent = ({ userID, value, onChange }) => {
   return (
     <div>
       <div style={{ margin: '1rem 0', color: 'black', width: 300 }}>
@@ -25,8 +25,10 @@ const SelectOpponent = ({ value, onChange }) => {
         >
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>
-            if (error) return <p>Error :(</p>
-
+            if (error) {
+              console.log(error)
+              throw error
+            }
             return (
               <Select
                 onChange={onChange}
@@ -35,11 +37,14 @@ const SelectOpponent = ({ value, onChange }) => {
                 name="team_id"
                 input={<OutlinedInput />}
               >
-                {data.teams.map(({ id, team_name }) => (
-                  <MenuItem key={id} value={parseInt(id)}>
-                    {team_name}
-                  </MenuItem>
-                ))}
+                {data.teams.map(//need to refactor when we allow user to be on multiple teams 
+                  ({ id, team_name }) =>
+                    id !== userID && (
+                      <MenuItem key={id} value={parseInt(id)}>
+                        {team_name}
+                      </MenuItem>
+                    )
+                )}
               </Select>
             )
           }}

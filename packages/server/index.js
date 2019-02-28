@@ -66,6 +66,8 @@ const apolloServer = new ApolloServer({
       process.env.NODE_ENV !== 'production'
     ) {
       app.set('SKIP_AUTH', true)
+    } else {
+      app.set('SKIP_AUTH', false)
     }
     return {
       app,
