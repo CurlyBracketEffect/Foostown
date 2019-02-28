@@ -99,5 +99,6 @@ module.exports = gql`
     createTeam(input: NewTeamInput!): Team!
     createMatch(input: NewMatchInput): Match!
     createTournament(input: NewTournamentInput): Tournament!
+    closeTournament(id: ID!): Tournament!
   }
 `
