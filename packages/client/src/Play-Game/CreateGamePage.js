@@ -11,30 +11,64 @@ import * as Yup from 'yup'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
-//material-ui
-import { Typography, FormControl, TextField, Button } from '@material-ui/core/'
-
 //components
 import SelectOpponent from './SelectOpponent'
 
-const CreateGamePage = () => (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <Typography style={{ marginTop: 25, marginBottom: 25 }} variant="overline">
+//material-ui
+import { makeStyles } from '@material-ui/styles'
+import { 
+  Typography,
+  FormControl,
+  TextField,
+  Button
+} from '@material-ui/core/'
+
+const useStyles = makeStyles({
+  createPage: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  createPageTitle: {
+    marginTop: 25, 
+    marginBottom: 25,
+  },
+  backToHomeBtn: {
+    marginBottom: 25,
+    textDecoration: 'none',
+    width: '50%',
+  },
+  submitScoreForm: {
+    marginTop: 50,
+    width: '300px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  scoreInputField: {
+    marginTop: 50,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  enterScore: {
+    width: '45%',
+  },
+  submitBtn: {
+    marginTop: 50,
+  },
+})
+
+const CreateGamePage = () => {
+  const classes = useStyles();
+  return (
+  <div className={classes.createPage}>
+    <Typography className={classes.createPageTitle} variant="overline">
       Create Game
     </Typography>
 
-    <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to="/">
+    <Link className={classes.backToHomeBtn} to="/">
       <Button
-        style={{
-          width: '100%',
-        }}
         color="primary"
         variant="contained"
       >
@@ -91,25 +125,15 @@ const CreateGamePage = () => (
               return (
                 <form
                   onSubmit={handleSubmit}
-                  style={{
-                    marginTop: 50,
-                    width: '300px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
+                  className={classes.submitScoreForm}
                 >
                   <FormControl variant="outlined">
-                    <SelectOpponent value={parseInt(values.team_id)} onChange={handleChange} />
+                    <SelectOpponent 
+                      value={parseInt(values.team_id)}
+                      onChange={handleChange} />
                   </FormControl>
 
-                  <div
-                    style={{
-                      marginTop: 50,
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                    }}
-                  >
+                  <div className={classes.scoreInputField}>
                     <TextField
                       name="goals_for"
                       label="Your Score"
@@ -119,10 +143,8 @@ const CreateGamePage = () => (
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      style={{
-                        width: '45%',
-                      }}
                       variant="outlined"
+                      className={classes.enterScore}
                     />
 
                     <TextField
@@ -134,10 +156,8 @@ const CreateGamePage = () => (
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      style={{
-                        width: '45%',
-                      }}
                       variant="outlined"
+                      className={classes.enterScore}
                     />
                   </div>
 
@@ -147,11 +167,7 @@ const CreateGamePage = () => (
                     color="secondary"
                     disabled={isSubmitting}
                     variant="contained"
-                    style={{
-                      width: '100%',
-                      width: '75%',
-                      marginTop: 50,
-                    }}
+                    className={classes.submitBtn}
                   >
                     Submit Scores
                   </Button>
@@ -164,6 +180,6 @@ const CreateGamePage = () => (
       }}
     </Mutation>
   </div>
-)
+)}
 
 export default CreateGamePage
