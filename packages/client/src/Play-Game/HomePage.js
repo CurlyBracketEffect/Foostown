@@ -3,6 +3,8 @@ import React from 'react'
 //router
 import { Link } from 'react-router-dom'
 
+import UsersAndStats from './UserAndStats'
+
 //apollo
 // import { Query } from 'react-apollo'
 // import gql from 'graphql-tag'
@@ -86,97 +88,8 @@ const HomePage = ({
         Players
     </ListSubheader>
       <List className={classes.homePageList}>
+        <UsersAndStats/>
         {/* <Divider style={{ background: '#00aa25', height: "0.5px" }}/> */}
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 1' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 2' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 3' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 4' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 5' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 6' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 7' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 8' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 9' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            Avatar
-        </ListItemIcon>
-          <ListItemText primary='Player 10' />
-          <ListItemSecondaryAction>
-            Stats
-        </ListItemSecondaryAction>
-        </ListItem>
       </List>
 
       <ListSubheader
