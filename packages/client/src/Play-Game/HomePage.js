@@ -3,7 +3,7 @@ import React from 'react'
 //router
 import { Link } from 'react-router-dom'
 
-import UsersAndStats from './UserAndStats'
+import UsersAndStats from './UsersAndStats'
 
 //apollo
 // import { Query } from 'react-apollo'
