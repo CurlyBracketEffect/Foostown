@@ -27,6 +27,7 @@ module.exports = gql`
     owner_id: ID!
     is_active: Boolean!
     users: [User!]!
+    tournaments: [Tournament]!
   }
 
   type Team {
@@ -50,6 +51,7 @@ module.exports = gql`
     start_date: DateTime!
     end_date: DateTime
     status: String!
+    teams: [Team]!
   }
 
   type MatchStat {
