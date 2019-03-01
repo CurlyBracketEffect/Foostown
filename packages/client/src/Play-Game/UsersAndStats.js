@@ -14,6 +14,8 @@ import {
   Button,
 } from '@material-ui/core/'
 
+import gravatar from 'gravatar'
+
 const UsersAndStats = () => (
   <Query
     query={gql`
@@ -22,6 +24,7 @@ const UsersAndStats = () => (
           users {
             id
             fullname
+            email
             stats {
               matches_played
               goals_for
@@ -41,7 +44,9 @@ const UsersAndStats = () => (
         return (
           <ListItem key={user.id} button style={{ height: '75px' }}>
             {/* {console.log(data)} */}
-            <ListItemIcon>Avatar</ListItemIcon>
+            <ListItemIcon>
+              <img src={gravatar.url(user.email, {s: '75', r: 'x', d: 'retro'}, false)} />{' '}
+            </ListItemIcon>
             <ListItemText
               primary={
                 user.fullname.length > 13 ? user.fullname.slice(0, 13) + '...' : user.fullname
