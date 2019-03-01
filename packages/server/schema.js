@@ -85,12 +85,16 @@ module.exports = gql`
 
   input NewTournamentInput {
     tournament_name: String!
-    available_spots: Int!
+    number_of_players: Int!
   }
 
   input LoginInput {
     email: String!
     password: String!
+  }
+
+  input TournamentSignUpInput{
+    team_id: ID!
   }
 
   type Query {
@@ -114,5 +118,6 @@ module.exports = gql`
     logout: Boolean
     createTournament(input: NewTournamentInput): Tournament!
     closeTournament(id: ID!): Tournament!
+    addTeamToTourney(input: TournamentSignUpInput): Boolean
   }
 `
