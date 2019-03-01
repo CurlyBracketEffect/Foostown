@@ -50,6 +50,7 @@ exports.up = pgm => {
       "start_date" DATE NOT NULL,
       "end_date" DATE,
       "status" TEXT NOT NULL,
+      "available_spots" INTEGER NOT NULL,
       UNIQUE (tournament_name, organization_id)
     );
   `),

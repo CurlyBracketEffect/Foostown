@@ -194,7 +194,7 @@ module.exports = {
     async createTournament(
       parent,
       {
-        input: { tournament_name },
+        input: { tournament_name, available_spots },
       },
       { req, app, postgres }
     ) {
@@ -203,8 +203,8 @@ module.exports = {
       const start_date = new Date().toISOString()
       const tournament = await postgres.query({
           text:
-            'INSERT INTO foostown.tournaments (tournament_name, organization_id, start_date, status) VALUES ($1, $2, $3, $4) RETURNING *',
-          values: [tournament_name, orgID, start_date, status],
+            'INSERT INTO foostown.tournaments (tournament_name, organization_id, start_date, status, available_spots) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+          values: [tournament_name, orgID, start_date, status, available_spots],
         })
       return tournament.rows[0]
     },
