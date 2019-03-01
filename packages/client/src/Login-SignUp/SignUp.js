@@ -101,21 +101,20 @@ const SignUp = () => {
                 validationSchema={Yup.object().shape({
                   email: Yup.string()
                     .email()
-                    .required('Required'),
-                  password: Yup.string(),
+                    .required('required'),
+                  password: Yup.string()
+                    .required('required'),
                 })}
               >
                 {props => {
                   const {
-                    values,
-                    touched,
                     errors,
-                    //dirty,
-                    isSubmitting,
                     handleChange,
                     handleBlur,
                     handleSubmit,
-                    //handleReset
+                    isSubmitting,
+                    touched,
+                    values,
                   } = props
                   return (
                     <form onSubmit={handleSubmit}>
