@@ -5,9 +5,6 @@ const crypto = require('crypto')
 const Promise = require('bluebird')
 const authenticate = require('../authenticate')
 
-const { DateTime, DateTimeScalar } = require ('@okgrow/graphql-scalars')
-
-
 
 function setCookie({ tokenName, token, res }) {
   res.cookie(tokenName, token, {
@@ -188,7 +185,11 @@ module.exports = {
         throw e
       }
     },
-
+    async logout(parent, {}, { app, req, postgres }) {
+      const cookieName = app.get('JWT_COOKIE_NAME')
+      req.res.clearCookie(cookieName)
+      return true
+    },
 
     async createTournament(
       parent,
@@ -198,7 +199,7 @@ module.exports = {
       { req, app, postgres }
     ) {
       const orgID = 1
-      let status = "Open"
+      const status = 'open'
       const start_date = new Date().toISOString()
       const tournament = await postgres.query({
           text:
@@ -207,5 +208,28 @@ module.exports = {
         })
       return tournament.rows[0]
     },
+
+
+    async closeTournament(
+      parent, 
+      {
+        id,
+      },
+      { req, app, postgres }
+    ) {
+      const end_date = new Date().toISOString()
+      const status = 'closed'
+      const updateTournamentStatus = await postgres.query({
+          text:
+            'UPDATE foostown.tournaments SET end_date=$1, status=$2 WHERE id=$3 RETURNING *',
+          values: [end_date, status, id],
+        })
+      console.log()
+      console.log(end_date)
+      console.log(status)
+      console.log(updateTournamentStatus)
+      return updateTournamentStatus.rows[0]
+    },
+
   },
 }

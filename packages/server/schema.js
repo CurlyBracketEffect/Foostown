@@ -43,7 +43,6 @@ module.exports = gql`
     goals_against: Int!
   }
 
-  
   type Tournament {
     id: ID!
     tournament_name: String!
@@ -51,7 +50,16 @@ module.exports = gql`
     start_date: DateTime!
     end_date: DateTime
     status: String!
+  }
 
+  type MatchStat {
+    home_team: String
+    away_team: String
+    match_id: ID
+    home_team_id: ID
+    away_team_id: ID
+    home_goals: Int
+    away_goals: Int
   }
 
   input NewUserInput {
@@ -86,6 +94,7 @@ module.exports = gql`
     user(id: ID!): User!
     viewer: User
     organization(id: ID!): Organization!
+    matchesPlayed: [MatchStat]!
   }
 
   type LoginResponse {
@@ -98,6 +107,8 @@ module.exports = gql`
     login(input: LoginInput!): LoginResponse!
     createTeam(input: NewTeamInput!): Team!
     createMatch(input: NewMatchInput): Match!
+    logout: Boolean
     createTournament(input: NewTournamentInput): Tournament!
+    closeTournament(id: ID!): Tournament!
   }
 `

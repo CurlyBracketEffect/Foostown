@@ -9,58 +9,59 @@ import { Link } from 'react-router-dom'
 import { Formik } from 'formik'
 import { makeStyles } from '@material-ui/styles'
 import { unstable_Box as Box } from '@material-ui/core/Box'
-import {
-  Typography, TextField, Button
-} from '@material-ui/core'
+import { Typography, TextField, Button } from '@material-ui/core'
 
-const useStyles = makeStyles({
-  loginContainer: {
-    width: 300,
-    margin: '0 auto',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  createAccount: {
-    color: '#000',
-    textDecoration: 'none',
-    fontSize: 11,
-    textTransform: 'uppercase',
-    fontWeight: 500,
-  },
-  inputField: {
-    width: 250,
-    marginBottom: 20,
-    backgroundColor: '#FFF',
-  },
-  cssLabel: {
-    '&$cssFocused': {
-      color: '#007900',
+const useStyles = makeStyles(
+  {
+    loginContainer: {
+      width: 300,
+      margin: '0 auto',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    createAccount: {
+      color: '#000',
+      textDecoration: 'none',
+      fontSize: 11,
+      textTransform: 'uppercase',
+      fontWeight: 500,
+    },
+    inputField: {
+      width: 250,
+      marginBottom: 20,
+      backgroundColor: '#FFF',
+    },
+    cssLabel: {
+      '&$cssFocused': {
+        color: '#007900',
+      },
+    },
+    cssFocused: {},
+    cssUnderline: {
+      '&:after': {
+        borderBottomColor: '#007900',
+      },
+    },
+    cssOutlinedInput: {
+      '&$cssFocused $notchedOutline': {
+        borderColor: '#007900',
+      },
+    },
+    notchedOutline: {},
+    submitBtn: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginTop: 15,
     },
   },
-  cssFocused: {},
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: '#007900'
-    },
-  },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: '#007900',
-    },
-  },
-  notchedOutline: {},
-  submitBtn: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 15
-  }
-}, { name: 'hello_worlkd_wtf', index: 10 })
+  { name: 'hello_worlkd_wtf', index: 10 }
+)
 
 const LOG_IN = gql`
-  mutation loginMutation ($user: LoginInput!) {
-    login (input:$user) {
+  mutation loginMutation($user: LoginInput!) {
+    login(input: $user) {
       user {
         id
         fullname
@@ -69,44 +70,35 @@ const LOG_IN = gql`
       csrfToken
     }
   }
-`;
+`
 
-const Login = ({
-  setCSRFToken
-}) => {
-  const classes = useStyles();
+const Login = () => {
+  const classes = useStyles()
   return (
-    <Box className={classes.loginContainer} >
+    <Box className={classes.loginContainer}>
       <Mutation
         mutation={LOG_IN}
-        onCompleted={(data) => {
-          console.log('csrf token:', data.login.csrfToken)
-          localStorage.setItem('token', data.login.csrfToken)
-          setCSRFToken(data.login.csrfToken)
-        }}
-        onError={(error) => {
+        onError={error => {
           alert(error)
-        }}>
+        }}
+      >
         {(login, { data }) => (
           <div className={classes.loginForm}>
             <Typography
-              variant='overline'
-              style={{ fontSize: 16, color: '#00aa25', fontWeight: 'bold' }}>
+              variant="overline"
+              style={{ fontSize: 16, color: '#00aa25', fontWeight: 'bold' }}
+            >
               Login
             </Typography>
             <Formik
-              initialValues={
-                {
-                  email: '',
-                  password: '',
-                }
-              }
+              initialValues={{
+                email: '',
+                password: '',
+              }}
               onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  //alert(JSON.stringify(values, null, 2));
-                  login({ variables: { user: values } });
-                  setSubmitting(false);
-                }, 500);
+                //alert(JSON.stringify(values, null, 2));
+                login({ variables: { user: values } })
+                setSubmitting(false)
               }}
               validationSchema={Yup.object().shape({
                 email: Yup.string()
@@ -126,7 +118,7 @@ const Login = ({
                   handleBlur,
                   handleSubmit,
                   handleReset,
-                } = props;
+                } = props
                 return (
                   <form onSubmit={handleSubmit}>
                     <TextField
@@ -143,11 +135,11 @@ const Login = ({
                           notchedOutline: classes.notchedOutline,
                         },
                       }}
-                      name='email'
-                      label='Email'
-                      type='email'
-                      margin='normal'
-                      variant='outlined'
+                      name="email"
+                      label="Email"
+                      type="email"
+                      margin="normal"
+                      variant="outlined"
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -155,10 +147,11 @@ const Login = ({
                       ${classes.inputField}
                       ${errors.email && touched.email ? 'text-input error' : 'text-input'}
                     }`}
-                    /> <br />
-                    {errors.email &&
-                      touched.email && <div className='input-feedback'>{errors.email}</div>}
-
+                    />{' '}
+                    <br />
+                    {errors.email && touched.email && (
+                      <div className="input-feedback">{errors.email}</div>
+                    )}
                     <TextField
                       InputLabelProps={{
                         classes: {
@@ -173,11 +166,11 @@ const Login = ({
                           notchedOutline: classes.notchedOutline,
                         },
                       }}
-                      name='password'
-                      label='Password'
-                      type='password'
-                      margin='normal'
-                      variant='outlined'
+                      name="password"
+                      label="Password"
+                      type="password"
+                      margin="normal"
+                      variant="outlined"
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -185,25 +178,25 @@ const Login = ({
                       ${classes.inputField}
                       ${errors.password && touched.password ? 'text-input error' : 'text-input'}
                     }`}
-                    /> <br />
-                    {errors.email &&
-                      touched.email && <div className='input-feeback'>{errors.email}</div>}
-
+                    />{' '}
+                    <br />
+                    {errors.email && touched.email && (
+                      <div className="input-feeback">{errors.email}</div>
+                    )}
                     <Box className={classes.submitBtn}>
-
                       <Button
-                        type='submit'
-                        className='outline'
+                        type="submit"
+                        className="outline"
                         disabled={isSubmitting}
-                        variant='contained'
-                        color='secondary'
+                        variant="contained"
+                        color="secondary"
                       >
-                        submit                        
-                    </Button>
+                        submit
+                      </Button>
 
-                      <Link to='/sign-up' className={classes.createAccount}>
+                      <Link to="/sign-up" className={classes.createAccount}>
                         create an account
-                    </Link>
+                      </Link>
                     </Box>
                   </form>
                 )
@@ -213,10 +206,7 @@ const Login = ({
         )}
       </Mutation>
     </Box>
-
   )
+}
 
-};
-
-
-export default Login;
+export default Login
