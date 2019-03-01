@@ -3,10 +3,9 @@ import React from 'react'
 //router
 import { Link } from 'react-router-dom'
 
-import UsersAndStats from './UsersAndStats'
-
+//components
 import LogoutButton from '../LogoutButton'
-import MatchesPlayed from './MatchesPlayed'
+import TeamsInTournament from './TeamsInTournament'
 
 //material-ui
 import { makeStyles } from '@material-ui/styles'
@@ -18,13 +17,13 @@ import {
 } from '@material-ui/core/'
 
 const useStyles = makeStyles({
-  homePage: {
+  tournamentPage: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     width: '300px',
   },
-  homeTitle: {
+  tournamentTitle: {
     marginTop: 25,
     marginBottom: 25,
     fontSize: 16,
@@ -40,7 +39,7 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     fontWeight: 'bold'
   },
-  homePageList: {
+  tournamentPageList: {
     height: '175px',
     overflowY: 'scroll',
   },
@@ -50,63 +49,45 @@ const useStyles = makeStyles({
   }
 })
 
-const HomePage = () => {
+const TournamentPage = () => {
   const classes = useStyles();
   return (
-    <div className={classes.homePage}>
-
+    <div className={classes.tournamentPage}>
 
       <Typography 
-        className= {classes.homeTitle}
+        className= {classes.tournamentTitle}
         variant='overline'>
-        Home
+        Tournaments
       </Typography>
    
-      <LogoutButton /> 
+      <LogoutButton />
 
-      <Link className={classes.createBtn} to='/tournament'>
+      <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to="/">
         <Button
-          variant='contained'
-          color='secondary'
+          style={{
+            width: '100%',
+          }}
+          color="primary"
+          variant="contained"
         >
-          Temporary Tournament Btn.
-        </Button>
-      </Link>     
-
-      {/* Users And Stats Query */}
-      <ListSubheader
-        className={classes.subHeader}
-        component='div'
-      >
-        Players
-      </ListSubheader>
-      <List className={classes.homePageList}>
-        <UsersAndStats />
-      </List>
-
-      {/* Games Query */}
-      <ListSubheader
-        className={classes.subHeader}
-        component='div'
-      >
-        Games
-      </ListSubheader>
-
-      <List className={classes.homePageList}>
-        <MatchesPlayed/>
-      </List>
-
-      <Link className={classes.createBtn} to='/create-game'>
-        <Button
-          variant='contained'
-          color='secondary'
-        >
-          Create Game
+          Back To Home
         </Button>
       </Link>
+
+      <ListSubheader
+        className={classes.subHeader}
+        component='div'
+      >
+        Already Joined
+      </ListSubheader>
+
+      {/* Teams Already Joined Query */}
+      <List className={classes.tournamentPageList}>
+        <TeamsInTournament />
+      </List>
 
     </div>
   )
 }
 
-export default HomePage;
+export default TournamentPage;
