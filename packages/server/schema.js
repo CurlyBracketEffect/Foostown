@@ -54,6 +54,7 @@ module.exports = gql`
     teams: [Team]!
   }
 
+
   type MatchStat {
     home_team: String
     away_team: String
@@ -84,6 +85,7 @@ module.exports = gql`
 
   input NewTournamentInput {
     tournament_name: String!
+    available_spots: Int!
   }
 
   input LoginInput {
