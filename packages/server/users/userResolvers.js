@@ -9,16 +9,14 @@ module.exports = {
       const teamsArray = await postgres.query({
         text: `SELECT * 
         from foostown.teams as teams
-        right join (SELECT users.fullname, t_u.team_id 
+        inner join (SELECT users.fullname, t_u.team_id 
         from foostown.users as users
-        left join foostown.teams_users as t_u
+        inner join foostown.teams_users as t_u
         on users.id = t_u.user_id where users.id != $1) 
         as users_t_u
         on teams.id = users_t_u.team_id`,
         values: [user.id],
       })
-
-      console.log(teamsArray.rows)
 
       return teamsArray.rows
     },

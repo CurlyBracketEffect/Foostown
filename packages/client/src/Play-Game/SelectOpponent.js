@@ -40,7 +40,6 @@ const SelectOpponent = ({ value, onChange }) => {
                 name="team_id"
                 input={<OutlinedInput />}
               >
-
               {/* {console.log(data.viewer)} */}
                 {data.viewer.teams.map((team) => (
                   <MenuItem key={team.id} value={parseInt(team.id)}>
