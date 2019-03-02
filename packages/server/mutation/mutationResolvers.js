@@ -214,13 +214,11 @@ module.exports = {
             `,
           values: [tournament_name, orgID, start_date, status],
         }
-
         const tournament = await postgres.query(createTournamentMutation)
 
         //Create entry in the Matches Tables for all matches that will be played in tourney
         const numberOfMatches = (number_of_players * (number_of_players - 1)) / 2 + 4 //+4 is for the elimination round matches
 
-        const matches = []
         for (let x = 0; x < numberOfMatches; x++) {
           const createTourneyMatchesMutation = {
             text: `
@@ -228,23 +226,8 @@ module.exports = {
             `,
             values: [tournament.rows[0].organization_id, tournament.rows[0].id],
           }
-          const tempMatch = await postgres.query(createTourneyMatchesMutation)
-
-          matches.push(tempMatch.rows[0].id)
-
-          //create entries in the Teams_Matches Table
-          for (let x = 0; x < 2; x++) {
-            const createTeamsMatchesMutation = {
-              text: `
-                INSERT INTO foostown.teams_matches (match_id, team_id, goals_for, goals_against) Values ($1, $2, $2, $2)
-              `,
-              values: [tempMatch.rows[0].id, null],
-            }
-
-            await postgres.query(createTeamsMatchesMutation)
-          }
+          await postgres.query(createTourneyMatchesMutation)
         }
-        console.log('Match>>>', matches)
 
         //Create entries in the Teams_Tournaments Table
         for (let x = 0; x < number_of_players; x++) {
@@ -254,7 +237,6 @@ module.exports = {
           `,
             values: [tournament.rows[0].id, null, 0],
           }
-
           await postgres.query(createTourneyTeamsMutation)
         }
 
