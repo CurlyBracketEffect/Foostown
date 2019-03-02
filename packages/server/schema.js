@@ -54,7 +54,6 @@ module.exports = gql`
     teams: [Team]!
   }
 
-
   type MatchStat {
     home_team: String
     away_team: String

@@ -218,38 +218,47 @@ module.exports = {
         const tournament = await postgres.query(createTournamentMutation)
 
         //Create entry in the Matches Tables for all matches that will be played in tourney
-        const numberOfMatches = (number_of_players * (number_of_players - 1)) / 2 + 4
+        const numberOfMatches = (number_of_players * (number_of_players - 1)) / 2 + 4 //+4 is for the elimination round matches
 
         const matches = []
         for (let x = 0; x < numberOfMatches; x++) {
           const createTourneyMatchesMutation = {
             text: `
-          INSERT into foostown.matches (organization_id, tournament_id) VALUES ($1, $2) RETURNING *
-          `,
+              INSERT into foostown.matches (organization_id, tournament_id) VALUES ($1, $2) RETURNING *
+            `,
             values: [tournament.rows[0].organization_id, tournament.rows[0].id],
           }
           const tempMatch = await postgres.query(createTourneyMatchesMutation)
 
           matches.push(tempMatch.rows[0].id)
-          console.log("tempMatch>>> ",tempMatch)
 
+          //create entries in the Teams_Matches Table
+          for (let x = 0; x < 2; x++) {
+            const createTeamsMatchesMutation = {
+              text: `
+                INSERT INTO foostown.teams_matches (match_id, team_id, goals_for, goals_against) Values ($1, $2, $2, $2)
+              `,
+              values: [tempMatch.rows[0].id, null],
+            }
+
+            await postgres.query(createTeamsMatchesMutation)
+          }
         }
-        console.log("Match>>>",matches)
-
-        //NEXT STEP: you have an array of match ids...use that array to create the entries in the teams_matches 
+        console.log('Match>>>', matches)
 
         //Create entries in the Teams_Tournaments Table
-        const createTourneyTeamsMutation = {
-          text: `
+        for (let x = 0; x < number_of_players; x++) {
+          const createTourneyTeamsMutation = {
+            text: `
+          INSERT INTO foostown.teams_tournaments (tournament_id, team_id, points) VALUES ($1, $2, $3)
           `,
-          values: [],
+            values: [tournament.rows[0].id, null, 0],
+          }
+
+          await postgres.query(createTourneyTeamsMutation)
         }
 
-        //need to write to the Team_matches table also**
-
-        const teams = await postgres.query(createTourneyTeamsMutation)
-
-        // await client.query('COMMIT')
+        await client.query('COMMIT')
         return tournament.rows[0]
       } catch (e) {
         client.query('ROLLBACK', err => {

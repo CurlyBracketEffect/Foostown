@@ -66,7 +66,7 @@ exports.up = pgm => {
   pgm.sql(`
     CREATE TABLE "foostown"."teams_matches" (
       "match_id" INTEGER REFERENCES matches(id) NOT NULL,
-      "team_id" INTEGER REFERENCES teams(id) NOT NULL,
+      "team_id" INTEGER REFERENCES teams(id),
       "goals_for" INTEGER,
       "goals_against" INTEGER
     );
@@ -75,7 +75,7 @@ exports.up = pgm => {
   pgm.sql(`
     CREATE TABLE "foostown"."teams_tournaments" (
       "tournament_id" INTEGER REFERENCES tournaments(id) NOT NULL,
-      "team_id" INTEGER REFERENCES teams(id) NOT NULL,
+      "team_id" INTEGER REFERENCES teams(id),
       "points" INTEGER NOT NULL
     );
   `),
