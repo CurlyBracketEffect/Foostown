@@ -50,7 +50,6 @@ exports.up = pgm => {
       "start_date" DATE NOT NULL,
       "end_date" DATE,
       "status" TEXT NOT NULL,
-      "available_spots" INTEGER NOT NULL,
       UNIQUE (tournament_name, organization_id)
     );
   `),
@@ -67,7 +66,7 @@ exports.up = pgm => {
   pgm.sql(`
     CREATE TABLE "foostown"."teams_matches" (
       "match_id" INTEGER REFERENCES matches(id) NOT NULL,
-      "team_id" INTEGER REFERENCES teams(id) NOT NULL,
+      "team_id" INTEGER REFERENCES teams(id),
       "goals_for" INTEGER,
       "goals_against" INTEGER
     );
@@ -75,8 +74,9 @@ exports.up = pgm => {
   //9. Teams_Tournaments Table
   pgm.sql(`
     CREATE TABLE "foostown"."teams_tournaments" (
+      "id" SERIAL PRIMARY key,
       "tournament_id" INTEGER REFERENCES tournaments(id) NOT NULL,
-      "team_id" INTEGER REFERENCES teams(id) NOT NULL,
+      "team_id" INTEGER REFERENCES teams(id),
       "points" INTEGER NOT NULL
     );
   `),

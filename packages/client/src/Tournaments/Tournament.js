@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 
 //components
 import LogoutButton from '../LogoutButton'
+import AvailableSpots from './AvailableSpots'
+import JoinTournament from './JoinTournament'
 import TeamsInTournament from './TeamsInTournament'
 
 //material-ui
@@ -74,6 +76,12 @@ const TournamentPage = () => {
         </Button>
       </Link>
 
+      {/* Available Spots Query */}
+      <AvailableSpots />
+
+      {/* Join Tournament Mutation */}
+      <JoinTournament />
+
       <ListSubheader
         className={classes.subHeader}
         component='div'
@@ -83,7 +91,8 @@ const TournamentPage = () => {
 
       {/* Teams Already Joined Query */}
       <List className={classes.tournamentPageList}>
-        <TeamsInTournament />
+        {/* Uncomment the code below when we have tournament data */}
+        {/* <TeamsInTournament /> */}
       </List>
 
     </div>
