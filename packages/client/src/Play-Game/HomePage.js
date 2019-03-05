@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-ro
 import UsersAndStats from './UsersAndStats'
 import NavBar from './NavBar'
 import MatchesPlayed from './MatchesPlayed'
+import ActiveTournaments from '../Tournaments/ActiveTournaments'
 
 //material-ui
 import { makeStyles } from '@material-ui/styles'
@@ -14,11 +15,10 @@ import { unstable_Box as Box } from '@material-ui/core/Box'
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {
-  Typography,
   List,
-  ListSubheader,
   Button
 } from '@material-ui/core/'
+
 
 const useStyles = makeStyles({
   homePage: {
@@ -92,10 +92,28 @@ const HomePage = (props) => {
       </List>}
         {value === 1 &&  <List className={classes.homePageList}>
         <MatchesPlayed/>
+        <br/>
+        <Link className={classes.createBtn} to='/create-game'>
+          <Button
+            variant='contained'
+            color='secondary'
+          >
+            Create Match
+          </Button>
+        </Link>
       </List>}
         {value === 2 && <List className={classes.homePageList}>
-        <UsersAndStats />
+        <ActiveTournaments/>
         <br/>
+        <Link className={classes.createBtn} to='/create-tournament'>
+          <Button
+            variant='contained'
+            color='secondary'
+          >
+            Create Tournament
+          </Button>
+        </Link>
+        <br/><br/>
         <Link className={classes.createBtn} to='/tournament'>
           <Button
             variant='contained'
