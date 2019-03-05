@@ -10,12 +10,7 @@ import MatchesPlayed from './MatchesPlayed'
 
 //material-ui
 import { makeStyles } from '@material-ui/styles'
-import {
-  Typography,
-  List,
-  ListSubheader,
-  Button
-} from '@material-ui/core/'
+import { Typography, List, ListSubheader, Button } from '@material-ui/core/'
 
 const useStyles = makeStyles({
   homePage: {
@@ -29,7 +24,7 @@ const useStyles = makeStyles({
     marginBottom: 25,
     fontSize: 16,
     color: '#00aa25',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   logoutBtn: {
     marginBottom: 25,
@@ -38,7 +33,7 @@ const useStyles = makeStyles({
   subHeader: {
     borderBottom: '1px solid #00aa25',
     overflow: 'hidden',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   homePageList: {
     height: '175px',
@@ -47,60 +42,44 @@ const useStyles = makeStyles({
   createBtn: {
     marginTop: 25,
     textDecoration: 'none',
-  }
+  },
 })
 
 const HomePage = () => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={classes.homePage}>
-
-
-      <Typography 
-        className= {classes.homeTitle}
-        variant='overline'>
+      <Typography className={classes.homeTitle} variant="overline">
         Home
       </Typography>
-   
-        <LogoutButton />
 
-       {/* Users And Stats Query */}
+      <LogoutButton />
 
-      <ListSubheader
-        className={classes.subHeader}
-        component='div'
-      >
+      {/* Users And Stats Query */}
+
+      <ListSubheader className={classes.subHeader} component="div">
         Players
       </ListSubheader>
       <List className={classes.homePageList}>
-
         <UsersAndStats />
         {/* <Divider style={{ background: '#00aa25', height: "0.5px" }}/> */}
-
       </List>
-      <ListSubheader
-        className={classes.subHeader}
-        component='div'
-      >
+      <ListSubheader className={classes.subHeader} component="div">
         Games
       </ListSubheader>
 
       {/* Games Query */}
       <List className={classes.homePageList}>
-        <MatchesPlayed/>
+        <MatchesPlayed />
       </List>
 
-      <Link className={classes.createBtn} to='/create-game'>
-        <Button
-          variant='contained'
-          color='secondary'
-        >
+      <Link className={classes.createBtn} to="/create-game">
+        <Button variant="contained" color="secondary">
           Create Game
         </Button>
       </Link>
-
     </div>
   )
 }
 
-export default HomePage;
+export default HomePage

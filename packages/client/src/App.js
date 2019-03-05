@@ -74,6 +74,7 @@ const App = () => {
                   {isLoggedIn && (
                     <React.Fragment>
                       <Route path="/" exact component={HomePage} />} />
+                      <Redirect path="/sign-up" to="/" />
                       <Route path="/create-game" exact component={CreateGamePage} />
                     </React.Fragment>
                   )}
