@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 //router
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom'
 
 //components
 import UsersAndStats from './UsersAndStats'
@@ -95,24 +95,16 @@ const HomePage = (props) => {
       </List>}
         {value === 2 && <List className={classes.homePageList}>
         <UsersAndStats />
+        <br/>
+        <Link className={classes.createBtn} to='/tournament'>
+          <Button
+            variant='contained'
+            color='secondary'
+          >
+            Temp. Join Tourney Button
+          </Button>
+        </Link>
       </List>}
-
-      
-
-    
-
-      {/* Games Query */}
-       */}
-
-
-      {/* <Link className={classes.createBtn} to='/create-game'>
-        <Button
-          variant='contained'
-          color='secondary'
-        >
-          Create Game
-        </Button>
-      </Link> */}
 
     </div>
   )

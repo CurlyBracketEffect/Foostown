@@ -74,7 +74,6 @@ const App = () => {
 
                   {isLoggedIn && (
                     <React.Fragment>
-
                       <Route path="/" exact component={HomePage} />
                       <Route path="/create-game" exact component={CreateGamePage} />
                       <Route path="/tournament" exact component={Tournament} />
