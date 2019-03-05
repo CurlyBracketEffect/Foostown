@@ -16,6 +16,7 @@ import Login from './Login-SignUp/Login'
 import SignUp from './Login-SignUp/SignUp'
 import HomePage from './Play-Game/HomePage'
 import CreateGamePage from './Play-Game/CreateGamePage'
+import Tournament from './Tournaments/Tournament'
 
 //material-ui
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
@@ -73,8 +74,10 @@ const App = () => {
 
                   {isLoggedIn && (
                     <React.Fragment>
-                      <Route path="/" exact component={HomePage}/>
+
+                      <Route path="/" exact component={HomePage} />
                       <Route path="/create-game" exact component={CreateGamePage} />
+                      <Route path="/tournament" exact component={Tournament} />
                     </React.Fragment>
                   )}
                 </Box>

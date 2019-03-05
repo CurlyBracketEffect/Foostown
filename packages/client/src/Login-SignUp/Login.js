@@ -103,8 +103,9 @@ const Login = () => {
               validationSchema={Yup.object().shape({
                 email: Yup.string()
                   .email()
-                  .required('Required'),
-                password: Yup.string(),
+                  .required('required'),
+                password: Yup.string()
+                  .required('required'),
               })}
             >
               {props => {
@@ -181,7 +182,7 @@ const Login = () => {
                     />{' '}
                     <br />
                     {errors.email && touched.email && (
-                      <div className="input-feeback">{errors.email}</div>
+                      <div className="input-feeback">{errors.password}</div>
                     )}
                     <Box className={classes.submitBtn}>
                       <Button
