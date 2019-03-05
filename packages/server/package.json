@@ -5,12 +5,13 @@
     "db:reset": "yarn db:drop && yarn db:up",
     "db:seed": "node seeds/index.js",
     "db:resetandseed": "yarn db:drop && yarn db:up && node seeds/index.js",
+    "test": "jest",
     "start": "NODE_ENV=production node index.js",
     "start:dev": "NODE_ENV=development nodemon index.js"
   },
   "dependencies": {
-    "apollo-server": "^2.4.8",
     "@okgrow/graphql-scalars": "^0.4.5",
+    "apollo-server": "^2.4.8",
     "apollo-server-express": "^2.4.6",
     "bcrypt": "^3.0.4",
     "bluebird": "^3.5.3",
@@ -24,6 +25,7 @@
     "squel": "^5.12.2"
   },
   "devDependencies": {
+    "jest": "^24.1.0",
     "nodemon": "^1.18.10"
   }
 }
