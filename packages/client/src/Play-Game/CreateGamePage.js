@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 //router
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 //formik & yup
 import { Formik } from 'formik'
@@ -19,193 +19,189 @@ import { Typography, FormControl, TextField, Button } from '@material-ui/core/'
 import SelectOpponent from './SelectOpponent'
 import CustomizedSnackbar from './SnackBar'
 
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-
+import Snackbar from '@material-ui/core/Snackbar'
+import SnackbarContent from '@material-ui/core/SnackbarContent'
 
 const CreateGamePage = () => {
   const [snackBarOpen, setSnackBarOpen] = useState(false)
+  if (snackBarOpen) {
+    return <Redirect to="/" />
+  }
   return (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <Typography style={{ marginTop: 25, marginBottom: 25 }} variant="overline">
-      Create Game
-    </Typography>
-
-    <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to="/">
-      <Button
-        style={{
-          width: '100%',
-        }}
-        color="primary"
-        variant="contained"
-      >
-        Back To Home
-      </Button>
-    </Link>
-
-    <Mutation
-      onError={error => {
-        alert(error)
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
-      mutation={gql`
-        mutation($createMatch: NewMatchInput!) {
-          createMatch(input: $createMatch) {
-            match_id
-            team_id
-            goals_for
-            goals_against
-          }
-        }
-      `}
     >
-      {(createMatch, { loading, error, data }) => {
-        if (loading) return <p>Loading...</p>
-        if (error) {
-          console.log(error)
-          return <p>Error :(</p>
-        }
+      <Typography style={{ marginTop: 25, marginBottom: 25 }} variant="overline">
+        Create Game
+      </Typography>
 
-        return (
+      <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to="/">
+        <Button
+          style={{
+            width: '100%',
+          }}
+          color="primary"
+          variant="contained"
+        >
+          Back To Home
+        </Button>
+      </Link>
 
+      <Mutation
+        onError={error => {
+          alert(error)
+        }}
+        mutation={gql`
+          mutation($createMatch: NewMatchInput!) {
+            createMatch(input: $createMatch) {
+              match_id
+              team_id
+              goals_for
+              goals_against
+            }
+          }
+        `}
+      >
+        {(createMatch, { loading, error, data }) => {
+          if (loading) return <p>Loading...</p>
+          if (error) {
+            console.log(error)
+            return <p>Error :(</p>
+          }
 
-          <Formik
-            initialValues={{
-              team_id: '',
-              goals_for: '',
-              goals_against: '',
-              organization_id: 1,
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              console.log(values)
-              values = {
-                ...values,
-              }
-              createMatch({ variables: { createMatch: values } })
-              setSubmitting(false)
-              setSnackBarOpen(true)
-              
-              console.log('snack_bar_open', snackBarOpen)              
-            }}
-            validationSchema={Yup.object().shape({
-              team_id: Yup.number().required('required'),
-              goals_for: Yup.number().required('required'),
-              goals_against: Yup.number().required('required'),
-            })}
-          >
-            {props => {
-              const { handleChange, handleSubmit, isSubmitting, values} = props
-              return (
-                <form
-                  onSubmit={handleSubmit}
-                  style={{
-                    marginTop: 50,
-                    width: '300px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <FormControl variant="outlined">
-                    <Query
-                      query={gql`
-                        query{
-                          viewer{
-                            id
-                          }
-                        }
-                      `}
-                    >
-                      {({ loading, error, data }) => {
-                        if (loading) return <p>Loading...</p>
-                        if (error){
-                          console.log(error)
-                          return <p>Error :(</p>
-                        } 
-                        return (
-                          <SelectOpponent
-                            value={parseInt(values.team_id)}
-                            onChange={handleChange}
-                          />
-                        )
-                      }}
-                    </Query>
-                  </FormControl>
+          return (
+            <Formik
+              initialValues={{
+                team_id: '',
+                goals_for: '',
+                goals_against: '',
+                organization_id: 1,
+              }}
+              onSubmit={(values, { setSubmitting }) => {
+                console.log(values)
+                values = {
+                  ...values,
+                }
+                createMatch({ variables: { createMatch: values } })
+                setSubmitting(false)
+                setSnackBarOpen(true)
 
-                  <div
+                console.log('snack_bar_open', snackBarOpen)
+              }}
+              validationSchema={Yup.object().shape({
+                team_id: Yup.number().required('required'),
+                goals_for: Yup.number().required('required'),
+                goals_against: Yup.number().required('required'),
+              })}
+            >
+              {props => {
+                const { handleChange, handleSubmit, isSubmitting, values } = props
+                return (
+                  <form
+                    onSubmit={handleSubmit}
                     style={{
                       marginTop: 50,
+                      width: '300px',
                       display: 'flex',
-                      justifyContent: 'space-between',
+                      flexDirection: 'column',
+                      alignItems: 'center',
                     }}
                   >
-                    <TextField
-                      name="goals_for"
-                      label="Your Score"
-                      value={values.goals_for}
-                      onChange={handleChange}
-                      type="number"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
+                    <FormControl variant="outlined">
+                      <Query
+                        query={gql`
+                          query {
+                            viewer {
+                              id
+                            }
+                          }
+                        `}
+                      >
+                        {({ loading, error, data }) => {
+                          if (loading) return <p>Loading...</p>
+                          if (error) {
+                            console.log(error)
+                            return <p>Error :(</p>
+                          }
+                          return (
+                            <SelectOpponent
+                              value={parseInt(values.team_id)}
+                              onChange={handleChange}
+                            />
+                          )
+                        }}
+                      </Query>
+                    </FormControl>
+
+                    <div
                       style={{
-                        width: '45%',
+                        marginTop: 50,
+                        display: 'flex',
+                        justifyContent: 'space-between',
                       }}
-                      variant="outlined"
-                    />
+                    >
+                      <TextField
+                        name="goals_for"
+                        label="Your Score"
+                        value={values.goals_for}
+                        onChange={handleChange}
+                        type="number"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        style={{
+                          width: '45%',
+                        }}
+                        variant="outlined"
+                      />
 
-                    <TextField
-                      name="goals_against"
-                      label="Opponent Score"
-                      value={values.goals_against}
-                      onChange={handleChange}
-                      type="number"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
+                      <TextField
+                        name="goals_against"
+                        label="Opponent Score"
+                        value={values.goals_against}
+                        onChange={handleChange}
+                        type="number"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        style={{
+                          width: '45%',
+                        }}
+                        variant="outlined"
+                      />
+                    </div>
+
+                    {/* <Link style={{ marginTop: 50, width: '75%', textDecoration: 'none' }} to='/'> */}
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      disabled={isSubmitting}
+                      variant="contained"
                       style={{
-                        width: '45%',
+                        width: '100%',
+                        width: '75%',
+                        marginTop: 50,
                       }}
-                      variant="outlined"
-                    />
-                  </div>
+                    >
+                      Submit Scores
+                    </Button>
 
-                  {/* <Link style={{ marginTop: 50, width: '75%', textDecoration: 'none' }} to='/'> */}
-                  <Button
-                    type="submit"
-                    color="secondary"
-                    disabled={isSubmitting}
-                    variant="contained"
-                    style={{
-                      width: '100%',
-                      width: '75%',
-                      marginTop: 50,
-                    }}
-                  >
-                    Submit Scores
-                  </Button>
-
-                  <CustomizedSnackbar 
-                    open={snackBarOpen}
-                    setSnackBarOpen={setSnackBarOpen} 
-                  />
-                  {/* </Link> */}
-                </form>
-
-
-              )
-            }}
-          </Formik>
-        )
-      }}
-    </Mutation>
-  </div>
-)}
+                    <CustomizedSnackbar open={snackBarOpen} setSnackBarOpen={setSnackBarOpen} />
+                    {/* </Link> */}
+                  </form>
+                )
+              }}
+            </Formik>
+          )
+        }}
+      </Mutation>
+    </div>
+  )
+}
 
 export default CreateGamePage

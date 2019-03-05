@@ -34,6 +34,7 @@ const UsersAndStats = () => (
         }
       }
     `}
+    pollInterval={500}
   >
     {({ loading, error, data }) => {
       if (loading) return <div>Loading...</div>
@@ -45,7 +46,7 @@ const UsersAndStats = () => (
           <ListItem key={user.id} button style={{ height: '75px', listStyle: 'none' }}>
             {/* {console.log(data)} */}
             <ListItemIcon>
-              <img src={gravatar.url(user.email, {s: '75', r: 'x', d: 'retro'}, false)} />{' '}
+              <img src={gravatar.url(user.email, { s: '75', r: 'x', d: 'retro' }, false)} />{' '}
             </ListItemIcon>
             <ListItemText
             style={{listStyle:'none'}}

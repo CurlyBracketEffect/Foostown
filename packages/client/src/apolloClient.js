@@ -69,14 +69,16 @@ const authLink = new ApolloLink((operation, forward) => {
     if (csrfToken != null) {
       setCSRFToken(csrfToken)
       console.log('logged in')
+      apolloClient.queryManager.broadcastQueries()
     }
     if (data.logout) {
       setCSRFToken(null)
       console.log('logged out')
     }
-
     // Handle auth errors and filter them out of responses
-    if (response.errors == null) return true
+    if (response.errors == null) {
+      return true
+    }
     const authError = response.errors.some(err => err.extensions.code === 'UNAUTHENTICATED')
     if (authError) {
       console.log('unauthenticated')
