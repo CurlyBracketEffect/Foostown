@@ -24,12 +24,9 @@ const TeamsInTournament = () => (
       if (error) {
         throw error
       }
-      console.log(data)
-      return null
       return data.organization.tournaments.teams.map(team => {
         return (
           <ListItem key={team.id} button style={{ height: '75px' }}>
-            {console.log(data)}
             <ListItemIcon>Avatar</ListItemIcon>
             <ListItemText
               primary={team.team_name}
