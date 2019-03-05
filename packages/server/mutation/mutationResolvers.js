@@ -205,7 +205,7 @@ module.exports = {
       try {
         await client.query('BEGIN')
 
-        //create entry on Tournaaments Table
+        //create entry on Tournaments Table
         const createTournamentMutation = {
           text: `
             INSERT INTO foostown.tournaments (tournament_name, 
