@@ -3,10 +3,10 @@ const cookieParser = require('cookie-parser')
 const chalk = require('chalk')
 const cors = require('cors')
 const path = require('path')
-const { Pool } = require('pg')
 const { ApolloServer } = require('apollo-server-express')
 const { makeExecutableSchema } = require('graphql-tools')
 
+const postgres = require('./postgres')
 const typeDefs = require('./schema')
 let resolvers = require('./resolvers')
 
@@ -41,15 +41,6 @@ if (process.env.NODE_ENV !== 'production') {
   // Allow requests from dev server address
   app.use(cors(corsConfig))
 }
-
-const postgres = new Pool({
-  user: app.get('PG_USER'),
-  host: app.get('PG_HOST'),
-  database: app.get('PG_DB'),
-  password: app.get('PG_PASSWORD'),
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-})
 
 resolvers = resolvers()
 

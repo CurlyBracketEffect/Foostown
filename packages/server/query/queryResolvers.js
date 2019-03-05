@@ -43,12 +43,12 @@ module.exports = {
       return user.rows[0]
     },
 
-    async teams(parent, args, { req, app, postgres }) {
+    async teams(parent, { organizationID = 1 }, { req, app, postgres }) {
       // const userID = authenticate(app, req)
 
       const teams = await postgres.query({
-        text: 'SELECT * FROM foostown.teams',
-        // values: [userID],
+        text: 'SELECT * FROM foostown.teams WHERE organization_id = $1',
+        values: [organizationID],
       })
       return teams.rows
     },
