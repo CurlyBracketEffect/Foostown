@@ -2,17 +2,13 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@material-ui/core/'
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core/'
 
 const TeamsInTournament = () => (
   <Query
     query={gql`
       query {
-        organization(id:1) {
+        organization(id: 1) {
           tournaments {
             teams {
               id

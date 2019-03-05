@@ -5,7 +5,6 @@ const crypto = require('crypto')
 const Promise = require('bluebird')
 const authenticate = require('../authenticate')
 
-
 function setCookie({ tokenName, token, res }) {
   res.cookie(tokenName, token, {
     httpOnly: true,
@@ -75,7 +74,8 @@ module.exports = {
         //Set role for the User in the Org
         const isAdmin = false
         const setRoleForUser = await postgres.query({
-          text: 'INSERT INTO foostown.organizations_users (organization_id, user_id, is_admin) VALUES ($1, $2, $3) RETURNING *',
+          text:
+            'INSERT INTO foostown.organizations_users (organization_id, user_id, is_admin) VALUES ($1, $2, $3) RETURNING *',
           values: [orgID, userId, isAdmin],
         })
 
@@ -136,7 +136,6 @@ module.exports = {
       }
     },
 
-
     async createMatch(
       parent,
       {
@@ -194,42 +193,88 @@ module.exports = {
     async createTournament(
       parent,
       {
-        input: { tournament_name, available_spots },
+        input: { tournament_name, number_of_players },
       },
       { req, app, postgres }
     ) {
       const orgID = 1
       const status = 'open'
       const start_date = new Date().toISOString()
-      const tournament = await postgres.query({
-          text:
-            'INSERT INTO foostown.tournaments (tournament_name, organization_id, start_date, status, available_spots) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-          values: [tournament_name, orgID, start_date, status, available_spots],
+
+      const client = await postgres.connect()
+      try {
+        await client.query('BEGIN')
+
+        //create entry on Tournaaments Table
+        const createTournamentMutation = {
+          text: `
+            INSERT INTO foostown.tournaments (tournament_name, 
+            organization_id, start_date, status) 
+            VALUES ($1, $2, $3, $4) RETURNING *
+            `,
+          values: [tournament_name, orgID, start_date, status],
+        }
+        const tournament = await postgres.query(createTournamentMutation)
+
+        //Create entry in the Matches Tables for all matches that will be played in tourney
+        const numberOfMatches = (number_of_players * (number_of_players - 1)) / 2 + 4 //+4 is for the elimination round matches
+
+        for (let x = 0; x < numberOfMatches; x++) {
+          const createTourneyMatchesMutation = {
+            text: `
+              INSERT into foostown.matches (organization_id, tournament_id) VALUES ($1, $2) RETURNING *
+            `,
+            values: [tournament.rows[0].organization_id, tournament.rows[0].id],
+          }
+          await postgres.query(createTourneyMatchesMutation)
+        }
+
+        //Create entries in the Teams_Tournaments Table
+        for (let x = 0; x < number_of_players; x++) {
+          const createTourneyTeamsMutation = {
+            text: `
+          INSERT INTO foostown.teams_tournaments (tournament_id, team_id, points) VALUES ($1, $2, $3)
+          `,
+            values: [tournament.rows[0].id, null, 0],
+          }
+          await postgres.query(createTourneyTeamsMutation)
+        }
+
+        await client.query('COMMIT')
+        return tournament.rows[0]
+      } catch (e) {
+        client.query('ROLLBACK', err => {
+          if (err) {
+            throw err
+          }
         })
-      return tournament.rows[0]
+        throw e
+      }
     },
 
-
-    async closeTournament(
-      parent, 
-      {
-        id,
-      },
-      { req, app, postgres }
-    ) {
+    async closeTournament(parent, { id }, { req, app, postgres }) {
       const end_date = new Date().toISOString()
       const status = 'closed'
       const updateTournamentStatus = await postgres.query({
-          text:
-            'UPDATE foostown.tournaments SET end_date=$1, status=$2 WHERE id=$3 RETURNING *',
-          values: [end_date, status, id],
-        })
+        text: 'UPDATE foostown.tournaments SET end_date=$1, status=$2 WHERE id=$3 RETURNING *',
+        values: [end_date, status, id],
+      })
       console.log()
       console.log(end_date)
       console.log(status)
       console.log(updateTournamentStatus)
       return updateTournamentStatus.rows[0]
     },
+    // async addTeamToTourney(parent, {}, { app, req, postgres }) {
 
+    //   const addTeamMutation = {
+    //     text: `INSERT into foostown.teams_tournaments (tournament_id, team_id, points) VALUES(1,1,0)`,
+    //     values: [id],
+    //   }
+
+    //   const user = await postgres.query(addTeamMutation)
+
+    //   return true
+    // },
   },
 }
