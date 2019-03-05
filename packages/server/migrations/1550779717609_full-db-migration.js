@@ -74,6 +74,7 @@ exports.up = pgm => {
   //9. Teams_Tournaments Table
   pgm.sql(`
     CREATE TABLE "foostown"."teams_tournaments" (
+      "id" SERIAL PRIMARY key,
       "tournament_id" INTEGER REFERENCES tournaments(id) NOT NULL,
       "team_id" INTEGER REFERENCES teams(id),
       "points" INTEGER NOT NULL
