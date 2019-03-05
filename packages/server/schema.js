@@ -27,6 +27,7 @@ module.exports = gql`
     owner_id: ID!
     is_active: Boolean!
     users: [User!]!
+    tournaments: [Tournament]!
   }
 
   type Team {
@@ -50,6 +51,7 @@ module.exports = gql`
     start_date: DateTime!
     end_date: DateTime
     status: String!
+    teams: [Team]!
   }
 
   type MatchStat {
@@ -82,11 +84,16 @@ module.exports = gql`
 
   input NewTournamentInput {
     tournament_name: String!
+    number_of_players: Int!
   }
 
   input LoginInput {
     email: String!
     password: String!
+  }
+
+  input TournamentSignUpInput{
+    team_id: ID!
   }
 
   type Query {
@@ -110,5 +117,6 @@ module.exports = gql`
     logout: Boolean
     createTournament(input: NewTournamentInput): Tournament!
     closeTournament(id: ID!): Tournament!
+    addTeamToTourney(input: TournamentSignUpInput): Boolean
   }
 `

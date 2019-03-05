@@ -43,17 +43,19 @@ const UsersAndStats = () => (
       }
       return data.organization.users.map(user => {
         return (
-          <ListItem key={user.id} button style={{ height: '75px' }}>
+          <ListItem key={user.id} button style={{ height: '75px', listStyle: 'none' }}>
             {/* {console.log(data)} */}
             <ListItemIcon>
               <img src={gravatar.url(user.email, { s: '75', r: 'x', d: 'retro' }, false)} />{' '}
             </ListItemIcon>
             <ListItemText
+            style={{listStyle:'none'}}
               primary={
                 user.fullname.length > 13 ? user.fullname.slice(0, 13) + '...' : user.fullname
               }
             />
-            <ListItemSecondaryAction>
+            <ListItemSecondaryAction
+            style={{listStyle:'none'}}>
               G.P.: {user.stats.matches_played} <br />
               G.F.: {user.stats.goals_for} <br />
               G.A.: {user.stats.goals_against} <br />
