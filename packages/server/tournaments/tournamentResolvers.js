@@ -15,12 +15,7 @@ module.exports = {
         values: [parent.id],
       }
 
-      // console.log("tourney ID >>>", parent.id)
-
       const teams = await postgres.query(findTeamsQuery)
-
-      console.log('teams>>> ', teams)
-
       return teams.rows
     },
   },

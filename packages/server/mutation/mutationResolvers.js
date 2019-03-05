@@ -163,7 +163,6 @@ module.exports = {
         throw e
       }
     },
-
     async closeTournament(parent, { id }, { req, app, postgres }) {
       const end_date = new Date().toISOString()
       const status = 'closed'
@@ -177,16 +176,39 @@ module.exports = {
       console.log(updateTournamentStatus)
       return updateTournamentStatus.rows[0]
     },
-    // async addTeamToTourney(parent, {}, { app, req, postgres }) {
+    async addTeamToTourney(parent, args, { app, req, postgres }) {
 
-    //   const addTeamMutation = {
-    //     text: `INSERT into foostown.teams_tournaments (tournament_id, team_id, points) VALUES(1,1,0)`,
-    //     values: [id],
-    //   }
+      const checkIfTeamHasJoinedQuery = {
+        text: `
+          SELECT id FROM foostown.teams_tournaments
+          WHERE tournament_id = $1 AND team_id = $2
+        `,
+        values: [args.input.tournament_id, args.input.team_id],
+      }
+      
+      const teamHasJoined = await postgres.query(checkIfTeamHasJoinedQuery)
+      
+      if(teamHasJoined.rows.length > 0){
+        //for extra defense a deletion mutation could be added that would delete any teams that got added twice
+        return false
+      }
 
-    //   const user = await postgres.query(addTeamMutation)
+      const addTeamMutation = {
+        text: `
+          UPDATE foostown.teams_tournaments
+          SET team_id = $1
+          WHERE id = 
+          (SELECT id FROM foostown.teams_tournaments
+          WHERE tournament_id = $2 AND team_id IS NULL
+          ORDER BY id
+          LIMIT 1)
+        `,
+        values: [args.input.team_id, args.input.tournament_id],
+      }
 
-    //   return true
-    // },
+      await postgres.query(addTeamMutation)
+
+      return true
+    },
   },
 }

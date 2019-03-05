@@ -93,6 +93,7 @@ module.exports = gql`
   }
 
   input TournamentSignUpInput{
+    tournament_id: ID!
     team_id: ID!
   }
 
@@ -117,6 +118,6 @@ module.exports = gql`
     logout: Boolean
     createTournament(input: NewTournamentInput): Tournament!
     closeTournament(id: ID!): Tournament!
-    addTeamToTourney(input: TournamentSignUpInput): Boolean
+    addTeamToTourney(input: TournamentSignUpInput): Boolean!
   }
 `
