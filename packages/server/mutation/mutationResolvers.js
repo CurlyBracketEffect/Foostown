@@ -5,6 +5,8 @@ const crypto = require('crypto')
 const Promise = require('bluebird')
 const authenticate = require('../authenticate')
 const signup = require('./signup')
+const setCookie = require('./setCookie')
+const generateToken = require('./generateToken')
 
 module.exports = {
   Mutation: {
