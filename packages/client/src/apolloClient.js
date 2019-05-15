@@ -69,7 +69,7 @@ const authLink = new ApolloLink((operation, forward) => {
     if (csrfToken != null) {
       setCSRFToken(csrfToken)
       console.log('logged in')
-      apolloClient.queryManager.broadcastQueries()
+      // apolloClient.queryManager.broadcastQueries()
     }
     if (data.logout) {
       setCSRFToken(null)
@@ -83,7 +83,7 @@ const authLink = new ApolloLink((operation, forward) => {
     if (authError) {
       console.log('unauthenticated')
       setCSRFToken(null)
-      apolloClient.queryManager.broadcastQueries()
+      // apolloClient.queryManager.broadcastQueries()
     }
     return !authError
   })
