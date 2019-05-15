@@ -77,17 +77,17 @@ const HomePage = props => {
           <Tab
             className={classes.iconTab}
             label="PLAYERS"
-            icon={<i class="fas fa-users" style={{ color: '#00aa25' }} />}
+            icon={<i className="fas fa-users" style={{ color: '#00aa25' }} />}
           />
           <Tab
             className={classes.iconTab}
             label="GAMES"
-            icon={<i class="fas fa-play-circle" style={{ color: '#00aa25' }} />}
+            icon={<i className="fas fa-play-circle" style={{ color: '#00aa25' }} />}
           />
           <Tab
             className={classes.iconTab}
             label="TOURNAMENTS"
-            icon={<i class="fas fa-trophy" style={{ color: '#00aa25' }} />}
+            icon={<i className="fas fa-trophy" style={{ color: '#00aa25' }} />}
           />
         </Tabs>
       </Box>
