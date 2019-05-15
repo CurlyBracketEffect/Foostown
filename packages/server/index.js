@@ -27,7 +27,13 @@ if (process.env.NODE_ENV === 'production') {
 
   // Serve the static front-end from /public when deployed
   app.use(express.static(root))
-  app.use(fallback('index.html', { root }))
+  app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client/index.html'), function(err) {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  })
 }
 
 if (process.env.NODE_ENV !== 'production') {
