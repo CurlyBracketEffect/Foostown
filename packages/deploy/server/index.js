@@ -11,8 +11,8 @@ const typeDefs = require('./schema')
 let resolvers = require('./resolvers')
 
 const app = express()
-const PORT = process.env.PORT || 8080
-app.set('PORT', process.env.PORT || 8080)
+const PORT = process.env.PORT || 3000
+app.set('PORT', process.env.PORT || 3000)
 app.set('PG_HOST', process.env.PG_HOST || 'localhost')
 app.set('PG_USER', process.env.PG_USER || 'postgres')
 app.set('PG_PASSWORD', process.env.PG_PASSWORD || '')
@@ -36,17 +36,18 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  // Allow requests from dev server address
-  const corsConfig = {
-    origin: 'http://localhost:3000',
-    credentials: true,
-  }
-  app.set('CORS_CONFIG', corsConfig)
-
-  // Allow requests from dev server address
-  app.use(cors(corsConfig))
+// Allow requests from dev server address
+const corsConfig = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: true,
+  optionsSuccessStatus: 204,
 }
+app.set('CORS_CONFIG', corsConfig)
+
+// Allow requests from dev server address
+app.use(cors(corsConfig))
 
 resolvers = resolvers()
 
@@ -58,7 +59,7 @@ const schema = makeExecutableSchema({
 const apolloServer = new ApolloServer({
   context: ({ req }) => {
     if (
-      req.headers.referer === 'http://localhost:8080/graphql' &&
+      req.headers.referer === 'http://localhost:3000/graphql' &&
       process.env.NODE_ENV !== 'production'
     ) {
       app.set('SKIP_AUTH', true)
