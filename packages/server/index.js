@@ -76,7 +76,7 @@ const apolloServer = new ApolloServer({
 apolloServer.applyMiddleware({
   app,
   uploads: true,
-  cors: app.get('CORS_CONFIG'),
+  cors: corsConfig,
 })
 
 postgres.on('error', (err, client) => {
