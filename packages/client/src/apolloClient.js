@@ -48,7 +48,7 @@ const authorizedFetch = (uri, options) => {
 }
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8080/graphql',
+  uri: '/graphql',
   credentials: 'include',
   fetch: authorizedFetch,
 })
