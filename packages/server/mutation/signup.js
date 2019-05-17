@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt-nodejs')
 const crypto = require('crypto')
 const Promise = require('bluebird')
 const setCookie = require('./setCookie')
@@ -6,20 +6,13 @@ const generateToken = require('./generateToken')
 
 const saltRounds = 12
 
-const signup = async (
-  parent,
-  {
-    input: { fullname, email, password },
-  },
-  { req, app, postgres }
-) => {
+const signup = async (parent, { input: { fullname, email, password } }, { req, app, postgres }) => {
   const hashedPassword = await bcrypt.hash(password, 12)
   const emailLowerCase = email.toString().toLowerCase()
   const orgID = 1
 
   const newUserInsert = {
-    text:
-      'INSERT INTO foostown.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
+    text: 'INSERT INTO foostown.users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
     values: [fullname, emailLowerCase, hashedPassword],
   }
 
@@ -42,8 +35,7 @@ const signup = async (
 
     //Create New Team
     const team = await postgres.query({
-      text:
-        'INSERT INTO foostown.teams (team_name, organization_id) VALUES ($1, $2) RETURNING *',
+      text: 'INSERT INTO foostown.teams (team_name, organization_id) VALUES ($1, $2) RETURNING *',
       values: [email, orgID],
     })
 
@@ -58,7 +50,8 @@ const signup = async (
     //Set role for the User in the Org
     const isAdmin = false
     const setRoleForUser = await postgres.query({
-      text: 'INSERT INTO foostown.organizations_users (organization_id, user_id, is_admin) VALUES ($1, $2, $3) RETURNING *',
+      text:
+        'INSERT INTO foostown.organizations_users (organization_id, user_id, is_admin) VALUES ($1, $2, $3) RETURNING *',
       values: [orgID, userId, isAdmin],
     })
 
