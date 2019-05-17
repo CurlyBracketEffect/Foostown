@@ -39,7 +39,6 @@ const authorizedFetch = (uri, options) => {
   const headers = {
     ...options.headers,
     Authorization: token ? `Bearer ${token}` : '',
-    'Content-Type': 'application/json',
   }
 
   return fetch(uri, {
