@@ -32,7 +32,7 @@ module.exports = {
 
       // -------------------------------
       if (user == null) throw 'User was not found.'
-      const valid = await bcrypt.compare(password, user.password)
+      const valid = bcrypt.compareSync(password, user.password)
       if (!valid) throw 'Incorrect user or email.'
 
       const csrfTokenBinary = await Promise.promisify(crypto.randomBytes)(32)

@@ -4,10 +4,10 @@ const Promise = require('bluebird')
 const setCookie = require('./setCookie')
 const generateToken = require('./generateToken')
 
-const saltRounds = 12
+const saltRounds = bcrypt.genSaltSync(12)
 
 const signup = async (parent, { input: { fullname, email, password } }, { req, app, postgres }) => {
-  const hashedPassword = await bcrypt.hash(password, 12)
+  const hashedPassword = bcrypt.hashSync(password, 12)
   const emailLowerCase = email.toString().toLowerCase()
   const orgID = 1
 
