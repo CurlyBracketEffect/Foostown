@@ -23,7 +23,7 @@ app.set('JWT_COOKIE_NAME', 'token')
 app.use(cookieParser())
 
 if (process.env.NODE_ENV === 'production') {
-  const root = path.resolve(__dirname, '../public')
+  const root = path.resolve(__dirname, '../client')
 
   // Serve the static front-end from /public when deployed
   app.use(express.static(root))
