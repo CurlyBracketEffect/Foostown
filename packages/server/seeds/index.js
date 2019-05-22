@@ -6,32 +6,32 @@ const userSeeds = [
   {
     fullname: 'Rob Gilson',
     email: 'rob@rob.rob',
-    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
+    password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
   {
     fullname: 'Jorrin Bruns',
     email: 'jorrin@jorrin.com',
-    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
+    password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
   {
     fullname: 'Eirian Ta',
     email: 'eirian@eirian.com',
-    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
+    password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
   {
     fullname: 'Akshay Manchand',
     email: 'akshay@akshay.com',
-    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
+    password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
   {
     fullname: 'Navi Hothi',
     email: 'navi@navi.com',
-    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
+    password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
   {
     fullname: 'Vaughn Paulger',
     email: 'vaughn@vaughn.com',
-    password: '$2b$12$tGggtJkg2q3Vm6xadnb/yO2XWuRzl0yDekd6sB5jq9fk6TgDzS.iS',
+    password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
 ]
 
