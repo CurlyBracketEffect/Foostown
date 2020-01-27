@@ -1,12 +1,14 @@
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
 const Promise = require('bluebird')
-const setCookie = require('./setCookie')
-const generateToken = require('./generateToken')
 
 const saltRounds = bcrypt.genSaltSync(12)
 
-const signup = async (parent, { input: { fullname, email, password } }, { req, app, postgres }) => {
+const signup = async (
+  parent,
+  { input: { fullname, email, password } },
+  { req, app, postgres, authUtil }
+) => {
   const hashedPassword = bcrypt.hashSync(password, 12)
   const emailLowerCase = email.toString().toLowerCase()
   const orgID = 1
@@ -27,9 +29,9 @@ const signup = async (parent, { input: { fullname, email, password } }, { req, a
     const user = userResult.rows[0]
     const csrfTokenBinary = await Promise.promisify(crypto.randomBytes)(32)
     const csrfToken = Buffer.from(csrfTokenBinary, 'binary').toString('base64')
-    setCookie({
+    authUtil.setCookie({
       tokenName: app.get('JWT_COOKIE_NAME'),
-      token: generateToken(user, app.get('JWT_SECRET'), csrfToken),
+      token: authUtil.generateToken(user, app.get('JWT_SECRET'), csrfToken),
       res: req.res,
     })
 

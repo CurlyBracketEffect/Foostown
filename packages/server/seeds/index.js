@@ -19,7 +19,7 @@ const userSeeds = [
     password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
   {
-    fullname: 'Akshay Manchand',
+    fullname: 'Akshay Manchanda',
     email: 'akshay@akshay.com',
     password: '$2a$12$C3fzh/z1u9PpTxjEPsK1SefXVritcsDfcL6ftQzWSkfgouSKR6BfS',
   },
@@ -49,7 +49,7 @@ const teamSeeds = [
     organization_id: 1,
   },
   {
-    team_name: 'Akshay Manchand',
+    team_name: 'Akshay Manchanda',
     organization_id: 1,
   },
   {

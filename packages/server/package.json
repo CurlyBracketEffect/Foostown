@@ -11,10 +11,10 @@
     "db:drop": "psql -U postgres -d postgres -c \"DROP SCHEMA IF EXISTS \\\"foostown\\\" CASCADE\"",
     "db:reset": "yarn db:drop && yarn db:up",
     "db:seed": "node seeds/index.js",
-    "db:resetandseed": "yarn db:drop && yarn db:up && node seeds/index.js",
+    "db:ras": "yarn db:drop && yarn db:up && node seeds/index.js",
     "test": "jest",
-    "start": "NODE_ENV=production node index.js",
-    "start:dev": "NODE_ENV=development nodemon index.js"
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
   },
   "dependencies": {
     "@okgrow/graphql-scalars": "^0.4.5",

@@ -1,24 +1,15 @@
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const saltRounds = 12
 const crypto = require('crypto')
 const Promise = require('bluebird')
-const authenticate = require('../authenticate')
 const signup = require('./signup')
-const setCookie = require('./setCookie')
-const generateToken = require('./generateToken')
 
 module.exports = {
   Mutation: {
     signup,
 
-    async login(
-      parent,
-      {
-        input: { email, password },
-      },
-      { req, app, postgres }
-    ) {
+    async login(parent, { input: { email, password } }, { req, app, postgres, authUtil }) {
       const emailLowerCase = email.toString().toLowerCase()
       //Get User And Password For Verification
       const findUserQuery = {
@@ -38,9 +29,9 @@ module.exports = {
       const csrfTokenBinary = await Promise.promisify(crypto.randomBytes)(32)
       const csrfToken = Buffer.from(csrfTokenBinary, 'binary').toString('base64')
 
-      setCookie({
+      authUtil.setCookie({
         tokenName: app.get('JWT_COOKIE_NAME'),
-        token: generateToken(user, app.get('JWT_SECRET'), csrfToken),
+        token: authUtil.generateToken(user, app.get('JWT_SECRET'), csrfToken),
         res: req.res,
       })
 
@@ -52,15 +43,13 @@ module.exports = {
 
     async createMatch(
       parent,
-      {
-        input: { team_id, goals_for, goals_against, organization_id },
-      },
-      { req, app, postgres }
+      { input: { team_id, goals_for, goals_against, organization_id } },
+      { req, app, postgres, authUtil }
     ) {
       const client = await postgres.connect()
       try {
         await client.query('BEGIN')
-        const userID = authenticate(app, req)
+        const userID = authUtil.authenticate(app, req)
         const tournamentID = null
         const userTeamResult = await client.query({
           text: 'SELECT * FROM foostown.teams_users WHERE user_id = $1',
@@ -98,7 +87,7 @@ module.exports = {
         throw e
       }
     },
-    async logout(parent, {}, { app, req, postgres }) {
+    async logout(parent, {}, { app, req, postgres, authUtil }) {
       const cookieName = app.get('JWT_COOKIE_NAME')
       req.res.clearCookie(cookieName)
       return true
@@ -106,10 +95,8 @@ module.exports = {
 
     async createTournament(
       parent,
-      {
-        input: { tournament_name, number_of_players },
-      },
-      { req, app, postgres }
+      { input: { tournament_name, number_of_players } },
+      { req, app, postgres, authUtil }
     ) {
       const orgID = 1
       const status = 'open'
@@ -166,7 +153,7 @@ module.exports = {
       }
     },
 
-    async closeTournament(parent, { id }, { req, app, postgres }) {
+    async closeTournament(parent, { id }, { req, app, postgres, authUtil }) {
       const end_date = new Date().toISOString()
       const status = 'closed'
       const updateTournamentStatus = await postgres.query({
@@ -179,7 +166,7 @@ module.exports = {
       console.log(updateTournamentStatus)
       return updateTournamentStatus.rows[0]
     },
-    // async addTeamToTourney(parent, {}, { app, req, postgres }) {
+    // async addTeamToTourney(parent, {}, { app, req, postgres, authUtil }) {
 
     //   const addTeamMutation = {
     //     text: `INSERT into foostown.teams_tournaments (tournament_id, team_id, points) VALUES(1,1,0)`,

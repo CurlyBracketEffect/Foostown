@@ -1,9 +1,7 @@
-const authenticate = require('../authenticate')
-
 module.exports = {
   Organization: {
-    async users(parent, { id }, { app, req, postgres }, info) {
-      authenticate(app, req)
+    async users(parent, { id }, { app, req, postgres, authUtil }, info) {
+      authUtil.authenticate(app, req)
 
       const findUsersQuery = {
         text: 'SELECT * FROM foostown.users',
@@ -14,8 +12,8 @@ module.exports = {
 
       return users.rows
     },
-    async tournaments(parent, { id }, { app, req, postgres }, info) {
-      authenticate(app, req)
+    async tournaments(parent, { id }, { app, req, postgres, authUtil }, info) {
+      authUtil.authenticate(app, req)
 
       const findTournamentsQuery = {
         text: 'SELECT * FROM foostown.tournaments WHERE tournaments.organization_id = $1',
@@ -24,7 +22,6 @@ module.exports = {
 
       const tournaments = await postgres.query(findTournamentsQuery)
       // console.log(tournaments.rows)
-
 
       return tournaments.rows
     },
