@@ -28,9 +28,7 @@ const TeamsInTournament = () => (
         return (
           <ListItem key={team.id} button style={{ height: '75px' }}>
             <ListItemIcon>Avatar</ListItemIcon>
-            <ListItemText
-              primary={team.team_name}
-            />
+            <ListItemText primary={team.team_name} />
           </ListItem>
         )
       })

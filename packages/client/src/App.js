@@ -7,17 +7,12 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 //apollo
 import { ApolloProvider } from 'react-apollo'
-import apolloClient from './apolloClient'
+import apolloClient from './config/apolloClient'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 
 //components
-import Login from './Login-SignUp/Login'
-import SignUp from './Login-SignUp/SignUp'
-import HomePage from './Play-Game/HomePage'
-import CreateGamePage from './Play-Game/CreateGamePage'
-import CreateTournament from './Tournaments/CreateTournament'
-import Tournament from './Tournaments/Tournament'
+import { Login, SignUp, HomePage, CreateGamePage, CreateTournament, Tournament } from './components'
 
 //material-ui
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
@@ -75,7 +70,7 @@ const App = () => {
 
                   {isLoggedIn && (
                     <React.Fragment>
-                      <Route path="/" exact component={HomePage} />} />
+                      <Route path="/" exact component={HomePage} />
                       <Redirect path="/sign-up" to="/" />
                       <Route path="/create-game" exact component={CreateGamePage} />
                       <Route path="/create-tournament" exact component={CreateTournament} />

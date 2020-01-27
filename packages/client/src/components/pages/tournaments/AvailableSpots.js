@@ -30,24 +30,28 @@ const AvailableSpots = ({ value, onChange }) => {
             }
             return (
               <div>
-                {data.teams.map((team) => (
-                  <h2 style={{
-                    color: 'rgba(0, 0, 0, 0.54)',
-                    display: 'flex', 
-                    justifyContent: 'center', 
-                    fontSize: '16px',
-                    border: '1px solid #BCBCBC',
-                    padding: '16px',
-                    borderRadius: '4px',
-                  }}>Available Spots: &nbsp;
-                    <div style={{
-                      color: 'black',
-                      textDecoration: 'underline',
-                      textDecorationColor: 'green',
+                {data.teams.map(team => (
+                  <h2
+                    style={{
+                      color: 'rgba(0, 0, 0, 0.54)',
+                      display: 'flex',
+                      justifyContent: 'center',
                       fontSize: '16px',
+                      border: '1px solid #BCBCBC',
+                      padding: '16px',
+                      borderRadius: '4px',
                     }}
+                  >
+                    Available Spots: &nbsp;
+                    <div
+                      style={{
+                        color: 'black',
+                        textDecoration: 'underline',
+                        textDecorationColor: 'green',
+                        fontSize: '16px',
+                      }}
                     >
-                     {team.id}
+                      {team.id}
                     </div>
                   </h2>
                 ))}
