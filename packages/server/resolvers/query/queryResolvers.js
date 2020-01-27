@@ -1,9 +1,7 @@
-const authenticate = require('../authenticate')
-
 module.exports = {
   Query: {
-    async user(parent, { id }, { app, req, postgres }, info) {
-      authenticate(app, req)
+    async user(parent, { id }, { app, req, postgres, authUtil }, info) {
+      authUtil.authenticate(app, req)
       const findUserQuery = {
         text: 'SELECT * FROM foostown.users WHERE id = $1',
         values: [id],
@@ -17,8 +15,8 @@ module.exports = {
       return user.rows[0]
     },
 
-    async organization(parent, { id }, { app, req, postgres }, info) {
-      authenticate(app, req)
+    async organization(parent, { id }, { app, req, postgres, authUtil }, info) {
+      authUtil.authenticate(app, req)
       const findOrgQuery = {
         text: 'SELECT * FROM foostown.organizations WHERE id = $1',
         values: [id],
@@ -32,8 +30,8 @@ module.exports = {
       return org.rows[0]
     },
 
-    async viewer(parent, args, { req, app, postgres }) {
-      const userID = authenticate(app, req)
+    async viewer(parent, args, { req, app, postgres, authUtil }) {
+      const userID = authUtil.authenticate(app, req)
       const findUserQuery = {
         text: 'SELECT * FROM foostown.users WHERE id = $1',
         values: [userID],
@@ -43,19 +41,18 @@ module.exports = {
       return user.rows[0]
     },
 
-    async teams(parent, { organizationID = 1 }, { req, app, postgres }) {
-      authenticate(app, req)
+    async teams(parent, { organizationID = 1 }, { req, app, postgres, authUtil }) {
+      authUtil.authenticate(app, req)
 
       const teams = await postgres.query({
         text: 'SELECT * FROM foostown.teams WHERE organization_id = $1',
         values: [organizationID],
-
       })
       return teams.rows
     },
 
-    async matchesPlayed(team, args, { app, req, postgres }, info) {
-      const userID = authenticate(app, req)
+    async matchesPlayed(team, args, { app, req, postgres, authUtil }, info) {
+      const userID = authUtil.authenticate(app, req)
 
       const teamsMatchesQuery = {
         text: `
@@ -76,12 +73,12 @@ module.exports = {
           on away_team.id = away.team_id 
           WHERE home.team_id = $1
         `,
-        values: [userID] 
+        values: [userID],
       }
 
-      const matchesPlayed = await postgres.query(teamsMatchesQuery);
-      
-      return matchesPlayed.rows; 
+      const matchesPlayed = await postgres.query(teamsMatchesQuery)
+
+      return matchesPlayed.rows
     },
   },
 }

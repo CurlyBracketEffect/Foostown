@@ -1,9 +1,7 @@
-const authenticate = require('../authenticate')
-
 module.exports = {
   Tournament: {
-    async teams(parent, { id }, { app, req, postgres }, info) {
-      authenticate(app, req)
+    async teams(parent, { id }, { app, req, postgres, authUtil }, info) {
+      authUtil.authenticate(app, req)
 
       const findTeamsQuery = {
         text: `

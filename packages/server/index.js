@@ -8,7 +8,8 @@ const { makeExecutableSchema } = require('graphql-tools')
 
 const postgres = require('./postgres')
 const typeDefs = require('./schema')
-let resolvers = require('./resolvers')
+const resolvers = require('./resolvers')
+const { authUtil } = require('./utils')
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -47,13 +48,6 @@ app.set('CORS_CONFIG', corsConfig)
 // Allow requests from dev server address
 app.use(cors(corsConfig))
 
-resolvers = resolvers()
-
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-})
-
 const apolloServer = new ApolloServer({
   context: ({ req }) => {
     if (
@@ -65,12 +59,14 @@ const apolloServer = new ApolloServer({
       app.set('SKIP_AUTH', false)
     }
     return {
+      authUtil,
       app,
       req,
       postgres,
     }
   },
-  schema,
+  typeDefs,
+  resolvers,
 })
 
 apolloServer.applyMiddleware({
