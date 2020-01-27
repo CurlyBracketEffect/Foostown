@@ -37,7 +37,7 @@ const SelectYourTeam = ({ value, onChange }) => {
                 name="team_id"
                 input={<OutlinedInput />}
               >
-                {data.teams.map((team) => (
+                {data.teams.map(team => (
                   <MenuItem key={team.id} value={parseInt(team.id)}>
                     {team.team_name}
                   </MenuItem>

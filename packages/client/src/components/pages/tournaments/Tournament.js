@@ -4,19 +4,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 //components
-import LogoutButton from '../LogoutButton'
-import AvailableSpots from './AvailableSpots'
-import JoinTournament from './JoinTournament'
-import TeamsInTournament from './TeamsInTournament'
+import { LogoutButton, AvailableSpots, JoinTournament, TeamsInTournament } from 'components'
 
 //material-ui
 import { makeStyles } from '@material-ui/styles'
-import {
-  Typography,
-  List,
-  ListSubheader,
-  Button
-} from '@material-ui/core/'
+import { Typography, List, ListSubheader, Button } from '@material-ui/core/'
 
 const useStyles = makeStyles({
   tournamentPage: {
@@ -30,7 +22,7 @@ const useStyles = makeStyles({
     marginBottom: 25,
     fontSize: 16,
     color: '#00aa25',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   logoutBtn: {
     marginBottom: 25,
@@ -39,7 +31,7 @@ const useStyles = makeStyles({
   subHeader: {
     borderBottom: '1px solid #00aa25',
     overflow: 'hidden',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   tournamentPageList: {
     height: '175px',
@@ -48,20 +40,17 @@ const useStyles = makeStyles({
   createBtn: {
     marginTop: 25,
     textDecoration: 'none',
-  }
+  },
 })
 
 const TournamentPage = () => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={classes.tournamentPage}>
-
-      <Typography 
-        className= {classes.tournamentTitle}
-        variant='overline'>
+      <Typography className={classes.tournamentTitle} variant="overline">
         Tournaments
       </Typography>
-   
+
       <LogoutButton />
 
       <Link style={{ marginBottom: 25, textDecoration: 'none', width: '50%' }} to="/">
@@ -82,10 +71,7 @@ const TournamentPage = () => {
       {/* Join Tournament Mutation */}
       <JoinTournament />
 
-      <ListSubheader
-        className={classes.subHeader}
-        component='div'
-      >
+      <ListSubheader className={classes.subHeader} component="div">
         Already Joined
       </ListSubheader>
 
@@ -94,9 +80,8 @@ const TournamentPage = () => {
         {/* Uncomment the code below when we have tournament data */}
         {/* <TeamsInTournament /> */}
       </List>
-
     </div>
   )
 }
 
-export default TournamentPage;
+export default TournamentPage

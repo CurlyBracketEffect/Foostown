@@ -4,10 +4,7 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom'
 
 //components
-import UsersAndStats from './UsersAndStats'
-import NavBar from './NavBar'
-import MatchesPlayed from './MatchesPlayed'
-import ActiveTournaments from '../Tournaments/ActiveTournaments'
+import { UsersAndStats, NavBar, MatchesPlayed, ActiveTournaments } from 'components'
 
 //material-ui
 import { makeStyles } from '@material-ui/styles'

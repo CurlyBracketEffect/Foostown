@@ -1,6 +1,6 @@
 import React from 'react'
 
-import LogoutButton from '../LogoutButton'
+import { LogoutButton } from 'components'
 import gravatar from 'gravatar'
 
 import { makeStyles } from '@material-ui/styles'

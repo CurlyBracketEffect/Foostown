@@ -16,8 +16,7 @@ import gql from 'graphql-tag'
 import { Typography, FormControl, TextField, Button } from '@material-ui/core/'
 
 //components
-import SelectOpponent from './SelectOpponent'
-import CustomizedSnackbar from './SnackBar'
+import { SelectOpponent, CustomizedSnackbar } from 'components'
 
 import Snackbar from '@material-ui/core/Snackbar'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
