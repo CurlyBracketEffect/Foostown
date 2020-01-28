@@ -7,20 +7,10 @@ import { ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/co
 //router
 import { Link } from 'react-router-dom'
 
+import { GET_TOURNAMENTS } from 'gql/queries'
+
 const ActiveTournaments = () => (
-  <Query
-    query={gql`
-      query {
-        organization(id: 1) {
-          tournaments {
-            id
-            tournament_name
-            status
-          }
-        }
-      }
-    `}
-  >
+  <Query query={GET_TOURNAMENTS}>
     {({ loading, error, data }) => {
       if (loading) return <div>Loading...</div>
       if (error) {

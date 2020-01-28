@@ -15,6 +15,8 @@ import gql from 'graphql-tag'
 //material-ui
 import { Typography, FormControl, TextField, Button } from '@material-ui/core/'
 
+import { CREATE_TOURNAMENT } from 'gql/mutations'
+
 //components
 // import CustomizedSnackbar from './SnackBar'
 
@@ -52,14 +54,7 @@ const CreateTourament = () => {
         onError={error => {
           alert(error)
         }}
-        mutation={gql`
-          mutation($createTournament: NewTournamentInput!) {
-            createTournament(input: $createTournament) {
-              id
-              tournament_name
-            }
-          }
-        `}
+        mutation={CREATE_TOURNAMENT}
       >
         {(createMatch, { loading, error, data }) => {
           if (loading) return <p>Loading...</p>

@@ -10,6 +10,7 @@ import { Formik } from 'formik'
 import { makeStyles } from '@material-ui/styles'
 import { unstable_Box as Box } from '@material-ui/core/Box'
 import { Typography, TextField, Button } from '@material-ui/core'
+import { LOG_IN } from 'gql/mutations'
 
 const useStyles = makeStyles(
   {
@@ -59,19 +60,6 @@ const useStyles = makeStyles(
   { name: 'hello_worlkd_wtf', index: 10 }
 )
 
-const LOG_IN = gql`
-  mutation loginMutation($user: LoginInput!) {
-    login(input: $user) {
-      user {
-        id
-        fullname
-        email
-      }
-      csrfToken
-    }
-  }
-`
-
 const Login = () => {
   const classes = useStyles()
   return (
@@ -104,8 +92,7 @@ const Login = () => {
                 email: Yup.string()
                   .email()
                   .required('required'),
-                password: Yup.string()
-                  .required('required'),
+                password: Yup.string().required('required'),
               })}
             >
               {props => {

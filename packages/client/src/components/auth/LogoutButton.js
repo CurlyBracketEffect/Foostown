@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { Button } from '@material-ui/core/'
 import { makeStyles } from '@material-ui/styles'
+import { LOGOUT } from 'gql/mutations'
 
 const useStyles = makeStyles({
   logoutBtn: {
@@ -10,16 +11,10 @@ const useStyles = makeStyles({
   },
 })
 
-const LogoutMutation = gql`
-  mutation logoutmutation {
-    logout
-  }
-`
-
 const LogoutButton = () => {
   const classes = useStyles()
   return (
-    <Mutation mutation={LogoutMutation}>
+    <Mutation mutation={LOGOUT}>
       {(logout, { client, loading, error, data }) => {
         if (loading) return <p>Loading...</p>
         if (error) {
