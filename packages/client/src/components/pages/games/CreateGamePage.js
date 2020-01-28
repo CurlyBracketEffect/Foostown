@@ -17,6 +17,7 @@ import { Typography, FormControl, TextField, Button } from '@material-ui/core/'
 
 //components
 import { SelectOpponent, CustomizedSnackbar } from 'components'
+import { CREATE_MATCH } from 'gql/mutations'
 
 import Snackbar from '@material-ui/core/Snackbar'
 import SnackbarContent from '@material-ui/core/SnackbarContent'
@@ -55,16 +56,7 @@ const CreateGamePage = () => {
         onError={error => {
           alert(error)
         }}
-        mutation={gql`
-          mutation($createMatch: NewMatchInput!) {
-            createMatch(input: $createMatch) {
-              match_id
-              team_id
-              goals_for
-              goals_against
-            }
-          }
-        `}
+        mutation={CREATE_MATCH}
       >
         {(createMatch, { loading, error, data }) => {
           if (loading) return <p>Loading...</p>

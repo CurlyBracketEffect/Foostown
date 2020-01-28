@@ -6,23 +6,14 @@ import gql from 'graphql-tag'
 
 //material-ui
 import { OutlinedInput, InputLabel, Select, MenuItem } from '@material-ui/core/'
+import { GET_TEAMS } from 'gql/queries'
 
 const SelectYourTeam = ({ value, onChange }) => {
   return (
     <div>
       <div style={{ margin: '1rem 0', color: 'black', width: 300 }}>
         <InputLabel shrink>Select Your Team</InputLabel>
-        <Query
-          query={gql`
-            query {
-              teams {
-                id
-                organization_id
-                team_name
-              }
-            }
-          `}
-        >
+        <Query query={GET_TEAMS}>
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>
             if (error) {

@@ -14,28 +14,12 @@ import {
   Button,
 } from '@material-ui/core/'
 
+import { GET_STATS } from 'gql/queries'
+
 import gravatar from 'gravatar'
 
 const UsersAndStats = () => (
-  <Query
-    query={gql`
-      query {
-        organization(id: 1) {
-          users {
-            id
-            fullname
-            email
-            stats {
-              matches_played
-              goals_for
-              goals_against
-            }
-          }
-        }
-      }
-    `}
-    pollInterval={500}
-  >
+  <Query query={GET_STATS} pollInterval={500}>
     {({ loading, error, data }) => {
       if (loading) return <div>Loading...</div>
       if (error) {

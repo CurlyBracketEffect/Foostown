@@ -7,21 +7,13 @@ import gql from 'graphql-tag'
 //material-ui
 import { List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core/'
 
+import { GET_TEAMS } from 'gql/queries'
+
 const AvailableSpots = ({ value, onChange }) => {
   return (
     <div>
       <div style={{ margin: '1rem 0', color: 'black', width: 300 }}>
-        <Query
-          query={gql`
-            query {
-              teams {
-                id
-                organization_id
-                team_name
-              }
-            }
-          `}
-        >
+        <Query query={GET_TEAMS}>
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>
             if (error) {

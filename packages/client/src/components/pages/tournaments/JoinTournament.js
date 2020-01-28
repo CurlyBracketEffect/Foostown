@@ -12,7 +12,9 @@ import gql from 'graphql-tag'
 import { FormControl, Button } from '@material-ui/core/'
 
 //components
-import SelectYourTeam from './SelectYourTeam'
+import { SelectYourTeam } from 'components'
+
+import { JOIN_TOURNAMENT } from 'gql/mutations'
 
 const JoinTournament = () => {
   return (
@@ -28,16 +30,7 @@ const JoinTournament = () => {
         onError={error => {
           alert(error)
         }}
-        mutation={gql`
-          mutation($createMatch: NewMatchInput!) {
-            createMatch(input: $createMatch) {
-              match_id
-              team_id
-              goals_for
-              goals_against
-            }
-          }
-        `}
+        mutation={JOIN_TOURNAMENT}
       >
         {(createMatch, { loading, error, data }) => {
           if (loading) return <p>Loading...</p>

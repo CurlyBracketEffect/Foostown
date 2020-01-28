@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { unstable_Box as Box } from '@material-ui/core/Box'
 import { Typography, TextField, Button } from '@material-ui/core'
+import { SIGN_UP } from 'gql/mutations'
 
 const useStyles = makeStyles({
   signupContainer: {
@@ -55,19 +56,6 @@ const useStyles = makeStyles({
   },
 })
 
-const SIGN_UP = gql`
-  mutation signupMutation($user: NewUserInput!) {
-    signup(input: $user) {
-      user {
-        id
-        fullname
-        email
-      }
-      csrfToken
-    }
-  }
-`
-
 const SignUp = () => {
   const classes = useStyles()
   return (
@@ -102,8 +90,7 @@ const SignUp = () => {
                   email: Yup.string()
                     .email()
                     .required('required'),
-                  password: Yup.string()
-                    .required('required'),
+                  password: Yup.string().required('required'),
                 })}
               >
                 {props => {
